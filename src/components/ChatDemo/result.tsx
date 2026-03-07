@@ -315,6 +315,7 @@ export const Result: FC<{
             } else if (eventType === MESSAGE_EVENT) {
               // Handle incremental content delta
               if (eventData.delta && eventData.delta.content) {
+                setIsSearching(false); // Clear searching state when message data arrives
                 const contentItems = eventData.delta.content;
                 for (const item of contentItems) {
                   if (

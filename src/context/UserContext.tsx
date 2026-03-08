@@ -39,7 +39,7 @@ const UserContext = createContext<UserContextProps>({
     userRole: null,
     userId: null,
   },
-  getClient: () => null,
+  getClient: async () => null,
   client: null,
   viewMode: 'admin',
   setViewMode: () => {},
@@ -118,20 +118,59 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
       password: string,
       instanceUrl: string
     ): Promise<{ success: boolean; userRole: 'admin' | 'user' }> => {
-      const newClient = new r2rClient(instanceUrl);
+      // Normalize the instance URL
+      let normalizedUrl = instanceUrl.trim();
+      // Remove trailing slash if present
+      if (normalizedUrl.endsWith('/')) {
+        normalizedUrl = normalizedUrl.slice(0, -1);
+      }
+
+      console.log('Original instance URL:', instanceUrl);
+      console.log('Normalized instance URL:', normalizedUrl);
+
+      const newClient = new r2rClient(normalizedUrl);
       try {
-        const tokens = await newClient.users.login({
+        console.log('Attempting login to:', normalizedUrl);
+        console.log('Email:', email);
+        console.log('Password provided:', !!password);
+
+        // Log the request payload structure
+        const loginPayload = {
           email: email,
           password: password,
+        };
+        console.log('Login payload:', {
+          email: loginPayload.email,
+          hasPassword: !!loginPayload.password,
         });
 
-        localStorage.setItem('accessToken', tokens.results.accessToken.token);
-        localStorage.setItem('refreshToken', tokens.results.refreshToken.token);
-
-        newClient.setTokens(
-          tokens.results.accessToken.token,
-          tokens.results.refreshToken.token
+        // Log the actual request that will be sent
+        console.log(
+          'Calling r2rClient.users.login with payload:',
+          loginPayload
         );
+        console.log('r2rClient instance URL:', normalizedUrl);
+
+        const tokens = await newClient.users.login(loginPayload);
+        console.log('Login successful, tokens received');
+        console.log('Tokens structure:', {
+          hasResults: !!tokens.results,
+          hasAccessToken: !!tokens.results?.accessToken,
+          hasRefreshToken: !!tokens.results?.refreshToken,
+        });
+
+        // Handle response format from r2r-js
+        const accessToken = tokens.results?.accessToken?.token;
+        const refreshToken = tokens.results?.refreshToken?.token;
+
+        if (!accessToken || !refreshToken) {
+          throw new Error('Invalid token format received from server');
+        }
+
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+
+        newClient.setTokens(accessToken, refreshToken);
 
         setClient(newClient);
 
@@ -170,7 +209,108 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         return { success: true, userRole };
       } catch (error) {
         console.error('Login failed:', error);
-        throw error;
+        console.error('Error type:', typeof error);
+        console.error('Error constructor:', error?.constructor?.name);
+        console.error(
+          'Error keys:',
+          error && typeof error === 'object' ? Object.keys(error) : 'N/A'
+        );
+
+        // Try to extract full error details
+        if (error && typeof error === 'object') {
+          try {
+            console.error(
+              'Full error object:',
+              JSON.stringify(error, Object.getOwnPropertyNames(error), 2)
+            );
+          } catch (e) {
+            console.error('Could not stringify error:', e);
+            console.error('Error object keys:', Object.keys(error));
+          }
+          if ('response' in error) {
+            const response = (error as any).response;
+            console.error('Error response:', response);
+            if (response && typeof response === 'object') {
+              console.error('Response status:', response.status);
+              console.error('Response statusText:', response.statusText);
+              console.error('Response data:', response.data);
+              try {
+                console.error(
+                  'Response data (stringified):',
+                  JSON.stringify(response.data, null, 2)
+                );
+              } catch (e) {
+                console.error('Could not stringify response data');
+              }
+            }
+          }
+          if ('request' in error) {
+            const request = (error as any).request;
+            console.error('Error request:', request);
+            if (request && typeof request === 'object') {
+              console.error('Request URL:', request.url);
+              console.error('Request method:', request.method);
+              console.error('Request headers:', request.headers);
+              console.error('Request data:', request.data);
+            }
+          }
+          // Check for axios-style error
+          if ('config' in error) {
+            const config = (error as any).config;
+            console.error('Request config:', {
+              url: config?.url,
+              method: config?.method,
+              baseURL: config?.baseURL,
+              data: config?.data,
+              headers: config?.headers,
+            });
+          }
+        }
+
+        // Extract error message from different error formats
+        let errorMessage = 'Login failed';
+        let statusCode: number | undefined;
+
+        if (error instanceof Error) {
+          errorMessage = error.message;
+          // Check for status code in error object
+          if ('status' in error) {
+            statusCode = error.status as number;
+          } else if ('statusCode' in error) {
+            statusCode = (error as any).statusCode;
+          } else if ('code' in error) {
+            statusCode = (error as any).code;
+          }
+        } else if (typeof error === 'object' && error !== null) {
+          // Handle r2r-js error format
+          if ('message' in error) {
+            errorMessage = String(error.message);
+          } else if ('detail' in error) {
+            errorMessage = String(error.detail);
+          } else if ('error' in error) {
+            errorMessage = String(error.error);
+          }
+          if ('status' in error) {
+            statusCode = (error as any).status;
+          } else if ('statusCode' in error) {
+            statusCode = (error as any).statusCode;
+          }
+        } else if (typeof error === 'string') {
+          errorMessage = error;
+        }
+
+        console.error('Extracted error message:', errorMessage);
+        console.error('Extracted status code:', statusCode);
+
+        // Create a more descriptive error
+        const enhancedError = new Error(errorMessage);
+        if (error instanceof Error) {
+          Object.assign(enhancedError, error);
+        }
+        if (statusCode !== undefined) {
+          (enhancedError as any).status = statusCode;
+        }
+        throw enhancedError;
       }
     },
     []
@@ -351,9 +491,27 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [authState.isAuthenticated, client, lastLoginTime, logout]);
 
-  const getClient = useCallback((): r2rClient | null => {
-    return client;
-  }, [client]);
+  const getClient = useCallback(async (): Promise<r2rClient | null> => {
+    // If client exists and has tokens, return it
+    if (client) {
+      return client;
+    }
+
+    // If authenticated but client not created, create it
+    if (authState.isAuthenticated && pipeline?.deploymentUrl) {
+      const accessToken = localStorage.getItem('accessToken');
+      const refreshToken = localStorage.getItem('refreshToken');
+
+      if (accessToken && refreshToken) {
+        const newClient = new r2rClient(pipeline.deploymentUrl);
+        newClient.setTokens(accessToken, refreshToken);
+        setClient(newClient);
+        return newClient;
+      }
+    }
+
+    return null;
+  }, [client, authState.isAuthenticated, pipeline]);
 
   useEffect(() => {
     if (authState.isAuthenticated && pipeline && !client) {

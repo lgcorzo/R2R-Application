@@ -1,7 +1,7 @@
 import { FileUp } from 'lucide-react';
 import React, { useState, Dispatch, SetStateAction } from 'react';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useUserContext } from '@/context/UserContext';
 import { generateIdFromLabel } from '@/lib/utils';
 
@@ -88,11 +88,10 @@ export const CreateFileButton: React.FC<CreateFileButton> = ({
     <>
       <Button
         type="button"
-        color="filled"
-        shape="rounded"
+        variant="default"
         onClick={() => setIsDialogOpen(true)}
         disabled={isUploading}
-        className={`pl-2 pr-2 text-white py-2 px-4`}
+        className="pl-2 pr-2 text-white py-2 px-4 rounded-md"
         style={{ zIndex: 20 }}
       >
         <FileUp className="mr-2 h-4 w-4 mt-1" />

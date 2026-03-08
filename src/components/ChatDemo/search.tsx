@@ -2,7 +2,8 @@ import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { FC, useState, useCallback } from 'react';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { SearchProps } from '@/types';
 
 function debounce<T extends (...args: any[]) => void>(
@@ -51,8 +52,8 @@ export const Search: FC<SearchProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
-      <div className="relative flex items-center focus-within:ring-2 focus-within:ring-accent-base focus-within:ring-offset-2 focus-within:ring-offset-zinc-800 rounded-full">
-        <input
+      <div className="relative flex items-center gap-0 rounded-full overflow-hidden border border-input bg-zinc-800/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background transition-all">
+        <Input
           id="search-bar"
           value={value}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -60,16 +61,17 @@ export const Search: FC<SearchProps> = ({
           }
           autoFocus
           placeholder={placeholder}
-          className="w-full px-4 py-2 h-10 bg-zinc-700 text-zinc-200 rounded-l-full focus:outline-none"
+          className="flex-1 h-12 border-0 bg-transparent text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none px-6"
           disabled={disabled}
         />
         <Button
           type="submit"
-          color="filled"
-          className="px-4 py-2 h-10 rounded-r-full"
+          size="icon"
+          className="h-12 w-12 rounded-none border-0"
           disabled={disabled}
         >
-          <ArrowRight size={20} />
+          <ArrowRight className="h-5 w-5" />
+          <span className="sr-only">Submit search</span>
         </Button>
       </div>
     </form>

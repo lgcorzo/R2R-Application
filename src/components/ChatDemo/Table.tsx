@@ -3,12 +3,12 @@ import React, { useState, useMemo } from 'react';
 
 import { Checkbox } from '@/components/ui/checkbox';
 import CopyableContent from '@/components/ui/CopyableContent';
-import Pagination from '@/components/ui/pagination';
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from '@/components/ui/popover';
+import { TablePagination } from '@/components/ui/TablePagination';
 import {
   Tooltip,
   TooltipContent,
@@ -136,6 +136,18 @@ function Table<T extends object>({
     : Math.ceil(filteredAndSortedData.length / itemsPerPage);
 
   const currentPageData = useMemo(() => {
+    // If totalEntries is provided, it means server-side pagination is used
+    // In this case, data already contains only the current page items, so don't apply client-side pagination
+    if (totalEntries !== undefined) {
+      // Server-side pagination: data already contains only current page items
+      // Apply only filtering and sorting if needed
+      if (Object.keys(filters).length > 0 || sort.key) {
+        return filteredAndSortedData;
+      }
+      return data;
+    }
+
+    // Client-side pagination: apply pagination to all data
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
@@ -164,6 +176,7 @@ function Table<T extends object>({
     sort.key,
     filteredAndSortedData,
     getRowKey,
+    totalEntries,
   ]);
 
   const handlePageChangeInternal = (page: number) => {
@@ -428,7 +441,7 @@ function Table<T extends object>({
       </div>
       {showPagination && (
         <div>
-          <Pagination
+          <TablePagination
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChangeInternal}

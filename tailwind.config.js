@@ -18,6 +18,43 @@ module.exports = {
       },
     },
     extend: {
+      fontSize: {
+        // Размеры шрифта как в IDE (Cursor/VS Code)
+        xs: ['12px', { lineHeight: '1.5' }], // Мелкий текст (12px)
+        sm: ['13px', { lineHeight: '1.5' }], // Основной текст (13px)
+        base: ['13px', { lineHeight: '1.5' }], // Базовый (13px)
+        lg: ['14px', { lineHeight: '1.5' }], // Заголовки (14px)
+        xl: ['16px', { lineHeight: '1.5' }],
+        '2xl': ['18px', { lineHeight: '1.4' }],
+        '3xl': ['20px', { lineHeight: '1.3' }],
+      },
+      fontFamily: {
+        // Моноширинный шрифт для кода и данных
+        mono: [
+          'SF Mono',
+          'Monaco',
+          'Cascadia Code',
+          'Consolas',
+          'Fira Code',
+          'JetBrains Mono',
+          'Courier New',
+          'monospace',
+        ],
+        // Системный шрифт для UI элементов
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'Oxygen',
+          'Ubuntu',
+          'Cantarell',
+          'Fira Sans',
+          'Droid Sans',
+          'Helvetica Neue',
+          'sans-serif',
+        ],
+      },
       colors: {
         accent: {
           base: 'var(--accent-base)',
@@ -36,34 +73,46 @@ module.exports = {
         color7: 'var(--color-7)',
         color8: 'var(--color-8)',
         color9: 'var(--color-9)',
-        border: 'var(--border)',
-        input: 'var(--input)',
-        ring: 'var(--ring)',
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: 'var(--primary)',
-          foreground: 'var(--primary-foreground)',
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
-          DEFAULT: 'var(--secondary)',
-          foreground: 'var(--secondary-foreground)',
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
         },
         destructive: {
-          DEFAULT: 'var(--destructive)',
-          foreground: 'var(--destructive-foreground)',
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        success: {
+          DEFAULT: 'hsl(var(--success))',
+          foreground: 'hsl(var(--success-foreground))',
+        },
+        warning: {
+          DEFAULT: 'hsl(var(--warning))',
+          foreground: 'hsl(var(--warning-foreground))',
+        },
+        info: {
+          DEFAULT: 'hsl(var(--info))',
+          foreground: 'hsl(var(--info-foreground))',
         },
         muted: {
-          DEFAULT: 'var(--muted)',
-          foreground: 'var(--muted-foreground)',
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
         },
         popover: {
-          DEFAULT: 'var(--popover)',
-          foreground: 'var(--popover-foreground)',
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
         },
         card: {
-          DEFAULT: 'var(--card)',
-          foreground: 'var(--card-foreground)',
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
         },
         link: 'var(--link)',
         'link-hover': 'var(--link-hover)',

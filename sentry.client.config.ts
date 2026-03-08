@@ -7,20 +7,84 @@ import * as Sentry from '@sentry/nextjs';
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || '',
 
+  // Environment detection
+  environment: process.env.NODE_ENV || 'development',
+
   // Add optional integrations for additional features
-  integrations: [Sentry.replayIntegration()],
+  integrations: [
+    Sentry.replayIntegration({
+      maskAllText: false,
+      blockAllMedia: false,
+    }),
+    Sentry.browserTracingIntegration(),
+    Sentry.captureConsoleIntegration({
+      levels: ['error', 'warn'],
+    }),
+  ],
 
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
-  tracesSampleRate: 1,
+  tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
 
   // Define how likely Replay events are sampled.
   // This sets the sample rate to be 10%. You may want this to be 100% while
   // in development and sample at a lower rate in production
-  replaysSessionSampleRate: 0.1,
+  replaysSessionSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
 
   // Define how likely Replay events are sampled when an error occurs.
   replaysOnErrorSampleRate: 1.0,
 
+  // Attach stack traces to all messages
+  attachStacktrace: true,
+
+  // Send default PII (Personally Identifiable Information) - user IP, user agent, etc.
+  sendDefaultPii: true,
+
+  // Filter out sensitive data before sending
+  beforeSend(event, hint) {
+    // Don't send events in development unless explicitly testing
+    if (process.env.NODE_ENV === 'development' && !process.env.SENTRY_DEBUG) {
+      return null;
+    }
+
+    // Filter out known non-critical errors
+    if (event.exception) {
+      const error = hint.originalException;
+      if (error instanceof Error) {
+        // Filter out network errors that are expected
+        if (
+          error.message.includes('NetworkError') ||
+          error.message.includes('Failed to fetch') ||
+          error.message.includes('Network request failed')
+        ) {
+          // Only send if it's a critical path
+          return null;
+        }
+      }
+    }
+
+    // Add additional context
+    if (event.contexts) {
+      event.contexts.runtime = {
+        name: 'browser',
+        version:
+          typeof window !== 'undefined' ? navigator.userAgent : 'unknown',
+      };
+    }
+
+    // Add tags for better filtering
+    event.tags = {
+      ...event.tags,
+      component: 'client',
+      vercel_env: process.env.VERCEL_ENV || 'unknown',
+    };
+
+    return event;
+  },
+
+  // Note: captureUnhandledRejections is enabled by default in Sentry
+
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
-  debug: false,
+  debug:
+    process.env.NODE_ENV === 'development' &&
+    process.env.SENTRY_DEBUG === 'true',
 });

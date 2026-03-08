@@ -1,95 +1,117 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
+import * as React from 'react';
 
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/input';
-import debounce from '@/lib/debounce';
+import { ButtonProps, buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (pageNumber: number) => void;
-  isLoading?: boolean;
-}
+const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
+  <nav
+    role="navigation"
+    aria-label="pagination"
+    className={cn('mx-auto flex w-full justify-center', className)}
+    {...props}
+  />
+);
+Pagination.displayName = 'Pagination';
 
-const Pagination: React.FC<PaginationProps> = ({
-  currentPage,
-  totalPages,
-  onPageChange,
-  isLoading = false,
-}) => {
-  const [inputPage, setInputPage] = useState(currentPage.toString());
+const PaginationContent = React.forwardRef<
+  HTMLUListElement,
+  React.ComponentProps<'ul'>
+>(({ className, ...props }, ref) => (
+  <ul
+    ref={ref}
+    className={cn('flex flex-row items-center gap-1', className)}
+    {...props}
+  />
+));
+PaginationContent.displayName = 'PaginationContent';
 
-  useEffect(() => {
-    setInputPage(currentPage.toString());
-  }, [currentPage]);
+const PaginationItem = React.forwardRef<
+  HTMLLIElement,
+  React.ComponentProps<'li'>
+>(({ className, ...props }, ref) => (
+  <li ref={ref} className={cn('', className)} {...props} />
+));
+PaginationItem.displayName = 'PaginationItem';
 
-  const debouncedPageChange = useCallback(
-    debounce((page: number) => {
-      if (page >= 1 && page <= totalPages && !isLoading) {
-        onPageChange(page);
-      }
-    }, 300),
-    [onPageChange, totalPages, isLoading]
-  );
+type PaginationLinkProps = {
+  isActive?: boolean;
+} & Pick<ButtonProps, 'size'> &
+  React.ComponentProps<'a'>;
 
-  const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= totalPages && !isLoading) {
-      onPageChange(newPage);
-    }
-  };
+const PaginationLink = ({
+  className,
+  isActive,
+  size = 'icon',
+  ...props
+}: PaginationLinkProps) => (
+  <a
+    aria-current={isActive ? 'page' : undefined}
+    className={cn(
+      buttonVariants({
+        variant: isActive ? 'outline' : 'ghost',
+        size,
+      }),
+      className
+    )}
+    {...props}
+  />
+);
+PaginationLink.displayName = 'PaginationLink';
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputPage(e.target.value);
-  };
+const PaginationPrevious = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to previous page"
+    size="default"
+    className={cn('gap-1 pl-2.5', className)}
+    {...props}
+  >
+    <ChevronLeft className="h-4 w-4" />
+    <span>Previous</span>
+  </PaginationLink>
+);
+PaginationPrevious.displayName = 'PaginationPrevious';
 
-  const handleInputBlur = () => {
-    const parsedPage = parseInt(inputPage, 10);
-    if (!isNaN(parsedPage) && parsedPage >= 1 && parsedPage <= totalPages) {
-      handlePageChange(parsedPage);
-    } else {
-      setInputPage(currentPage.toString());
-    }
-  };
+const PaginationNext = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof PaginationLink>) => (
+  <PaginationLink
+    aria-label="Go to next page"
+    size="default"
+    className={cn('gap-1 pr-2.5', className)}
+    {...props}
+  >
+    <span>Next</span>
+    <ChevronRight className="h-4 w-4" />
+  </PaginationLink>
+);
+PaginationNext.displayName = 'PaginationNext';
 
-  const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleInputBlur();
-    }
-  };
+const PaginationEllipsis = ({
+  className,
+  ...props
+}: React.ComponentProps<'span'>) => (
+  <span
+    aria-hidden
+    className={cn('flex h-9 w-9 items-center justify-center', className)}
+    {...props}
+  >
+    <MoreHorizontal className="h-4 w-4" />
+    <span className="sr-only">More pages</span>
+  </span>
+);
+PaginationEllipsis.displayName = 'PaginationEllipsis';
 
-  return (
-    <nav className="flex justify-center items-center" aria-label="Pagination">
-      <Button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage <= 1 || isLoading}
-        color={currentPage <= 1 || isLoading ? 'disabled' : 'filled'}
-        className="px-4 py-2 mx-1 w-32"
-        aria-label="Previous page"
-      >
-        &lt; Previous
-      </Button>
-      <span className="mx-2">Page</span>
-      <Input
-        type="text"
-        value={inputPage}
-        onChange={handleInputChange}
-        onBlur={handleInputBlur}
-        onKeyPress={handleInputKeyPress}
-        className="w-16 mx-2 text-center"
-        disabled={isLoading}
-      />
-      <span className="mx-2">of {totalPages}</span>
-      <Button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage >= totalPages || isLoading}
-        color={currentPage >= totalPages || isLoading ? 'disabled' : 'filled'}
-        className="px-4 py-2 mx-1 w-32"
-        aria-label="Next page"
-      >
-        Next &gt;
-      </Button>
-    </nav>
-  );
+export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 };
-
-export default Pagination;

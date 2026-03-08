@@ -3,7 +3,7 @@ import { FileOutput } from 'lucide-react';
 import React, { useState } from 'react';
 
 import { Spinner } from '@/components/Spinner';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useUserContext } from '@/context/UserContext';
 
 interface ExtractContainerProps {
@@ -63,9 +63,9 @@ const ExtractButtonContainer: React.FC<ExtractContainerProps> = ({
       <Button
         onClick={handleDocumentExtraction}
         disabled={isExtracting || !isIngestionValid()}
-        color={isExtracting ? 'disabled' : 'text_gray'}
-        shape="slim"
-        tooltip="Document Extraction"
+        variant="ghost"
+        size="icon"
+        title="Document Extraction"
       >
         {isExtracting ? (
           <Spinner className="h-6 w-6 text-white" />

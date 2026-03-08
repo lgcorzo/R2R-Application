@@ -286,6 +286,11 @@ export const Result: FC<{
 
           const jsonStr = dataLine.slice(6);
 
+          // Skip parsing if the data is "[DONE]" marker
+          if (jsonStr.trim() === '[DONE]') {
+            continue;
+          }
+
           try {
             const eventData = JSON.parse(jsonStr);
 

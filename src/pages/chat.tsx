@@ -289,16 +289,18 @@ const Index: React.FC = () => {
 
         {/* Main Content */}
         <div
-          className={`main-content-wrapper ${sidebarIsOpen ? '' : 'sidebar-closed'}`}
+          className={`fixed top-16 right-0 bottom-0 transition-all duration-300 ease-in-out flex justify-center overflow-x-hidden ${
+            sidebarIsOpen ? 'left-80' : 'left-0'
+          }`}
         >
           <div
-            className={`main-content ${sidebarIsOpen ? '' : 'sidebar-closed'}`}
+            className="w-full max-w-4xl p-4 flex flex-col overflow-y-auto"
             ref={contentAreaRef}
           >
             {/* Mode Selector */}
-            <div className="mode-selector h-0">
+            <div className="fixed top-20 left-1/2 -translate-x-1/2 z-10">
               <Select value={mode} onValueChange={handleModeChange}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[200px] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg border-border">
                   <SelectValue placeholder="Select Mode" />
                 </SelectTrigger>
                 <SelectContent>
@@ -307,9 +309,9 @@ const Index: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="w-full max-w-4xl flex flex-col flex-grow overflow-hidden">
+            <div className="w-full flex flex-col flex-grow overflow-hidden mt-16">
               {/* Chat Interface */}
-              <div className="flex-1 overflow-auto p-4 mt-16">
+              <div className="flex-1 overflow-auto px-2 sm:px-4">
                 <Result
                   query={query}
                   setQuery={setQuery}
@@ -337,7 +339,7 @@ const Index: React.FC = () => {
               </div>
 
               {/* Search Bar */}
-              <div className="p-4 w-full">
+              <div className="sticky bottom-0 pt-4 pb-2 px-2 sm:px-4 bg-gradient-to-t from-background via-background to-transparent">
                 <Search
                   pipeline={pipeline || undefined}
                   setQuery={setQuery}

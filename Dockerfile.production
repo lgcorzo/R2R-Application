@@ -1,0 +1,44 @@
+     STDIN
+   1 # Multi-stage build for optimized production image
+   2 FROM node:20-alpine AS base
+   3 
+   4 # Install dependencies only when needed
+   5 FROM base AS deps
+   6 RUN apk add --no-cache libc6-compat
+   7 WORKDIR /app
+   8 
+   9 # Install dependencies based on the preferred package manager
+  10 COPY package.json pnpm-lock.yaml* ./
+  11 RUN corepack enable pnpm && pnpm i --frozen-lockfile
+  12 
+  13 # Rebuild the source code only when needed
+  14 FROM base AS builder
+  15 WORKDIR /app
+  16 COPY --from=deps /app/node_modules ./node_modules
+  17 COPY . .
+  18 
+  19 # Build with runtime config replacement
+  20 RUN npm run build
+  21 
+  22 # Production image, copy all the files and run next
+  23 FROM base AS runner
+  24 WORKDIR /app
+  25 
+  26 ENV NODE_ENV production
+  27 
+  28 RUN addgroup --system --gid 1001 nodejs
+  29 RUN adduser --system --uid 1001 nextjs
+  30 
+  31 # Copy standalone build
+  32 COPY --from=builder /app/public ./public
+  33 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+  34 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+  35 
+  36 USER nextjs
+  37 
+  38 EXPOSE 3000
+  39 
+  40 ENV PORT 3000
+  41 ENV HOSTNAME "0.0.0.0"
+  42 
+  43 CMD ["node", "server.js"]

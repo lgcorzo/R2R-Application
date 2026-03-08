@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 
 import Highlight from '@/components/ui/highlight';
-import Pagination from '@/components/ui/pagination';
 import {
   Table,
   TableBody,
@@ -10,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { TablePagination } from '@/components/ui/TablePagination';
 import { setColor, setTextColor } from '@/lib/utils';
 
 type Log = {
@@ -143,7 +143,7 @@ const LogTable = ({ logs, loading }: { logs: Log[]; loading: boolean }) => {
             )}
           </div>
         </main>
-        <Pagination
+        <TablePagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}

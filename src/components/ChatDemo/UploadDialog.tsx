@@ -2,7 +2,7 @@ import { Upload, X } from 'lucide-react';
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -96,7 +96,6 @@ export const UploadDialog: React.FC<UploadDialogProps> = ({
           onClick={handleUpload}
           disabled={files.length === 0}
           className={`mt-4 py-2 px-4 rounded-full transition-colors`}
-          color={files.length === 0 ? 'disabled' : 'filled'}
         >
           Upload
         </Button>

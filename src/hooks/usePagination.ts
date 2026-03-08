@@ -46,7 +46,7 @@ function usePagination<T>({
 
   useEffect(() => {
     loadPage(initialPage);
-  }, [initialPage, loadPage]);
+  }, [initialPage, loadPage, pageSize]);
 
   const goToPage = useCallback(
     (page: number) => {

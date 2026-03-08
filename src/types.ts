@@ -232,8 +232,7 @@ export interface HighlightProps {
   children: React.ReactNode;
 }
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 export interface LogoProps {
   width?: number;
@@ -242,6 +241,12 @@ export interface LogoProps {
   onClick?: () => void;
   disableLink?: boolean;
   priority?: boolean;
+}
+
+export interface AgentActivity {
+  type: 'thinking' | 'tool_call' | 'tool_result';
+  content: string;
+  timestamp: number;
 }
 
 export interface Message {
@@ -255,6 +260,7 @@ export interface Message {
   };
   isStreaming?: boolean;
   searchPerformed?: boolean;
+  activities?: AgentActivity[];
 }
 
 export interface ModelSelectorProps {
@@ -436,7 +442,7 @@ export interface UserContextProps {
     instanceUrl: string
   ) => Promise<void>;
   authState: AuthState;
-  getClient: () => r2rClient | null;
+  getClient: () => Promise<r2rClient | null>;
   client: r2rClient | null;
   viewMode: 'admin' | 'user';
   setViewMode: React.Dispatch<React.SetStateAction<'admin' | 'user'>>;

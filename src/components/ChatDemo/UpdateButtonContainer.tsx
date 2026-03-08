@@ -3,7 +3,7 @@ import { FileUp } from 'lucide-react';
 import React, { useState, useRef } from 'react';
 
 import { Spinner } from '@/components/Spinner';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useUserContext } from '@/context/UserContext';
 import { UpdateButtonContainerProps } from '@/types';
 
@@ -76,9 +76,9 @@ const UpdateButtonContainer: React.FC<UpdateButtonContainerProps> = ({
       <Button
         onClick={handleUpdateButtonClick}
         disabled={isUpdating}
-        color={isUpdating ? 'disabled' : 'filled'}
-        shape="slim"
-        tooltip="Update Document"
+        variant="default"
+        size="icon"
+        title="Update Document"
       >
         {isUpdating ? (
           <Spinner className="h-6 w-6 text-white" />

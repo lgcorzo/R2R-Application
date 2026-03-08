@@ -8,7 +8,7 @@ import Table, { Column } from '@/components/ChatDemo/Table';
 import { UploadButton } from '@/components/ChatDemo/upload';
 import DocumentInfoDialog from '@/components/ChatDemo/utils/documentDialogInfo';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Popover,
@@ -60,13 +60,13 @@ const DocumentsTable: React.FC<DocumentsTableProps> = ({
   totalEntries,
   currentPage = 1,
   onPageChange,
+  itemsPerPage,
   middleContent,
 }) => {
   const { toast } = useToast();
   const [selectedDocumentId, setSelectedDocumentId] = useState('');
   const [isDocumentInfoDialogOpen, setIsDocumentInfoDialogOpen] =
     useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSelectAllInternal = (selected: boolean) => {
     onSelectAll(selected);
@@ -201,16 +201,17 @@ const DocumentsTable: React.FC<DocumentsTableProps> = ({
             setSelectedDocumentId(doc.id);
             setIsDocumentInfoDialogOpen(true);
           }}
-          color="text_gray"
           disabled={doc.ingestionStatus !== IngestionStatus.SUCCESS}
-          shape="slim"
-          tooltip="View Document Info"
+          variant="ghost"
+          size="icon"
+          title="View Document Info"
         >
           <FileSearch2 className="h-6 w-6" />
         </Button>
       </div>
     );
 
+  // Documents are already filtered and paginated from parent component
   const displayedDocuments = documents;
 
   return (
@@ -225,7 +226,7 @@ const DocumentsTable: React.FC<DocumentsTableProps> = ({
             {/* Column toggle popover */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button color="light">
+                <Button>
                   <SlidersHorizontal className="h-4 w-4" />
                 </Button>
               </PopoverTrigger>

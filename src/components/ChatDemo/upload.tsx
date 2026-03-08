@@ -2,7 +2,7 @@ import { FileUp, PencilLine, Plus } from 'lucide-react';
 import { UnprocessedChunk } from 'r2r-js/dist/types';
 import React, { useState, Dispatch, SetStateAction } from 'react';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Popover,
   PopoverTrigger,
@@ -150,8 +150,6 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
         <PopoverTrigger asChild>
           <Button
             className="pl-2 pr-2 py-2 px-4"
-            color="filled"
-            shape="rounded"
             disabled={isUploading}
             style={{ zIndex: 20, minWidth: '100px' }}
           >
@@ -163,7 +161,6 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
           <div className="flex flex-col gap-1">
             <Button
               onClick={() => setIsUploadDialogOpen(true)}
-              color="secondary"
               className="flex justify-between items-center"
             >
               <FileUp className="mr-2 h-4 w-4" />
@@ -171,7 +168,6 @@ export const UploadButton: React.FC<UploadButtonProps> = ({
             </Button>
             <Button
               onClick={() => setIsCreateDialogOpen(true)}
-              color="secondary"
               className="flex justify-between items-center"
             >
               <PencilLine className="mr-2 h-4 w-4" />

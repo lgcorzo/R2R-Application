@@ -3,7 +3,7 @@ import { FileDown } from 'lucide-react';
 import React, { useState } from 'react';
 
 import { Spinner } from '@/components/Spinner';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useUserContext } from '@/context/UserContext';
 
 interface DownloadFileContainerProps {
@@ -70,9 +70,9 @@ const DownloadButtonContainer: React.FC<DownloadFileContainerProps> = ({
       <Button
         onClick={handleDocumentDownload}
         disabled={isDownloading}
-        color={isDownloading ? 'disabled' : 'text_gray'}
-        shape="slim"
-        tooltip="Download Document"
+        variant="ghost"
+        size="icon"
+        title="Download Document"
       >
         {isDownloading ? (
           <Spinner className="h-6 w-6 text-white" />

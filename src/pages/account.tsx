@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 
 import { DeleteButton } from '@/components/ChatDemo/deleteButton';
 import Layout from '@/components/Layout';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
@@ -182,10 +182,7 @@ const Index: React.FC = () => {
                       <p className="text-gray-400">{userProfile?.email}</p>
                     </div>
                   </div>
-                  <Button
-                    color="primary"
-                    onClick={() => setIsUpdateModalOpen(true)}
-                  >
+                  <Button onClick={() => setIsUpdateModalOpen(true)}>
                     <Pencil className="w-4 h-4 mr-2" />
                     Edit Profile
                   </Button>

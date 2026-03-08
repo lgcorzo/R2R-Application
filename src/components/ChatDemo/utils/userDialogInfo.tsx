@@ -22,7 +22,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import CopyableContent from '@/components/ui/CopyableContent';
 import {
@@ -219,7 +219,7 @@ export const UserInfoDialog: React.FC<UserInfoDialogProps> = ({
           <div className="flex items-center justify-between">
             <DialogTitle>User Details</DialogTitle>
             {!loading && userProfile && (
-              <Button shape="outline" onClick={() => setIsEditing(!isEditing)}>
+              <Button onClick={() => setIsEditing(!isEditing)}>
                 {isEditing ? (
                   <>
                     <X className="h-4 w-4 mr-2" />
@@ -374,9 +374,7 @@ export const UserInfoDialog: React.FC<UserInfoDialogProps> = ({
 
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button color="danger" className="w-full">
-                          Delete User
-                        </Button>
+                        <Button className="w-full">Delete User</Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>

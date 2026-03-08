@@ -4,105 +4,123 @@
 
 @layer base {
   :root {
-    --header-height: 4.5rem;
-    --sidebar-width: 20rem;
-
-    --text-gray-700: #374151;
-    --text-gray-200: #e5e7eb;
-    --text-accent-base: #818cf8;
-    --text-gray-600: #4b5563;
-    --text-gray-400: #9ca3af;
-    --text-gray-800: #1f2937;
-    --text-red-500: #ef4444;
-    --bg-zinc-100: #f4f4f5;
-    --bg-zinc-800: #27272a;
-
-    --accent-lighter: #b3edd7;
-    --accent-light: #5fe1b2;
-    --accent-base: #03d78c;
-    --accent-dark: #019f69;
-    --accent-darker: #007948;
-    --accent-contrast: #ffffff;
-
-    --sciphi-primary: #454eb5;
-    --sciphi-secondary: #686fc5;
-    --sciphi-accent: #7b4dc6;
-
-    --link: #3b82f6;
-    --link-hover: #2b6cb0;
-
-    --header-box-shadow: inset 0 -1px var(--color-2);
-    --shadow: 0 0 0 1px var(--color-2);
-    --shadow-hover: 0 0 0 1px var(--color-7);
-
-    --background: #171717;
-    --foreground: #3d3935;
-
-    --dark-background: #2c2a2a;
-    --dark-foreground: #fafafa;
-
-    --card: #ffffff;
-    --card-foreground: #3d3935;
-
-    --dark-card: #2c2a2a;
-    --dark-card-foreground: #fafafa;
-
-    --popover: #ffffff;
-    --popover-foreground: #3d3935;
-
-    --primary: #454eb5;
-    --primary-foreground: #fafafa;
-
-    --secondary: #686fc5;
-    --secondary-foreground: #1a1919;
-
-    --muted: #f4f3f3;
-    --muted-foreground: #757373;
-
-    --accent: #7b4dc6;
-    --accent-foreground: #1a1919;
-
-    --destructive: #ff5555;
-    --destructive-foreground: #fafafa;
-
-    --border: #e6e4e4;
-    --input: #e6e4e4;
-    --ring: #3d3935;
-
+    /* Light theme - из репозитория v0-ai-agents-control-panel */
+    /* Конвертировано из oklch в HSL для совместимости */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+    --primary: 252 70% 55%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 15%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 50%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 15%;
+    --destructive: 27 96% 61%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 252 70% 55%;
     --radius: 0.5rem;
+    --chart-1: 252 70% 55%;
+    --chart-2: 200 70% 60%;
+    --chart-3: 160 65% 65%;
+    --chart-4: 280 70% 70%;
+    --chart-5: 320 70% 75%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 252 70% 55%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 15%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 252 70% 55%;
+
+    /* Семантические цвета для светлой темы */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+    --info: 221 83% 53%;
+    --info-foreground: 0 0% 100%;
   }
 
   .dark {
-    --background: #171717;
-    --foreground: #fafafa;
+    /* Dark theme - GitHub Dark Mode (классическая схема) */
 
-    --card: #2c2a2a;
-    --card-foreground: #fafafa;
+    /* === Фоны === */
+    /* Основной фон - #0d1117 */
+    --background: 216 28% 7%;
+    /* Карточки - #0d1117 (такой же как фон) */
+    --card: 216 28% 7%;
+    --popover: 216 28% 7%;
+    /* Secondary - #161b22 */
+    --secondary: 216 28% 11%;
+    /* Muted/overlay фон - #21262d */
+    --muted: 215 19% 15%;
+    /* Accent/hover фон - #30363d */
+    --accent: 214 13% 22%;
 
-    --popover: #3d3935;
-    --popover-foreground: #fafafa;
+    /* === Текст === */
+    /* fg.default - #c9d1d9 */
+    --foreground: 210 17% 82%;
+    --card-foreground: 210 17% 82%;
+    --popover-foreground: 210 17% 82%;
+    --secondary-foreground: 210 17% 82%;
+    --accent-foreground: 210 17% 82%;
+    /* fg.muted - #8b949e */
+    --muted-foreground: 212 9% 58%;
 
-    --primary: #fafafa;
-    --primary-foreground: #1a1919;
+    /* === Акценты === */
+    /* GitHub button green - #238636 */
+    --primary: 132 59% 33%;
+    --primary-foreground: 0 0% 100%;
+    /* danger.fg - #f85149 */
+    --destructive: 3 93% 63%;
+    --destructive-foreground: 0 0% 100%;
 
-    --secondary: #282626;
-    --secondary-foreground: #fafafa;
+    /* === Границы === */
+    /* border - #30363d */
+    --border: 214 13% 22%;
+    /* input border - #21262d */
+    --input: 215 19% 15%;
+    /* focus ring - GitHub button green */
+    --ring: 132 59% 33%;
 
-    --muted: #282626;
-    --muted-foreground: #a5a3a3;
+    /* === Графики === */
+    --chart-1: 132 59% 33%;
+    --chart-2: 139 58% 53%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 271 64% 71%;
+    --chart-5: 330 62% 62%;
 
-    --accent: #282626;
-    --accent-foreground: #fafafa;
+    /* === Sidebar === */
+    /* Чуть темнее основного - #010409 */
+    --sidebar-background: 220 40% 2%;
+    --sidebar-foreground: 210 17% 82%;
+    --sidebar-primary: 132 59% 33%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    /* hover - #161b22 */
+    --sidebar-accent: 216 28% 11%;
+    --sidebar-accent-foreground: 210 17% 82%;
+    /* border - #21262d */
+    --sidebar-border: 215 19% 15%;
+    --sidebar-ring: 132 59% 33%;
 
-    --destructive: #802020;
-    --destructive-foreground: #fafafa;
-
-    --border: #282626;
-    --input: #282626;
-    --ring: #d6d5d5;
-  }
-  [inert] ::-webkit-scrollbar {
-    display: none;
+    /* === Семантические цвета GitHub === */
+    /* success.fg - #3fb950 */
+    --success: 139 58% 53%;
+    --success-foreground: 0 0% 100%;
+    /* attention.fg - #d29922 */
+    --warning: 38 76% 48%;
+    --warning-foreground: 0 0% 100%;
+    /* done.fg - #a371f7 */
+    --info: 271 91% 71%;
+    --info-foreground: 0 0% 100%;
   }
 }
 
@@ -110,7 +128,6 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
   }
@@ -126,11 +143,24 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family:
-    'Ubuntu',
-    -apple-system,
-    sans-serif;
-  font-size: 93.75%;
+  /* Системный шрифт для UI элементов (читаемость и консистентность) */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  /* Размер шрифта как в IDE: 13px */
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Моноширинный шрифт только для кода, файлов и данных */
+code,
+pre,
+.file-name,
+.code-block,
+.mono-text {
+  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Consolas', 'Fira Code',
+    'JetBrains Mono', 'Courier New', monospace;
+  font-size: 13px;
 }
 
 a {
@@ -164,6 +194,7 @@ a {
   animation: searchingAnimation 4s forwards;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .main-content-wrapper {
@@ -205,7 +236,7 @@ a {
 }
 
 .prose {
-  color: #d4d4d8;
+  @apply text-foreground;
 }
 
 .prose h1,
@@ -214,12 +245,13 @@ a {
 .prose h4,
 .prose h5,
 .prose h6 {
-  color: white;
+  @apply text-foreground font-semibold;
   margin-top: 1em;
   margin-bottom: 0.5em;
 }
 
 .prose p {
+  @apply text-foreground/90;
   margin-bottom: 1em;
 }
 
@@ -230,13 +262,14 @@ a {
 }
 
 .prose code {
-  background-color: #3f3f46;
+  @apply bg-muted text-foreground;
   padding: 0.2em 0.4em;
   border-radius: 0.25em;
+  font-size: 0.9em;
 }
 
 .prose pre {
-  background-color: #27272a;
+  @apply bg-muted text-foreground border border-border;
   padding: 1em;
   border-radius: 0.5em;
   overflow-x: auto;
@@ -284,4 +317,67 @@ td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Улучшения для explorer страницы */
+.explorer-card {
+  @apply bg-card border-border shadow-sm;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.explorer-card:hover {
+  @apply shadow-md;
+}
+
+.dark .explorer-card {
+  @apply bg-background border-border;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.dark .explorer-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+}
+
+/* Улучшенная читаемость таблиц */
+.table-row-hover {
+  @apply transition-colors;
+}
+
+.table-row-hover:hover {
+  @apply bg-muted/50;
+}
+
+.dark .table-row-hover:hover {
+  @apply bg-muted/30;
+}
+
+/* Улучшенные границы для карточек */
+.card-border {
+  @apply border border-border;
+}
+
+.dark .card-border {
+  border-color: hsl(var(--border));
+}
+
+/* Улучшенная видимость статусов */
+.status-badge {
+  @apply font-medium;
+}
+
+/* Улучшенная видимость иконок */
+.icon-muted {
+  @apply text-muted-foreground;
+  transition: color 0.2s ease-in-out;
+}
+
+.icon-muted:hover {
+  @apply text-foreground;
+}
+
+/* Плавные переходы для тем */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }

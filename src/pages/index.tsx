@@ -18,7 +18,7 @@ import R2RServerCard from '@/components/ChatDemo/ServerCard';
 import Layout from '@/components/Layout';
 import RequestsCard from '@/components/RequestsCard';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card';
 import { brandingConfig } from '@/config/brandingConfig';
 import { useUserContext } from '@/context/UserContext';
@@ -155,7 +155,6 @@ const HomePage = () => {
                     <div className="flex space-x-4">
                       <Button
                         className="flex items-center justify-center px-4 py-2 text-sm"
-                        color="transparent"
                         onClick={() =>
                           window.open(
                             'https://github.com/SciPhi-AI/R2R/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=',
@@ -167,7 +166,6 @@ const HomePage = () => {
                       </Button>
                       <Button
                         className="flex items-center justify-center px-4 py-2 text-sm"
-                        color="transparent"
                         onClick={() =>
                           window.open(
                             'https://github.com/SciPhi-AI/R2R/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=',
@@ -199,7 +197,6 @@ const HomePage = () => {
                         <div className="flex flex-row space-x-2">
                           <Button
                             className="rounded-md py-1 px-3"
-                            color="light"
                             onClick={() =>
                               window.open(
                                 'https://r2r-docs.sciphi.ai/documentation/python-sdk/introduction',
@@ -214,7 +211,6 @@ const HomePage = () => {
                           </Button>
                           <Button
                             className="rounded-md py-1 px-3"
-                            color="light"
                             onClick={() =>
                               window.open(
                                 'https://github.com/SciPhi-AI/R2R/tree/main/py',
@@ -252,7 +248,6 @@ const HomePage = () => {
                         <div className="flex flex-row space-x-2">
                           <Button
                             className="rounded-md py-1 px-3"
-                            color="light"
                             onClick={() =>
                               window.open(
                                 'https://r2r-docs.sciphi.ai/documentation/js-sdk/introduction',
@@ -267,7 +262,6 @@ const HomePage = () => {
                           </Button>
                           <Button
                             className="rounded-md py-1 px-3"
-                            color="light"
                             onClick={() =>
                               window.open(
                                 'https://github.com/SciPhi-AI/R2R/tree/main/js/sdk',
@@ -307,7 +301,6 @@ const HomePage = () => {
                         <div className="flex flex-row space-x-2">
                           <Button
                             className="rounded-md py-1 px-3"
-                            color="light"
                             disabled={
                               !window.__RUNTIME_CONFIG__
                                 ?.NEXT_PUBLIC_HATCHET_DASHBOARD_URL ||
@@ -328,29 +321,6 @@ const HomePage = () => {
                                 window.open(url, '_blank');
                               }
                             }}
-                            tooltip={
-                              !window.__RUNTIME_CONFIG__
-                                ?.NEXT_PUBLIC_HATCHET_DASHBOARD_URL ||
-                              window.__RUNTIME_CONFIG__.NEXT_PUBLIC_HATCHET_DASHBOARD_URL.includes(
-                                '__NEXT_PUBLIC_HATCHET_DASHBOARD_URL__'
-                              ) ? (
-                                <div>
-                                  Hatchet Dashboard Deployment URL unavailable.
-                                  <br />
-                                  <a
-                                    href="https://r2r-docs.sciphi.ai/cookbooks/orchestration"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-blue-500 hover:text-blue-600 underline"
-                                    onClick={(e) => e.stopPropagation()}
-                                  >
-                                    Learn more about orchestration with{' '}
-                                    {brandingConfig.deploymentName}
-                                    Full.
-                                  </a>
-                                </div>
-                              ) : undefined
-                            }
                           >
                             <div className="flex items-center">
                               <PanelsTopLeft size={20} className="mr-2" />
@@ -359,7 +329,6 @@ const HomePage = () => {
                           </Button>
                           <Button
                             className="rounded-md py-1 px-3"
-                            color="light"
                             onClick={() =>
                               window.open(
                                 'https://github.com/hatchet-dev/hatchet',

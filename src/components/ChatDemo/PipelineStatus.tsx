@@ -20,7 +20,7 @@ export function useConnectionStatus(
       return;
     }
 
-    const client = getClient();
+    const client = await getClient();
     if (!client) {
       setIsConnected(false);
       onStatusChange?.(false);

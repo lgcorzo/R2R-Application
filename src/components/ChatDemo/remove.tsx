@@ -12,7 +12,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useUserContext } from '@/context/UserContext';
 
 export interface RemoveButtonProps {
@@ -105,9 +105,9 @@ export const RemoveButton: React.FC<RemoveButtonProps> = ({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          color="text_gray"
-          shape="slim"
-          tooltip={`Remove ${itemType} from collection`}
+          title={`Remove ${itemType} from collection`}
+          variant="destructive"
+          size="icon"
         >
           <Icon className="h-6 w-6" />
         </Button>

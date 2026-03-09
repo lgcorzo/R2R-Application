@@ -5,9 +5,9 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import CollectionCreationModal from '@/components/ChatDemo/utils/collectionCreationModal';
 import { ContainerObjectCard } from '@/components/ContainerObjectCard';
 import Layout from '@/components/Layout';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import Pagination from '@/components/ui/pagination';
+import { TablePagination } from '@/components/ui/TablePagination';
 import { useUserContext } from '@/context/UserContext';
 
 const PAGE_SIZE = 1000;
@@ -308,7 +308,7 @@ const Index: React.FC = () => {
               ? filteredPersonalCollections.length > ITEMS_PER_PAGE
               : personalTotalEntries > ITEMS_PER_PAGE) && (
               <div className="mb-10">
-                <Pagination
+                <TablePagination
                   currentPage={currentPersonalPage}
                   totalPages={personalTotalPages}
                   onPageChange={handlePersonalPageChange}
@@ -352,7 +352,7 @@ const Index: React.FC = () => {
               : accessibleTotalEntries - personalTotalEntries >
                 ITEMS_PER_PAGE) && (
               <div className="mb-10">
-                <Pagination
+                <TablePagination
                   currentPage={currentSharedPage}
                   totalPages={sharedTotalPages}
                   onPageChange={handleSharedPageChange}
@@ -409,8 +409,7 @@ const Index: React.FC = () => {
                   <Button
                     className="pl-2 pr-2 py-2 px-4"
                     onClick={handleAddCollection}
-                    color="filled"
-                    shape="rounded"
+                    variant="default"
                     style={{ zIndex: 20, minWidth: '100px' }}
                   >
                     <Plus className="w-5 h-5" />

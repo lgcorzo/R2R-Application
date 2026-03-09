@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -126,10 +126,10 @@ const ContainerObjectCreationModal: React.FC<
           />
         </div>
         <DialogFooter className="mt-6">
-          <Button color="filled" onClick={handleClose} disabled={isCreating}>
+          <Button onClick={handleClose} disabled={isCreating}>
             Cancel
           </Button>
-          <Button color="filled" onClick={handleCreate} disabled={isCreating}>
+          <Button onClick={handleCreate} disabled={isCreating}>
             {isCreating ? 'Creating...' : 'Create'}
           </Button>
         </DialogFooter>

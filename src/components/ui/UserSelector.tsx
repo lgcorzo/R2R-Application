@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import { Button } from './Button';
+import { Button } from './button';
 
 interface UserSelectorProps {
   id?: string;

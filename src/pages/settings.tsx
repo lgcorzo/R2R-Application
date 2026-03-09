@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 
 import EditPromptDialog from '@/components/ChatDemo/utils/editPromptDialog';
 import Layout from '@/components/Layout';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useUserContext } from '@/context/UserContext';
 
 interface Prompt {
@@ -334,16 +334,12 @@ const Index: React.FC = () => {
               <div className="flex justify-center ml-auto">
                 <Button
                   className={`px-4 py-2 rounded mr-2`}
-                  color={activeTab === 'config' ? 'filled' : 'secondary'}
-                  shape={activeTab === 'config' ? 'default' : 'outline'}
                   onClick={() => setActiveTab('config')}
                 >
                   Config
                 </Button>
                 <Button
                   className={`px-4 py-2 rounded`}
-                  color={activeTab === 'prompts' ? 'filled' : 'secondary'}
-                  shape={activeTab === 'prompts' ? 'default' : 'outline'}
                   onClick={() => setActiveTab('prompts')}
                 >
                   Prompts

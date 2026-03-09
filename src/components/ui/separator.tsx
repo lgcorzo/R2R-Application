@@ -1,26 +1,29 @@
-import React from 'react';
+import * as SeparatorPrimitive from '@radix-ui/react-separator';
+import * as React from 'react';
 
-interface SeparatorProps {
-  className?: string;
-  orientation?: 'horizontal' | 'vertical';
-  decorative?: boolean;
-}
+import { cn } from '@/lib/utils';
 
-const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
+const Separator = React.forwardRef<
+  React.ElementRef<typeof SeparatorPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
+>(
   (
-    { className, orientation = 'horizontal', decorative = false, ...props },
+    { className, orientation = 'horizontal', decorative = true, ...props },
     ref
   ) => (
-    <div
+    <SeparatorPrimitive.Root
       ref={ref}
-      role={decorative ? 'presentation' : 'separator'}
-      aria-orientation={orientation}
-      className={`border-t border-gray-200 ${className}`}
+      decorative={decorative}
+      orientation={orientation}
+      className={cn(
+        'shrink-0 bg-border',
+        orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]',
+        className
+      )}
       {...props}
     />
   )
 );
-
-Separator.displayName = 'Separator';
+Separator.displayName = SeparatorPrimitive.Root.displayName;
 
 export { Separator };

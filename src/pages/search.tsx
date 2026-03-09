@@ -11,7 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useUserContext } from '@/context/UserContext';
 
@@ -224,7 +224,6 @@ const SearchPage: React.FC = () => {
                   />
                   <Button
                     type="submit"
-                    color="filled"
                     className="px-4 py-2 h-10 rounded-r-full"
                     disabled={loading}
                   >

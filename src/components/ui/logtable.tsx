@@ -6,7 +6,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
-import Pagination from '@/components/ui/pagination';
 import {
   Table,
   TableBody,
@@ -15,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { TablePagination } from '@/components/ui/TablePagination';
 
 const LOGS_PER_PAGE = 10;
 const COLLAPSIBLE_THRESHOLD = 100;
@@ -139,7 +139,7 @@ const LogTable: React.FC<LogTableProps> = ({ logs }) => {
           ))}
         </TableBody>
       </Table>
-      <Pagination
+      <TablePagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}

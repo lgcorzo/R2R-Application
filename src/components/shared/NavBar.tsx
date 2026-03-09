@@ -4,8 +4,9 @@ import { useRouter } from 'next/router';
 import { forwardRef, useEffect, useState, ReactNode } from 'react';
 
 import { Logo } from '@/components/shared/Logo';
+import { ThemeToggle } from '@/components/shared/ThemeToggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,8 +28,8 @@ interface NavItemProps {
 const NavItem: React.FC<NavItemProps> = ({ href, children, isActive }) => (
   <Link
     href={href}
-    className={`px-2 py-1 text-sm font-medium ${
-      isActive ? 'text-accent-base' : 'text-zinc-400 hover:text-white'
+    className={`px-2 py-1 text-sm font-medium transition-colors ${
+      isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
     }`}
   >
     {children}
@@ -47,6 +48,21 @@ const NavItems: React.FC<NavItemsProps> = ({
   };
 
   const commonItems = [
+    {
+      path: '/manage',
+      label: 'Manage',
+      show: true,
+    },
+    {
+      path: '/explorer',
+      label: 'Explorer',
+      show: true,
+    },
+    {
+      path: '/documents-detail',
+      label: 'Documents Detail',
+      show: true,
+    },
     {
       path: '/documents',
       label: 'Documents',
@@ -145,7 +161,10 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
     };
 
     return (
-      <nav ref={ref} className="bg-zinc-900 shadow z-50 w-full">
+      <nav
+        ref={ref}
+        className="bg-background border-b border-border shadow z-50 w-full sticky top-0"
+      >
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-14 items-center">
             <div className="flex items-center space-x-4">
@@ -154,13 +173,13 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
                 className="flex-shrink-0 flex items-center"
               >
                 <Logo className="h-12 w-auto" disableLink={true} />
-                <span className="ml-2 text-xl font-bold text-white">
+                <span className="ml-2 text-xl font-bold text-foreground">
                   {brandingConfig.navbar.appName}
                 </span>
               </Link>
               {isSignedIn && (
                 <>
-                  <span className="text-zinc-400">|</span>
+                  <span className="text-muted-foreground">|</span>
                   <NavItems
                     isAuthenticated={isAuthenticated}
                     role={role}
@@ -170,10 +189,9 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
               )}
             </div>
             <div className="flex items-center space-x-4">
+              <ThemeToggle />
               {brandingConfig.navbar.showDocsButton && (
                 <Button
-                  color="primary"
-                  shape="outline_wide"
                   onClick={() =>
                     window.open('https://r2r-docs.sciphi.ai', '_blank')
                   }

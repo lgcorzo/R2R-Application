@@ -6,7 +6,7 @@ import Table, { Column } from '@/components/ChatDemo/Table';
 import UserInfoDialog from '@/components/ChatDemo/utils/userDialogInfo';
 import Layout from '@/components/Layout';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import UserForm from '@/components/UserForm';
@@ -224,8 +224,6 @@ const Index: React.FC = () => {
                       setSelectedUserID(user.id);
                       setIsUserInfoDialogOpen(true);
                     }}
-                    color="filled"
-                    shape="slim"
                     className="flex justify-center items-center"
                   >
                     <UserSearch className="h-8 w-8" />

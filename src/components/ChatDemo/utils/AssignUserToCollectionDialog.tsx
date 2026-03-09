@@ -3,7 +3,7 @@ import { User } from 'r2r-js';
 import React, { useState, useEffect, useCallback } from 'react';
 
 import Table, { Column } from '@/components/ChatDemo/Table';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -203,7 +203,6 @@ const AssignUserToCollectionDialog: React.FC<
         <DialogFooter className="mt-4 flex justify-end space-x-2">
           <Button
             onClick={handleAssign}
-            color="filled"
             disabled={assigning || selectedUserIds.length === 0}
             style={{ zIndex: 20 }}
           >

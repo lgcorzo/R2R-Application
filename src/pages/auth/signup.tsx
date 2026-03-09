@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 
 import Layout from '@/components/Layout';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useUserContext } from '@/context/UserContext';
 
@@ -151,9 +151,7 @@ const LoginPage: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center justify-between">
-            <Button color="primary" className="w-full">
-              Sign up with Email
-            </Button>
+            <Button className="w-full">Sign up with Email</Button>
           </div>
         </form>
 

@@ -7,7 +7,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { DeleteButton } from '@/components/ChatDemo/deleteButton';
 import AssignDocumentToCollectionDialog from '@/components/ChatDemo/utils/AssignDocumentToCollectionDialog';
 import AssignUserToCollectionDialog from '@/components/ChatDemo/utils/AssignUserToCollectionDialog';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -217,7 +217,6 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
                   <div className="grid grid-cols-2 gap-3">
                     <Button
                       onClick={handlePull}
-                      color="primary"
                       className="font-medium py-2.5 px-4 rounded-lg"
                     >
                       Pull Document Extractions into Graph
@@ -225,7 +224,6 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 
                     <Button
                       onClick={handleExtract}
-                      color="primary"
                       className="font-medium py-2.5 px-4 rounded-lg"
                     >
                       Extract Communities in Graph
@@ -235,7 +233,6 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
                   <div className="grid grid-cols-2 gap-3">
                     <Button
                       onClick={() => setIsAssignDocumentDialogOpen(true)}
-                      color="primary"
                       className="font-medium py-2.5 px-4 rounded-lg"
                     >
                       Manage Files
@@ -243,7 +240,6 @@ const CollectionDialog: React.FC<CollectionDialogProps> = ({
 
                     <Button
                       onClick={() => setIsAssignUserDialogOpen(true)}
-                      color="primary"
                       className="font-medium py-2.5 px-4 rounded-lg"
                     >
                       Manage Users

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect, useCallback } from 'react';
 
 import Layout from '@/components/Layout';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { brandingConfig } from '@/config/brandingConfig';
 import { useUserContext } from '@/context/UserContext';
@@ -101,6 +101,19 @@ const LoginPage: React.FC = () => {
       let errorMessage = 'An unknown error occurred';
       if (error instanceof Error) {
         errorMessage = error.message;
+        // Extract more details if available
+        if ('status' in error) {
+          errorMessage = `Status ${error.status}: ${errorMessage}`;
+        }
+      } else if (typeof error === 'object' && error !== null) {
+        // Handle r2r-js error format
+        if ('message' in error) {
+          errorMessage = String(error.message);
+        } else if ('detail' in error) {
+          errorMessage = String(error.detail);
+        } else if ('error' in error) {
+          errorMessage = String(error.error);
+        }
       } else if (typeof error === 'string') {
         errorMessage = error;
       }
@@ -289,7 +302,6 @@ const LoginPage: React.FC = () => {
             <div className="mb-4">
               <Button
                 onClick={handleSubmit}
-                color="primary"
                 className="w-full my-2"
                 disabled={isLoading}
               >
@@ -298,10 +310,9 @@ const LoginPage: React.FC = () => {
 
               <Button
                 onClick={() => handleOAuthSignIn('google')}
-                color="primary"
                 className="w-full my-2 relative"
                 disabled={true}
-                tooltip="OAuth sign-in requires using the Supabase auth provider."
+                title="OAuth sign-in requires using the Supabase auth provider."
               >
                 <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
                   <Image
@@ -318,10 +329,9 @@ const LoginPage: React.FC = () => {
 
               <Button
                 onClick={() => handleOAuthSignIn('github')}
-                color="primary"
                 className="w-full my-2 relative"
                 disabled={true}
-                tooltip="OAuth sign-in requires using the Supabase auth provider."
+                title="OAuth sign-in requires using the Supabase auth provider."
               >
                 <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
                   <Image

@@ -7,7 +7,9 @@
 ## Проблемы, которые были решены
 
 ### 1. Асимметричные отступы и неравномерное выравнивание
+
 **Проблема:** В разных табах использовались разные подходы к layout search bar:
+
 - CommunitiesTab: `max-w-sm` на Input создавал асимметрию
 - EntitiesTab: уже имел иконки, но разрозненный layout
 - RelationshipsTab/UsersTab: отсутствовали иконки Search
@@ -15,7 +17,9 @@
 **Решение:** Создан единый компонент `TabSearchHeader` с консистентным layout.
 
 ### 2. Отсутствие единообразия между табами
+
 **Проблема:** Каждый таб реализовывал поиск по-своему:
+
 - Разные placeholder тексты
 - Разные стили счётчиков
 - Разное позиционирование элементов
@@ -23,6 +27,7 @@
 **Решение:** Унифицированный API через `TabSearchHeader`.
 
 ### 3. Сложная поддержка category filters
+
 **Проблема:** EntitiesTab имел category filter с Badge'ами в Select, но это не было переиспользуемо.
 
 **Решение:** `TabSearchHeader` поддерживает опциональный `categoryFilter` prop с Badge поддержкой.
@@ -34,6 +39,7 @@
 **Расположение:** `src/components/explorer/TabSearchHeader.tsx`
 
 **Props API:**
+
 ```typescript
 interface TabSearchHeaderProps {
   searchQuery: string;
@@ -62,6 +68,7 @@ interface TabSearchHeaderProps {
 ```
 
 **Ключевые features:**
+
 - ✅ Search Input с иконкой Search (lucide-react)
 - ✅ Опциональный Category Filter с иконкой Filter
 - ✅ Адаптивный счётчик результатов (показывает filtered/total)
@@ -74,6 +81,7 @@ interface TabSearchHeaderProps {
 ### 1. `src/components/explorer/TabSearchHeader.tsx` (новый файл)
 
 **Структура компонента:**
+
 ```tsx
 <div className="flex flex-col gap-4">
   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
@@ -95,7 +103,8 @@ interface TabSearchHeaderProps {
     <div className="flex items-center gap-3 sm:ml-auto">
       {infoBadge && <Badge>{infoBadge.label}</Badge>}
       <div className="text-sm">
-        {isFiltered ? `${displayCount} filtered of ${totalCount}` : totalCount} {itemName}
+        {isFiltered ? `${displayCount} filtered of ${totalCount}` : totalCount}{' '}
+        {itemName}
       </div>
     </div>
   </div>
@@ -103,6 +112,7 @@ interface TabSearchHeaderProps {
 ```
 
 **Layout metrics:**
+
 - Search Input: `flex-1 max-w-md` (ограничен 448px)
 - Category Filter: `w-full sm:w-[200px]` (responsive)
 - Counter: `sm:ml-auto` (прижат к правому краю на desktop)
@@ -111,6 +121,7 @@ interface TabSearchHeaderProps {
 ### 2. `src/components/explorer/tabs/CommunitiesTabNew.tsx`
 
 **Изменения:**
+
 ```diff
 + import { TabSearchHeader } from '@/components/explorer/TabSearchHeader';
 - import { Input } from '@/components/ui/input';
@@ -131,18 +142,22 @@ interface TabSearchHeaderProps {
 ```
 
 **Live Indicator улучшение:**
+
 ```tsx
-{isPolling && (
-  <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-green-500/10 border border-green-500/20 hover:bg-green-500/15 transition-colors">
-    <Loader2 className="h-3.5 w-3.5 animate-spin text-green-600 dark:text-green-400" />
-    <span className="text-xs text-green-700 dark:text-green-300 font-semibold">
-      Live
-    </span>
-  </div>
-)}
+{
+  isPolling && (
+    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-green-500/10 border border-green-500/20 hover:bg-green-500/15 transition-colors">
+      <Loader2 className="h-3.5 w-3.5 animate-spin text-green-600 dark:text-green-400" />
+      <span className="text-xs text-green-700 dark:text-green-300 font-semibold">
+        Live
+      </span>
+    </div>
+  );
+}
 ```
 
 **Изменения дизайна:**
+
 - Цвет: blue → green (более подходящий для "Live" статуса)
 - Padding: `px-2 py-1` → `px-2.5 py-1.5` (больше breathing room)
 - Hover effect: `hover:bg-green-500/15`
@@ -151,6 +166,7 @@ interface TabSearchHeaderProps {
 ### 3. `src/components/explorer/tabs/EntitiesTabNew.tsx`
 
 **Изменения:**
+
 ```diff
 + import { TabSearchHeader } from '@/components/explorer/TabSearchHeader';
 - import { Search, Filter } from 'lucide-react';
@@ -159,6 +175,7 @@ interface TabSearchHeaderProps {
 ```
 
 **Добавлен useMemo для категорий:**
+
 ```tsx
 // Перемещён getCategoryBadgeProps в useCallback перед использованием
 const getCategoryBadgeProps = React.useCallback(...);
@@ -185,6 +202,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ```
 
 **Использование:**
+
 ```tsx
 <TabSearchHeader
   searchQuery={searchQuery}
@@ -210,6 +228,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ### 4. `src/components/explorer/tabs/RelationshipsTabNew.tsx`
 
 **Изменения:** Аналогично CommunitiesTabNew:
+
 - Добавлен импорт `TabSearchHeader`
 - Удалён импорт `Input`
 - Заменена секция поиска
@@ -224,6 +243,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ### До рефакторинга
 
 **CommunitiesTab:**
+
 ```text
 [Search Input (max-w-sm)]            [65 communities]  [Live]
         ↑                                    ↑
@@ -231,6 +251,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ```
 
 **Проблемы:**
+
 - ❌ Input ограничен `max-w-sm` (384px) создавал пустое пространство
 - ❌ Счётчик и Live badge не имели общего контейнера
 - ❌ Отсутствовала иконка Search
@@ -238,6 +259,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ### После рефакторинга
 
 **Все табы (унифицировано):**
+
 ```text
 [🔍 Search Input (flex-1 max-w-md)]  [🌐 Filter]  [65 communities] [✓ Live]
               ↑                           ↑              ↑             ↑
@@ -245,6 +267,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ```
 
 **Улучшения:**
+
 - ✅ Search Input с иконкой слева (pl-10)
 - ✅ Flex-1 для adaptive width, max-w-md (448px) ограничение
 - ✅ Опциональный Category Filter с иконкой Filter
@@ -254,6 +277,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ### Live Indicator сравнение
 
 **До:**
+
 ```tsx
 <div className="... bg-blue-500/10 border border-blue-500/20">
   <Loader2 className="h-3.5 w-3.5 text-blue-500" />
@@ -262,14 +286,18 @@ const categoryFilterOptions = React.useMemo(() => {
 ```
 
 **После:**
+
 ```tsx
 <div className="... bg-green-500/10 border border-green-500/20 hover:bg-green-500/15 transition-colors">
   <Loader2 className="h-3.5 w-3.5 animate-spin text-green-600 dark:text-green-400" />
-  <span className="text-xs text-green-700 dark:text-green-300 font-semibold">Live</span>
+  <span className="text-xs text-green-700 dark:text-green-300 font-semibold">
+    Live
+  </span>
 </div>
 ```
 
 **Улучшения:**
+
 - ✅ Green цвет (более подходящий для "Live"/"Active")
 - ✅ Hover effect (`hover:bg-green-500/15`)
 - ✅ Dark mode support (`dark:text-green-300`)
@@ -281,6 +309,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ### Icon Positioning
 
 **Search Icon:**
+
 ```tsx
 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
 <Input className="pl-10" />
@@ -292,6 +321,7 @@ const categoryFilterOptions = React.useMemo(() => {
 - Input padding: `pl-10` (40px) для space для иконки
 
 **Filter Icon (в Select):**
+
 ```tsx
 <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
 <SelectTrigger className="w-full sm:w-[200px] pl-10" />
@@ -303,6 +333,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ### Responsive Behavior
 
 **Mobile (< 640px):**
+
 ```text
 ┌─────────────────────────┐
 │ 🔍 Search Input         │
@@ -314,6 +345,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ```
 
 **Desktop (≥ 640px):**
+
 ```text
 ┌──────────────────────────────────────────────────────┐
 │ 🔍 Search Input    🌐 Filter    65 communities  ✓ Live │
@@ -321,6 +353,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ```
 
 **Layout classes:**
+
 - Container: `flex flex-col sm:flex-row` (column на mobile, row на desktop)
 - Search: `flex-1 max-w-md` (растягивается, но ограничен 448px)
 - Filter: `w-full sm:w-[200px]` (full width на mobile, 200px на desktop)
@@ -329,30 +362,36 @@ const categoryFilterOptions = React.useMemo(() => {
 ### Badge in Select Support
 
 **Механизм:**
+
 ```tsx
 // В TabSearchHeader
-{categoryFilter.categories.map((cat) => (
-  <SelectItem key={cat.value} value={cat.value}>
-    <div className="flex items-center gap-2">
-      {cat.badgeVariant ? (
-        <Badge
-          variant={cat.badgeVariant}
-          className={`${cat.badgeClassName || ''} scale-90`}
-        >
-          {cat.label}
-        </Badge>
-      ) : (
-        <>
-          {cat.color && <div className={`h-2 w-2 rounded-full ${cat.color}`} />}
-          <span>{cat.label}</span>
-        </>
-      )}
-    </div>
-  </SelectItem>
-))}
+{
+  categoryFilter.categories.map((cat) => (
+    <SelectItem key={cat.value} value={cat.value}>
+      <div className="flex items-center gap-2">
+        {cat.badgeVariant ? (
+          <Badge
+            variant={cat.badgeVariant}
+            className={`${cat.badgeClassName || ''} scale-90`}
+          >
+            {cat.label}
+          </Badge>
+        ) : (
+          <>
+            {cat.color && (
+              <div className={`h-2 w-2 rounded-full ${cat.color}`} />
+            )}
+            <span>{cat.label}</span>
+          </>
+        )}
+      </div>
+    </SelectItem>
+  ));
+}
 ```
 
 **Features:**
+
 - Если `badgeVariant` указан → рендерит Badge с `scale-90` (меньше для Select)
 - Если нет `badgeVariant`, но есть `color` → рендерит цветной dot
 - Fallback → простой `<span>`
@@ -360,6 +399,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ## Best Practices применены
 
 ### 1. Component Composition
+
 ```tsx
 // Вместо дублирования кода в каждом табе:
 <TabSearchHeader {...props} />
@@ -368,25 +408,29 @@ const categoryFilterOptions = React.useMemo(() => {
 ```
 
 ### 2. Responsive Design
+
 ```tsx
 // Mobile-first подход
-className="flex flex-col sm:flex-row"  // Vertical на mobile, horizontal на desktop
-className="w-full sm:w-[200px]"       // Full width на mobile
+className = 'flex flex-col sm:flex-row'; // Vertical на mobile, horizontal на desktop
+className = 'w-full sm:w-[200px]'; // Full width на mobile
 ```
 
 ### 3. Accessibility
+
 - ✅ Иконки: `pointer-events-none` чтобы не мешать focus
 - ✅ Placeholder текст для screen readers
 - ✅ Semantic HTML (div + flex layout)
 
 ### 4. Dark Mode Support
+
 ```tsx
 // Все цвета имеют dark: варианты
-className="text-green-700 dark:text-green-300"
-className="bg-green-500/10 dark:bg-green-500/20"
+className = 'text-green-700 dark:text-green-300';
+className = 'bg-green-500/10 dark:bg-green-500/20';
 ```
 
 ### 5. TypeScript Safety
+
 ```typescript
 interface TabSearchHeaderProps {
   // Required props
@@ -402,6 +446,7 @@ interface TabSearchHeaderProps {
 ## Performance Considerations
 
 ### useMemo для категорий
+
 ```tsx
 // Избегаем пересоздания category options на каждый render
 const categoryFilterOptions = React.useMemo(() => {
@@ -418,6 +463,7 @@ const categoryFilterOptions = React.useMemo(() => {
 ```
 
 ### useCallback для getCategoryBadgeProps
+
 ```tsx
 // Мемоизируем функцию чтобы не нарушать useMemo dependency
 const getCategoryBadgeProps = React.useCallback(
@@ -429,21 +475,26 @@ const getCategoryBadgeProps = React.useCallback(
 ## Файлы изменены
 
 ### Новые файлы:
+
 1. ✅ `src/components/explorer/TabSearchHeader.tsx` - Унифицированный search header компонент
 
 ### Изменённые файлы:
+
 1. ✅ `src/components/explorer/tabs/CommunitiesTabNew.tsx` - Интеграция TabSearchHeader
 2. ✅ `src/components/explorer/tabs/EntitiesTabNew.tsx` - Интеграция с category filter
 3. ✅ `src/components/explorer/tabs/RelationshipsTabNew.tsx` - Интеграция TabSearchHeader
 4. ✅ `src/components/explorer/tabs/UsersTabNew.tsx` - Интеграция TabSearchHeader
 
 ### Документация:
+
 1. ✅ `docs/SEARCH_HEADER_IMPROVEMENTS.md` - Этот документ
 
 ## Дальнейшие возможные улучшения
 
 ### 1. Keyboard Shortcuts
+
 Добавить hotkeys для focus на search:
+
 ```tsx
 useEffect(() => {
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -458,28 +509,35 @@ useEffect(() => {
 ```
 
 ### 2. Search History
+
 Dropdown с recent searches:
+
 ```tsx
-const [searchHistory, setSearchHistory] = useLocalStorage<string[]>('search-history', []);
+const [searchHistory, setSearchHistory] = useLocalStorage<string[]>(
+  'search-history',
+  []
+);
 ```
 
 ### 3. Advanced Filters
+
 Expandable panel с дополнительными фильтрами:
+
 ```tsx
 <Collapsible>
   <CollapsibleTrigger>Advanced Filters</CollapsibleTrigger>
-  <CollapsibleContent>
-    {/* Date range, status, etc */}
-  </CollapsibleContent>
+  <CollapsibleContent>{/* Date range, status, etc */}</CollapsibleContent>
 </Collapsible>
 ```
 
 ### 4. Search Suggestions
+
 Autocomplete на базе существующих данных:
+
 ```tsx
 const suggestions = useMemo(() => {
   return items
-    .filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
+    .filter((item) => item.name.toLowerCase().includes(query.toLowerCase()))
     .slice(0, 5);
 }, [items, query]);
 ```

@@ -38,11 +38,13 @@ jobs:
 
       - name: Start server and run for 20 seconds
         run: |
-          timeout 20s pnpm start || exit 0
+          mkdir -p .next
+          timeout 20s node .next/standalone/server.js > .next/server.log 2>&1 || exit 0
 
       - name: Check server logs
         run: |
-          if grep -q "error" .next/server.log; then
+          cat .next/server.log
+          if grep -i "error" .next/server.log; then
             echo "Server encountered errors during startup"
             exit 1
           fi

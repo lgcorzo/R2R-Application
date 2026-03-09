@@ -1,4 +1,5 @@
 # План максимизации потенциала R2R-Application
+
 ## Maximizing R2R API Usage & Data Quality for Programming
 
 > **Цель:** Реализовать максимальный потенциал R2R API, улучшить качество данных и эффективность использования для программирования
@@ -12,6 +13,7 @@
 ### Текущая реализация (из анализа кода)
 
 **Документы:**
+
 - ✅ Базовая загрузка файлов (`client.documents.create({ file })`)
 - ✅ Простой ingestion mode (hi-res, fast)
 - ❌ Нет custom ingestion config
@@ -20,6 +22,7 @@
 - ❌ Нет управления chunks после загрузки
 
 **Поиск:**
+
 - ✅ Базовый semantic search
 - ✅ Hybrid search (частично)
 - ❌ Нет HyDE strategy
@@ -27,6 +30,7 @@
 - ❌ Нет contextual compression
 
 **Качество данных:**
+
 - ❌ Нет валидации перед загрузкой
 - ❌ Нет обогащения metadata
 - ❌ Нет проверки качества chunks
@@ -56,7 +60,7 @@
 export interface IngestionConfig {
   // Basic modes
   mode: 'hi-res' | 'fast' | 'custom';
-  
+
   // Custom configuration
   customConfig?: {
     provider?: 'r2r' | 'unstructured_local' | 'unstructured_cloud';
@@ -68,7 +72,7 @@ export interface IngestionConfig {
     max_characters?: number;
     combine_under_n_chars?: number;
   };
-  
+
   // Chunk enrichment
   chunkEnrichment?: {
     enabled: boolean;
@@ -78,12 +82,12 @@ export interface IngestionConfig {
     semantic_neighbors?: number;
     semantic_similarity_threshold?: number;
     generation_config?: {
-      model?: string;  // Рекомендуется: 'google/gemini-2.5-flash'
-      temperature?: number;   // Рекомендуется: 0.2 для кода
-      thinking_budget?: number;  // Для Gemini: -1 (dynamic) или 1024-2048
+      model?: string; // Рекомендуется: 'google/gemini-2.5-flash'
+      temperature?: number; // Рекомендуется: 0.2 для кода
+      thinking_budget?: number; // Для Gemini: -1 (dynamic) или 1024-2048
     };
   };
-  
+
   // Metadata extraction
   metadataExtraction?: {
     enabled: boolean;
@@ -93,7 +97,7 @@ export interface IngestionConfig {
     geminiModel?: 'gemini-2.5-flash' | 'gemini-2.5-pro';
     thinkingBudget?: number;
   };
-  
+
   // Code-specific settings
   codeSpecific?: {
     language?: string;
@@ -116,17 +120,17 @@ export class AdvancedIngestionService {
   ) {
     // 1. Pre-processing
     const preprocessed = await this.preprocessFile(file, config);
-    
+
     // 2. Validation
     await this.validateFile(file, preprocessed);
-    
+
     // 3. Enrich metadata
     const enrichedMetadata = await this.enrichMetadata(
       file,
       preprocessed,
       metadata || {}
     );
-    
+
     // 4. Upload with config
     if (config.mode === 'custom') {
       return this.client.documents.create({
@@ -152,7 +156,7 @@ export class AdvancedIngestionService {
     if (config.codeSpecific) {
       return this.preprocessCode(file, config);
     }
-    
+
     // Для обычных документов:
     return {
       file,
@@ -164,15 +168,15 @@ export class AdvancedIngestionService {
   // Pre-processing кода
   async preprocessCode(file: File, config: IngestionConfig) {
     const text = await file.text();
-    const language = config.codeSpecific?.language || 
-                     this.detectLanguage(file.name);
-    
+    const language =
+      config.codeSpecific?.language || this.detectLanguage(file.name);
+
     // Извлечение структуры кода
     const structure = await this.extractCodeStructure(text, language);
-    
+
     // Нормализация кода
     const normalized = this.normalizeCode(text, language);
-    
+
     return {
       file,
       text: normalized,
@@ -191,7 +195,7 @@ export class AdvancedIngestionService {
     // - Классы
     // - Импорты
     // - Зависимости
-    
+
     const response = await this.client.retrieval.rag({
       query: `Extract code structure from this ${language} code:\n\`\`\`${language}\n${code}\n\`\`\``,
       rag_generation_config: {
@@ -199,7 +203,7 @@ export class AdvancedIngestionService {
         temperature: 0.1,
       },
     });
-    
+
     return this.parseStructure(response);
   }
 }
@@ -223,6 +227,7 @@ export class AdvancedIngestionService {
 ```
 
 **Задачи:**
+
 - [ ] Создать AdvancedIngestionService
 - [ ] Реализовать pre-processing для кода
 - [ ] Добавить валидацию файлов
@@ -263,13 +268,13 @@ export class ChunkIngestionService {
   ) {
     // Валидация chunks
     const validated = await this.validateChunks(chunks);
-    
+
     // Обогащение chunks
     const enriched = await this.enrichChunks(validated);
-    
+
     // Загрузка через R2R
     return this.client.chunks.create({
-      chunks: enriched.map(chunk => ({
+      chunks: enriched.map((chunk) => ({
         text: chunk.text,
         metadata: chunk.metadata,
         document_id: documentId,
@@ -280,18 +285,18 @@ export class ChunkIngestionService {
 
   // Валидация chunks
   async validateChunks(chunks: ProcessedChunk[]) {
-    return chunks.filter(chunk => {
+    return chunks.filter((chunk) => {
       // Проверка размера
       if (chunk.text.length > 10000) {
         logger.warn('Chunk too large', { size: chunk.text.length });
         return false;
       }
-      
+
       // Проверка на пустоту
       if (!chunk.text.trim()) {
         return false;
       }
-      
+
       return true;
     });
   }
@@ -304,15 +309,15 @@ export class ChunkIngestionService {
         // Рекомендуется использовать Gemini embeddings для лучшей совместимости
         const embedding = await this.client.retrieval.embedding({
           text: chunk.text,
-          model: 'google/text-embedding-004',  // Gemini embeddings
+          model: 'google/text-embedding-004', // Gemini embeddings
         });
-        
+
         // Извлечение entities для кода
         if (chunk.metadata?.language) {
           const entities = await this.extractCodeEntities(chunk.text);
           chunk.metadata.entities = entities;
         }
-        
+
         return {
           ...chunk,
           metadata: {
@@ -332,11 +337,11 @@ export class ChunkIngestionService {
     // - Имена классов
     // - Переменные
     // - Импорты
-    
+
     const response = await this.client.retrieval.rag({
       query: `Extract all code entities (functions, classes, variables, imports) from:\n\`\`\`\n${code}\n\`\`\``,
     });
-    
+
     return this.parseEntities(response);
   }
 }
@@ -353,6 +358,7 @@ export class ChunkIngestionService {
 ```
 
 **Задачи:**
+
 - [ ] Создать ChunkIngestionService
 - [ ] Реализовать валидацию chunks
 - [ ] Добавить обогащение chunks
@@ -406,32 +412,30 @@ export class ChunkManagementService {
   // Анализ качества chunks
   async analyzeChunkQuality(chunkId: string) {
     const chunk = await this.client.chunks.retrieve({ id: chunkId });
-    
+
     // Метрики качества:
     const metrics = {
       // Размер
       size: chunk.results.text.length,
       sizeScore: this.scoreSize(chunk.results.text.length),
-      
+
       // Семантическая полнота
-      semanticScore: await this.assessSemanticCompleteness(
-        chunk.results.text
-      ),
-      
+      semanticScore: await this.assessSemanticCompleteness(chunk.results.text),
+
       // Качество metadata
       metadataScore: this.scoreMetadata(chunk.results.metadata),
-      
+
       // Embedding quality
-      embeddingScore: chunk.results.vector 
+      embeddingScore: chunk.results.vector
         ? this.assessEmbeddingQuality(chunk.results.vector)
         : 0,
-      
+
       // Для кода: структура
       structureScore: chunk.results.metadata?.language
         ? await this.assessCodeStructure(chunk.results.text)
         : null,
     };
-    
+
     return {
       ...metrics,
       overallScore: this.calculateOverallScore(metrics),
@@ -442,23 +446,29 @@ export class ChunkManagementService {
   // Предложения по улучшению
   generateSuggestions(metrics: ChunkQualityMetrics): string[] {
     const suggestions: string[] = [];
-    
+
     if (metrics.sizeScore < 0.5) {
-      suggestions.push('Chunk is too small or too large. Consider splitting or merging.');
+      suggestions.push(
+        'Chunk is too small or too large. Consider splitting or merging.'
+      );
     }
-    
+
     if (metrics.semanticScore < 0.7) {
-      suggestions.push('Chunk may lack semantic completeness. Consider adding context.');
+      suggestions.push(
+        'Chunk may lack semantic completeness. Consider adding context.'
+      );
     }
-    
+
     if (metrics.metadataScore < 0.6) {
       suggestions.push('Metadata is incomplete. Add more context information.');
     }
-    
+
     if (metrics.structureScore && metrics.structureScore < 0.7) {
-      suggestions.push('Code structure could be improved. Consider better chunking strategy.');
+      suggestions.push(
+        'Code structure could be improved. Consider better chunking strategy.'
+      );
     }
-    
+
     return suggestions;
   }
 
@@ -468,7 +478,7 @@ export class ChunkManagementService {
     strategy: 'enrich' | 'split' | 'merge' | 'rechunk'
   ) {
     const chunks = await this.getDocumentChunks(documentId, { limit: 1000 });
-    
+
     switch (strategy) {
       case 'enrich':
         return this.enrichChunksBatch(chunks.results);
@@ -494,6 +504,7 @@ export class ChunkManagementService {
 ```
 
 **Задачи:**
+
 - [ ] Создать ChunkManagementService
 - [ ] Реализовать анализ качества
 - [ ] Добавить массовые операции
@@ -525,19 +536,13 @@ export class AdvancedSearchService {
   }
 
   // Multi-query search
-  async multiQuerySearch(
-    query: string,
-    numQueries: number = 3
-  ) {
+  async multiQuerySearch(query: string, numQueries: number = 3) {
     // Генерируем варианты запроса
-    const queryVariants = await this.generateQueryVariants(
-      query,
-      numQueries
-    );
-    
+    const queryVariants = await this.generateQueryVariants(query, numQueries);
+
     // Ищем по каждому варианту
     const results = await Promise.all(
-      queryVariants.map(variant =>
+      queryVariants.map((variant) =>
         this.client.retrieval.search({
           query: variant,
           search_settings: {
@@ -547,7 +552,7 @@ export class AdvancedSearchService {
         })
       )
     );
-    
+
     // Объединяем и дедуплицируем
     return this.mergeAndDeduplicate(results);
   }
@@ -559,11 +564,8 @@ export class AdvancedSearchService {
     options?: SearchOptions
   ) {
     // Используем context для улучшения поиска
-    const enhancedQuery = await this.enhanceQueryWithContext(
-      query,
-      context
-    );
-    
+    const enhancedQuery = await this.enhanceQueryWithContext(query, context);
+
     return this.client.retrieval.search({
       query: enhancedQuery,
       search_settings: {
@@ -588,7 +590,7 @@ export class AdvancedSearchService {
         model: rerankerModel || 'anthropic/claude-3-haiku-20240307',
       },
     });
-    
+
     return this.applyReranking(initialResults, reranked);
   }
 
@@ -605,15 +607,15 @@ export class AdvancedSearchService {
     const filters: Record<string, any> = {
       code_type: { $eq: 'source_code' },
     };
-    
+
     if (options?.language) {
       filters.language = { $eq: options.language };
     }
-    
+
     if (options?.functionName) {
       filters['metadata.function_name'] = { $eq: options.functionName };
     }
-    
+
     return this.client.retrieval.search({
       query,
       search_settings: {
@@ -643,6 +645,7 @@ export class AdvancedSearchService {
 ```
 
 **Задачи:**
+
 - [ ] Реализовать все search strategies
 - [ ] Добавить multi-query search
 - [ ] Реализовать contextual compression
@@ -666,9 +669,9 @@ export class EnhancedRAGService {
     options?: {
       useEnrichment?: boolean;
       enrichmentStrategy?: 'semantic' | 'neighborhood';
-      model?: string;  // Рекомендуется: 'google/gemini-2.5-flash'
-      temperature?: number;  // Рекомендуется: 0.3 для RAG
-      thinkingBudget?: number;  // Для Gemini: -1 (dynamic) или 2048
+      model?: string; // Рекомендуется: 'google/gemini-2.5-flash'
+      temperature?: number; // Рекомендуется: 0.3 для RAG
+      thinkingBudget?: number; // Для Gemini: -1 (dynamic) или 2048
     }
   ) {
     // Сначала поиск
@@ -679,7 +682,7 @@ export class EnhancedRAGService {
         limit: 10,
       },
     });
-    
+
     // Обогащение chunks если нужно
     if (options?.useEnrichment) {
       const enriched = await this.enrichSearchResults(
@@ -688,7 +691,7 @@ export class EnhancedRAGService {
       );
       searchResults.results = enriched;
     }
-    
+
     // Генерация с обогащенными результатами
     return this.client.retrieval.rag({
       query,
@@ -704,10 +707,7 @@ export class EnhancedRAGService {
   }
 
   // RAG с Knowledge Graph
-  async kgEnhancedRAG(
-    query: string,
-    options?: RAGOptions
-  ) {
+  async kgEnhancedRAG(query: string, options?: RAGOptions) {
     return this.client.retrieval.rag({
       query,
       search_settings: {
@@ -722,10 +722,7 @@ export class EnhancedRAGService {
   }
 
   // RAG с web search
-  async webEnhancedRAG(
-    query: string,
-    options?: RAGOptions
-  ) {
+  async webEnhancedRAG(query: string, options?: RAGOptions) {
     return this.client.retrieval.agent({
       message: { role: 'user', content: query },
       rag_tools: ['search_file_knowledge', 'web_search', 'web_scrape'],
@@ -735,15 +732,11 @@ export class EnhancedRAGService {
   }
 
   // Code-specific RAG
-  async codeRAG(
-    query: string,
-    codeContext?: string,
-    options?: RAGOptions
-  ) {
+  async codeRAG(query: string, codeContext?: string, options?: RAGOptions) {
     const enhancedQuery = codeContext
       ? `${query}\n\nCode context:\n\`\`\`\n${codeContext}\n\`\`\``
       : query;
-    
+
     return this.client.retrieval.rag({
       query: enhancedQuery,
       search_settings: {
@@ -757,8 +750,8 @@ export class EnhancedRAGService {
       rag_generation_config: {
         // Рекомендуется Gemini для кода
         model: options?.model || 'google/gemini-2.5-flash',
-        temperature: options?.temperature || 0.2,  // Низкая для точности кода
-        thinking_budget: options?.thinkingBudget || 2048,  // Для Gemini
+        temperature: options?.temperature || 0.2, // Низкая для точности кода
+        thinking_budget: options?.thinkingBudget || 2048, // Для Gemini
       },
     });
   }
@@ -766,6 +759,7 @@ export class EnhancedRAGService {
 ```
 
 **Задачи:**
+
 - [ ] Реализовать enriched RAG
 - [ ] Добавить KG-enhanced RAG
 - [ ] Реализовать web-enhanced RAG
@@ -793,9 +787,9 @@ export class PreUploadQualityService {
       structure: await this.validateStructure(file),
       duplicates: await this.checkDuplicates(file),
     };
-    
+
     return {
-      valid: Object.values(checks).every(c => c.valid),
+      valid: Object.values(checks).every((c) => c.valid),
       checks,
       score: this.calculateScore(checks),
       suggestions: this.generateSuggestions(checks),
@@ -808,7 +802,7 @@ export class PreUploadQualityService {
     existingMetadata?: Record<string, any>
   ): Promise<Record<string, any>> {
     const text = await file.text();
-    
+
     // Автоматическое извлечение metadata
     const extracted = {
       // Из файла
@@ -816,17 +810,17 @@ export class PreUploadQualityService {
       file_size: file.size,
       file_type: file.type,
       last_modified: new Date(file.lastModified).toISOString(),
-      
+
       // Из содержимого
       ...(await this.extractContentMetadata(text)),
-      
+
       // Для кода
       ...(await this.extractCodeMetadata(text, file.name)),
-      
+
       // Пользовательские
       ...existingMetadata,
     };
-    
+
     return extracted;
   }
 
@@ -840,14 +834,14 @@ export class PreUploadQualityService {
         temperature: 0.1,
       },
     });
-    
+
     return this.parseMetadata(response);
   }
 
   // Извлечение metadata из кода
   async extractCodeMetadata(code: string, fileName: string) {
     const language = this.detectLanguage(fileName);
-    
+
     return {
       language,
       ...(await this.extractCodeStructure(code, language)),
@@ -860,11 +854,11 @@ export class PreUploadQualityService {
   async checkDuplicates(file: File): Promise<DuplicateCheck> {
     const text = await file.text();
     // Используем Gemini embeddings для лучшей точности
-    const embedding = await this.client.retrieval.embedding({ 
+    const embedding = await this.client.retrieval.embedding({
       text,
-      model: 'google/text-embedding-004',  // Gemini embeddings
+      model: 'google/text-embedding-004', // Gemini embeddings
     });
-    
+
     // Поиск похожих документов
     const similar = await this.client.retrieval.search({
       query: '', // Используем embedding
@@ -874,9 +868,9 @@ export class PreUploadQualityService {
         limit: 5,
       },
     });
-    
+
     return {
-      hasDuplicates: similar.results.some(r => r.score > 0.95),
+      hasDuplicates: similar.results.some((r) => r.score > 0.95),
       similarDocuments: similar.results,
     };
   }
@@ -894,6 +888,7 @@ export class PreUploadQualityService {
 ```
 
 **Задачи:**
+
 - [ ] Создать PreUploadQualityService
 - [ ] Реализовать валидацию
 - [ ] Добавить обогащение metadata
@@ -914,11 +909,11 @@ export class PostUploadQualityService {
   async monitorDocumentQuality(documentId: string) {
     const document = await this.client.documents.retrieve({ id: documentId });
     const chunks = await this.client.documents.listChunks({ id: documentId });
-    
+
     return {
       document: await this.assessDocumentQuality(document.results),
       chunks: await Promise.all(
-        chunks.results.map(chunk => this.assessChunkQuality(chunk))
+        chunks.results.map((chunk) => this.assessChunkQuality(chunk))
       ),
       overall: this.calculateOverallQuality(document, chunks),
     };
@@ -938,9 +933,9 @@ export class PostUploadQualityService {
   // Автоматическое улучшение
   async autoImprove(documentId: string) {
     const quality = await this.monitorDocumentQuality(documentId);
-    
+
     const improvements: Improvement[] = [];
-    
+
     // Если metadata неполное
     if (quality.document.metadataCompleteness < 0.7) {
       improvements.push({
@@ -948,7 +943,7 @@ export class PostUploadQualityService {
         action: () => this.enrichDocumentMetadata(documentId),
       });
     }
-    
+
     // Если chunks низкого качества
     if (quality.overall.chunkQuality < 0.7) {
       improvements.push({
@@ -956,7 +951,7 @@ export class PostUploadQualityService {
         action: () => this.rechunkDocument(documentId),
       });
     }
-    
+
     // Если нет KG extraction
     if (quality.document.extractionStatus !== 'success') {
       improvements.push({
@@ -964,7 +959,7 @@ export class PostUploadQualityService {
         action: () => this.extractKnowledgeGraph(documentId),
       });
     }
-    
+
     return improvements;
   }
 }
@@ -981,6 +976,7 @@ export class PostUploadQualityService {
 ```
 
 **Задачи:**
+
 - [ ] Создать PostUploadQualityService
 - [ ] Реализовать мониторинг
 - [ ] Добавить автоматическое улучшение
@@ -1010,19 +1006,19 @@ export class CodeIngestionService {
     }
   ) {
     const results = [];
-    
+
     for (const file of files) {
       // Pre-processing кода
       const processed = await this.preprocessCode(file, options);
-      
+
       // Специальная chunking стратегия для кода
       const chunks = options?.chunkByFunction
         ? await this.chunkByFunctions(processed.code, processed.language)
         : await this.chunkCode(processed.code, processed.language);
-      
+
       // Загрузка с code-specific metadata
       const result = await this.client.chunks.create({
-        chunks: chunks.map(chunk => ({
+        chunks: chunks.map((chunk) => ({
           text: chunk.code,
           metadata: {
             ...chunk.metadata,
@@ -1035,10 +1031,10 @@ export class CodeIngestionService {
           },
         })),
       });
-      
+
       results.push(result);
     }
-    
+
     return results;
   }
 
@@ -1046,8 +1042,8 @@ export class CodeIngestionService {
   async chunkByFunctions(code: string, language: string) {
     // Используем R2R для извлечения функций
     const functions = await this.extractFunctions(code, language);
-    
-    return functions.map(func => ({
+
+    return functions.map((func) => ({
       code: func.code,
       metadata: {
         function_name: func.name,
@@ -1065,13 +1061,14 @@ export class CodeIngestionService {
     const response = await this.client.retrieval.rag({
       query: `Extract all dependencies (imports, requires, etc.) from this ${language} code:\n\`\`\`${language}\n${code}\n\`\`\``,
     });
-    
+
     return this.parseDependencies(response, language);
   }
 }
 ```
 
 **Задачи:**
+
 - [ ] Создать CodeIngestionService
 - [ ] Реализовать chunking по функциям
 - [ ] Добавить извлечение зависимостей
@@ -1161,6 +1158,7 @@ export class CodeSearchService {
 ```
 
 **Задачи:**
+
 - [ ] Создать CodeSearchService
 - [ ] Реализовать специализированные поиски
 - [ ] Добавить code RAG с контекстом
@@ -1172,24 +1170,28 @@ export class CodeSearchService {
 ## 📋 Roadmap выполнения
 
 ### Sprint 1-2 (2 недели): Advanced Ingestion
+
 - [ ] Advanced Ingestion Service
 - [ ] Pre-processed Chunks
 - [ ] Chunk Management
 - [ ] UI для advanced settings
 
 ### Sprint 3-4 (2 недели): Search & Generation
+
 - [ ] Advanced Search Strategies
 - [ ] Enhanced RAG
 - [ ] Code-specific search
 - [ ] UI improvements
 
 ### Sprint 5-6 (2 недели): Data Quality
+
 - [ ] Pre-upload validation
 - [ ] Post-upload monitoring
 - [ ] Auto-improvement
 - [ ] Quality dashboard
 
 ### Sprint 7-8 (2 недели): Code Specialization
+
 - [ ] Code ingestion
 - [ ] Code search
 - [ ] Code RAG
@@ -1248,18 +1250,21 @@ src/components/
 ## 📊 Метрики успеха
 
 ### Качество данных
+
 - [ ] 100% файлов проходят валидацию
 - [ ] 90%+ metadata completeness
 - [ ] 80%+ chunk quality score
 - [ ] 0 дубликатов высокого качества
 
 ### Использование API
+
 - [ ] 100% ingestion modes поддерживаются
 - [ ] Chunk enrichment включен для 80%+ документов
 - [ ] Все search strategies доступны
 - [ ] Code-specific features работают
 
 ### Эффективность
+
 - [ ] Время загрузки < 30s для обычных файлов
 - [ ] Время загрузки < 2min для больших кодовых баз
 - [ ] Search latency < 500ms
@@ -1282,19 +1287,21 @@ src/components/
 ### Быстрый старт с Gemini:
 
 1. **Настройте r2r.toml:**
+
    ```toml
    [completion]
    provider = "litellm"
    [completion.generation_config]
    model = "google/gemini-2.5-flash"
    temperature = 0.3
-   
+
    [embedding]
    provider = "litellm"
    base_model = "google/text-embedding-004"
    ```
 
 2. **Установите API ключ:**
+
    ```bash
    export GOOGLE_API_KEY=your_key_here
    ```

@@ -49,11 +49,13 @@ ExplorerPage (src/pages/explorer.tsx)
 ### Управление состоянием
 
 **ExplorerPage** отвечает за:
+
 - `selectedCollectionId` (по умолчанию "default")
 - `collections` (список всех коллекций)
 - Синхронизацию с URL query parameters
 
 **CollectionTabs** отвечает за:
+
 - `activeTab` (текущий активный таб)
 - `dataCache` (кэш загруженных данных для каждого таба)
 - Lazy loading данных при первом открытии таба
@@ -61,16 +63,19 @@ ExplorerPage (src/pages/explorer.tsx)
 ### Стратегия загрузки данных
 
 #### Documents таб
+
 - FileManager загружает данные через существующую логику
 - Никаких изменений
 
 #### Users, Entities, Relationships, Communities табы
+
 - Batch fetching паттерн из Collection Detail
 - Первый batch (100 записей) загружается при открытии таба
 - Остальные batches загружаются в фоне
 - Данные кэшируются в state
 
 #### Knowledge Graph табы
+
 - Используют entities и relationships из кэша
 - Загружаются при первом открытии таба
 
@@ -81,12 +86,14 @@ ExplorerPage (src/pages/explorer.tsx)
 **Путь:** `src/components/explorer/CollectionTabs.tsx`
 
 **Ответственность:**
+
 - Управление табами
 - Lazy loading данных
 - Кэширование загруженных данных
 - Передача selectedCollectionId дочерним компонентам
 
 **Props:**
+
 ```typescript
 interface CollectionTabsProps {
   selectedCollectionId: string | null;
@@ -101,6 +108,7 @@ interface CollectionTabsProps {
 **Директория:** `src/components/explorer/tabs/`
 
 Создаются 6 новых компонентов-оберток:
+
 - `UsersTab.tsx` - обертка над Table компонентом для users
 - `EntitiesTab.tsx` - обертка над Table для entities
 - `RelationshipsTab.tsx` - обертка над Table для relationships
@@ -109,6 +117,7 @@ interface CollectionTabsProps {
 - `ExploreTab.tsx` - обертка над KnowledgeGraph
 
 **Каждый компонент:**
+
 - Принимает data, loading, error через props
 - Использует существующий Table или Graph компонент
 - Не содержит логику загрузки (управляется родителем)
@@ -120,6 +129,7 @@ interface CollectionTabsProps {
 **Назначение:** Переиспользуемая логика batch loading
 
 **Интерфейс:**
+
 ```typescript
 function useBatchFetch<T>({
   fetchFn: (offset: number, limit: number) => Promise<{ results: T[], totalEntries: number }>,
@@ -154,6 +164,7 @@ function useBatchFetch<T>({
 ### FileManagerHeader изменения
 
 Добавляется кнопка "Manage Collection":
+
 - Показывается только когда выбрана коллекция (не для "All docs")
 - Располагается рядом с кнопкой Upload
 - Открывает существующий CollectionDialog
@@ -161,6 +172,7 @@ function useBatchFetch<T>({
 ### Breadcrumbs
 
 Остается без изменений:
+
 - "All docs" для режима всех документов
 - "All docs / Collection Name" для выбранной коллекции
 
@@ -199,6 +211,7 @@ export default function CollectionRedirect() {
 ```
 
 **Примеры:**
+
 - `/collections/abc123` → `/explorer?collection=abc123&tab=documents`
 - Старые ссылки продолжают работать
 
@@ -269,6 +282,7 @@ export default function CollectionRedirect() {
 ### Риск: Performance при загрузке всех entities/relationships
 
 **Митигация:**
+
 - Lazy loading - данные загружаются только при открытии таба
 - Кэширование - данные не перезагружаются при переключении табов
 - Batch loading - постепенная подгрузка в фоне
@@ -276,6 +290,7 @@ export default function CollectionRedirect() {
 ### Риск: Конфликт состояния между FileManager и CollectionTabs
 
 **Митигация:**
+
 - ExplorerPage владеет selectedCollectionId
 - Передается вниз через props (single source of truth)
 - Синхронизация через URL query parameters
@@ -283,6 +298,7 @@ export default function CollectionRedirect() {
 ### Риск: Поломка старых ссылок
 
 **Митигация:**
+
 - Редирект из `/collections/[id]` на новый URL
 - Обратная совместимость через query parameters
 - Постепенная миграция - старая страница не удаляется сразу
@@ -314,6 +330,6 @@ export default function CollectionRedirect() {
 ## Зависимости
 
 - Существующие компоненты: Table, KnowledgeGraph, KnowledgeGraphD3
-- R2R API endpoints: collections.*, graphs.*
+- R2R API endpoints: collections._, graphs._
 - shadcn/ui Tabs компонент
 - Next.js router для query parameters

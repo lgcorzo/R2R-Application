@@ -144,9 +144,9 @@ body {
   width: 100%;
   height: 100%;
   /* Системный шрифт для UI элементов (читаемость и консистентность) */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   /* Размер шрифта как в IDE: 13px */
   font-size: 13px;
   line-height: 1.5;
@@ -158,7 +158,8 @@ pre,
 .file-name,
 .code-block,
 .mono-text {
-  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Consolas', 'Fira Code',
+  font-family:
+    'SF Mono', 'Monaco', 'Cascadia Code', 'Consolas', 'Fira Code',
     'JetBrains Mono', 'Courier New', monospace;
   font-size: 13px;
 }

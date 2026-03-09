@@ -1,4 +1,5 @@
 # Глубокое исследование Gemini моделей и интеграция с R2R
+
 ## Deep Research: Gemini Models & R2R Optimization for Maximum Efficiency
 
 > **Цель:** Максимизировать эффективность R2R-Application через оптимальную настройку и использование моделей Gemini
@@ -10,7 +11,9 @@
 ### 1.1 Обзор моделей Gemini (2024-2025)
 
 #### Gemini 2.5 Pro
+
 **Характеристики:**
+
 - **Input tokens:** 1,048,576 (1M+)
 - **Output tokens:** 65,536
 - **Multimodal:** ✅ (audio, images, video, text, PDFs)
@@ -19,6 +22,7 @@
 - **Pricing:** Premium (выше чем Flash)
 
 **Ключевые возможности:**
+
 - Structured outputs
 - Caching
 - Function calling
@@ -27,7 +31,9 @@
 - Extended thinking (thinking_budget)
 
 #### Gemini 2.5 Flash
+
 **Характеристики:**
+
 - **Input tokens:** 1,048,576
 - **Output tokens:** 65,536
 - **Multimodal:** ✅
@@ -36,12 +42,15 @@
 - **Pricing:** $0.10/1M input, $0.40/1M output
 
 **Преимущества:**
+
 - Быстрее чем Pro
 - Дешевле чем Pro
 - Хорошая производительность для большинства задач
 
 #### Gemini 2.0 Flash Thinking Pro
+
 **Характеристики:**
+
 - **Benchmarks:**
   - General Knowledge (MMLU-Pro): 77.6%
   - Code Generation (LiveCodeBench v5): 34.5%
@@ -51,7 +60,9 @@
 - **Pricing:** $0.10/1M input, $0.40/1M output
 
 #### Gemini 3 Pro (ноябрь 2025)
+
 **Характеристики:**
+
 - Новейшая модель
 - Улучшенная multimodal understanding
 - Используется в Google Antigravity IDE
@@ -59,6 +70,7 @@
 ### 1.2 Ключевые параметры конфигурации
 
 #### Temperature
+
 ```typescript
 // Рекомендации для разных задач:
 interface TemperatureSettings {
@@ -68,14 +80,14 @@ interface TemperatureSettings {
     balanced: 0.3-0.5,         // Баланс точности и креативности
     creative: 0.5-0.7,         // Больше вариативности
   };
-  
+
   // RAG Generation
   ragGeneration: {
     factual: 0.1-0.3,          // Фактические ответы
     balanced: 0.3-0.7,         // Баланс
     creative: 0.7-1.0,         // Креативные ответы
   };
-  
+
   // Reasoning Tasks
   reasoning: {
     strict: 0.0-0.2,           // Строгое рассуждение
@@ -85,24 +97,26 @@ interface TemperatureSettings {
 ```
 
 #### Thinking Budget
+
 ```typescript
 // Стратегии thinking budget:
 interface ThinkingBudgetStrategies {
   // Speed-optimized (для простых задач)
   fast: 0,                     // Отключено, максимальная скорость
-  
+
   // Balanced (для большинства задач)
   balanced: -1,                // Dynamic - модель решает сама
-  
+
   // Quality-optimized (для сложных задач)
   quality: 4096-8192,          // Средний budget
-  
+
   // Maximum reasoning (для очень сложных задач)
   maximum: 16384-24576,        // Максимальный budget
 }
 ```
 
 #### Top-p и Top-k
+
 ```typescript
 interface SamplingSettings {
   // Deterministic (для кода)
@@ -110,13 +124,13 @@ interface SamplingSettings {
     top_p: 0.9-1.0,
     top_k: 20-40,
   };
-  
+
   // Balanced
   balanced: {
     top_p: 0.95,
     top_k: 40,
   };
-  
+
   // Creative
   creative: {
     top_p: 1.0,
@@ -128,12 +142,14 @@ interface SamplingSettings {
 ### 1.3 Embeddings: text-embedding-004
 
 **Характеристики:**
+
 - **Dimensions:** 768 (default), configurable 128-3072
 - **Tasks:** retrieval, similarity, classification, clustering
 - **Languages:** 100+ languages
 - **Performance:** State-of-the-art для RAG
 
 **Преимущества для R2R:**
+
 - Высокое качество embeddings
 - Мультиязычность
 - Гибкая размерность
@@ -170,7 +186,7 @@ concurrent_request_limit = 64
   top_k = 40
   max_tokens_to_sample = 8192    # Достаточно для длинных ответов
   stream = true                   # Streaming для лучшего UX
-  
+
   # Thinking budget для сложных задач
   thinking_budget = -1            # Dynamic - модель решает сама
   # Для очень сложных задач можно установить:
@@ -223,7 +239,7 @@ document_summary_model = "google/gemini-2.5-flash"
   semantic_neighbors = 10
   semantic_similarity_threshold = 0.7
   # Flash для enrichment - быстро и эффективно
-  generation_config = { 
+  generation_config = {
     model = "google/gemini-2.5-flash",
     temperature = 0.2,
     thinking_budget = 1024
@@ -244,7 +260,7 @@ batch_size = 256
   max_knowledge_relationships = 100
   max_description_input_length = 65536
   # Flash для быстрого извлечения entities
-  generation_config = { 
+  generation_config = {
     model = "google/gemini-2.5-flash",
     temperature = 0.1,
     thinking_budget = 2048
@@ -253,7 +269,7 @@ batch_size = 256
   [database.graph_enrichment_settings]
   max_summary_input_length = 65536
   # Flash для enrichment
-  generation_config = { 
+  generation_config = {
     model = "google/gemini-2.5-flash",
     temperature = 0.2,
     thinking_budget = 1024
@@ -261,7 +277,7 @@ batch_size = 256
 
   [database.graph_search_settings]
   # Flash для graph search
-  generation_config = { 
+  generation_config = {
     model = "google/gemini-2.5-flash",
     temperature = 0.3,
     thinking_budget = -1
@@ -321,7 +337,7 @@ export interface GeminiTaskProfile {
 
 export class GeminiService {
   private client: r2rClient;
-  
+
   // Профили для разных задач
   private readonly taskProfiles: GeminiTaskProfile = {
     // Генерация кода - низкая temperature, средний thinking budget
@@ -334,18 +350,18 @@ export class GeminiService {
       maxTokens: 8192,
       stream: true,
     },
-    
+
     // RAG генерация - сбалансированные настройки
     ragGeneration: {
       model: 'gemini-2.5-flash',
       temperature: 0.3,
-      thinkingBudget: -1,  // Dynamic
+      thinkingBudget: -1, // Dynamic
       topP: 0.95,
       topK: 40,
       maxTokens: 8192,
       stream: true,
     },
-    
+
     // Сложные рассуждения - Pro модель, высокий thinking budget
     reasoning: {
       model: 'gemini-2.5-pro',
@@ -356,18 +372,18 @@ export class GeminiService {
       maxTokens: 16384,
       stream: true,
     },
-    
+
     // Быстрые ответы - Flash, минимальный thinking
     fastResponse: {
       model: 'gemini-2.5-flash',
       temperature: 0.3,
-      thinkingBudget: 0,  // Отключено для скорости
+      thinkingBudget: 0, // Отключено для скорости
       topP: 0.95,
       topK: 40,
       maxTokens: 2048,
       stream: true,
     },
-    
+
     // Качество превыше всего - Pro, максимальный thinking
     qualityOptimized: {
       model: 'gemini-2.5-pro',
@@ -482,10 +498,7 @@ ${context ? `\nContext:\n\`\`\`\n${context}\n\`\`\`` : ''}`;
   }
 
   // Embeddings с Gemini
-  async generateEmbeddings(
-    texts: string | string[],
-    dimension: number = 768
-  ) {
+  async generateEmbeddings(texts: string | string[], dimension: number = 768) {
     return this.client.retrieval.embedding({
       text: texts,
       model: 'google/text-embedding-004',
@@ -670,8 +683,8 @@ export const CODE_GEMINI_CONFIGS = {
   // Генерация кода
   codeGeneration: {
     model: 'gemini-2.5-flash' as const,
-    temperature: 0.2,              // Низкая для точности
-    thinkingBudget: 2048,          // Средний для понимания задачи
+    temperature: 0.2, // Низкая для точности
+    thinkingBudget: 2048, // Средний для понимания задачи
     topP: 0.95,
     topK: 40,
     maxTokens: 8192,
@@ -681,8 +694,8 @@ export const CODE_GEMINI_CONFIGS = {
   // Анализ кода
   codeAnalysis: {
     model: 'gemini-2.5-pro' as const,
-    temperature: 0.1,              // Очень низкая для точного анализа
-    thinkingBudget: 4096,           // Высокий для глубокого анализа
+    temperature: 0.1, // Очень низкая для точного анализа
+    thinkingBudget: 4096, // Высокий для глубокого анализа
     topP: 0.9,
     topK: 20,
     maxTokens: 16384,
@@ -693,7 +706,7 @@ export const CODE_GEMINI_CONFIGS = {
   codeRefactoring: {
     model: 'gemini-2.5-pro' as const,
     temperature: 0.2,
-    thinkingBudget: 8192,           // Высокий для понимания структуры
+    thinkingBudget: 8192, // Высокий для понимания структуры
     topP: 0.95,
     topK: 40,
     maxTokens: 16384,
@@ -714,8 +727,8 @@ export const CODE_GEMINI_CONFIGS = {
   // Объяснение кода
   codeExplanation: {
     model: 'gemini-2.5-flash' as const,
-    temperature: 0.4,              // Немного выше для естественности
-    thinkingBudget: -1,              // Dynamic
+    temperature: 0.4, // Немного выше для естественности
+    thinkingBudget: -1, // Dynamic
     topP: 0.95,
     topK: 40,
     maxTokens: 4096,
@@ -832,7 +845,8 @@ export class GeminiAdvancedIngestion extends AdvancedIngestionService {
       metadata: {
         language,
         original_length: text.length,
-        processed_length: improved.results.generated_answer?.length || text.length,
+        processed_length:
+          improved.results.generated_answer?.length || text.length,
       },
     };
   }
@@ -880,10 +894,7 @@ export class GeminiCodeSearchService {
   }
 
   // Multi-query search с Gemini
-  async multiQueryCodeSearch(
-    query: string,
-    numVariants: number = 3
-  ) {
+  async multiQueryCodeSearch(query: string, numVariants: number = 3) {
     // Генерируем варианты запроса через Gemini
     const variants = await this.geminiService.ragWithGemini(
       `Generate ${numVariants} different search query variants for this programming question: "${query}"`,
@@ -926,13 +937,13 @@ export interface GeminiIngestionConfig extends IngestionConfig {
   gemini?: {
     // Модель для pre-processing
     preprocessingModel?: 'gemini-2.5-flash' | 'gemini-2.5-pro';
-    
+
     // Модель для chunk enrichment
     enrichmentModel?: 'gemini-2.5-flash' | 'gemini-2.5-pro';
-    
+
     // Thinking budget для enrichment
     enrichmentThinkingBudget?: number;
-    
+
     // Использовать Gemini embeddings
     useGeminiEmbeddings?: boolean;
     embeddingDimension?: number;
@@ -1084,11 +1095,11 @@ export const GEMINI_MODEL_SELECTION_GUIDE = {
 
   // Thinking Budget рекомендации:
   thinkingBudget: {
-    fast: 0,                    // Простые задачи
-    balanced: -1,               // Большинство задач (dynamic)
-    moderate: 2048,             // Средняя сложность
-    deep: 4096-8192,            // Сложные задачи
-    maximum: 16384-24576,       // Очень сложные задачи
+    fast: 0, // Простые задачи
+    balanced: -1, // Большинство задач (dynamic)
+    moderate: 2048, // Средняя сложность
+    deep: 4096 - 8192, // Сложные задачи
+    maximum: 16384 - 24576, // Очень сложные задачи
   },
 };
 ```
@@ -1104,7 +1115,7 @@ export const COST_OPTIMIZATION_STRATEGIES = {
   // Минимизировать thinking budget где возможно
   minimizeThinkingBudget: {
     simpleTasks: 0,
-    moderateTasks: -1,  // Dynamic
+    moderateTasks: -1, // Dynamic
     complexTasks: 4096,
   },
 
@@ -1117,7 +1128,7 @@ export const COST_OPTIMIZATION_STRATEGIES = {
   // Кэширование результатов
   caching: {
     enableCaching: true,
-    cacheTTL: 3600,  // 1 hour
+    cacheTTL: 3600, // 1 hour
   },
 
   // Оптимизация chunk size
@@ -1146,7 +1157,7 @@ export const PERFORMANCE_OPTIMIZATION = {
 
   // Оптимизация embeddings
   embeddingOptimization: {
-    dimension: 768,  // Оптимальный для Gemini
+    dimension: 768, // Оптимальный для Gemini
     batchSize: 512,
     useAsync: true,
   },
@@ -1170,16 +1181,16 @@ export const PERFORMANCE_OPTIMIZATION = {
 export interface GeminiContextValue {
   // Текущая конфигурация
   currentConfig: GeminiModelConfig;
-  
+
   // Профили задач
   taskProfiles: GeminiTaskProfile;
-  
+
   // Методы
   setModel: (model: GeminiModelConfig['model']) => void;
   setTemperature: (temp: number) => void;
   setThinkingBudget: (budget: number | -1) => void;
   applyProfile: (profile: keyof GeminiTaskProfile) => void;
-  
+
   // Сервис
   geminiService: GeminiService | null;
 }
@@ -1238,7 +1249,7 @@ const ChatPage: React.FC = () => {
     if (!geminiService) return;
 
     const profile = geminiMode === 'flash' ? 'ragGeneration' : 'qualityOptimized';
-    
+
     return geminiService.ragWithGemini(query, profile, {
       searchSettings: {
         use_semantic_search: true,
@@ -1258,7 +1269,7 @@ const ChatPage: React.FC = () => {
         config={currentConfig}
         onConfigChange={applyProfile}
       />
-      
+
       {/* Остальной UI */}
     </Layout>
   );
@@ -1286,10 +1297,10 @@ export const GeminiUploadDialog: React.FC<UploadDialogProps> = ({
 
   const handleUpload = async (files: File[]) => {
     const service = new GeminiAdvancedIngestion(client);
-    
+
     for (const file of files) {
       const language = detectLanguage(file.name);
-      
+
       if (language) {
         // Используем Gemini-оптимизированную загрузку
         await service.ingestCodeWithGemini(file, language, {
@@ -1309,7 +1320,7 @@ export const GeminiUploadDialog: React.FC<UploadDialogProps> = ({
         <DialogHeader>
           <DialogTitle>Upload with Gemini Optimization</DialogTitle>
         </DialogHeader>
-        
+
         {/* Gemini Configuration */}
         <GeminiConfigPanel
           config={geminiConfig.gemini}
@@ -1317,7 +1328,7 @@ export const GeminiUploadDialog: React.FC<UploadDialogProps> = ({
             setGeminiConfig({ ...geminiConfig, gemini })
           }
         />
-        
+
         {/* Upload UI */}
       </DialogContent>
     </Dialog>
@@ -1330,24 +1341,28 @@ export const GeminiUploadDialog: React.FC<UploadDialogProps> = ({
 ## 📋 Roadmap реализации
 
 ### Sprint 1 (1 неделя): Базовая интеграция Gemini
+
 - [ ] Создать GeminiService
 - [ ] Настроить r2r.toml для Gemini
 - [ ] Добавить GeminiConfigPanel
 - [ ] Интегрировать в Chat страницу
 
 ### Sprint 2 (1 неделя): Оптимизация Ingestion
+
 - [ ] Gemini-оптимизированная загрузка
 - [ ] Code-specific ingestion с Gemini
 - [ ] Chunk enrichment с Gemini
 - [ ] Gemini embeddings integration
 
 ### Sprint 3 (1 неделя): Advanced Search & RAG
+
 - [ ] HyDE с Gemini
 - [ ] Multi-query с Gemini
 - [ ] Code search с Gemini embeddings
 - [ ] Enhanced RAG с Gemini
 
 ### Sprint 4 (1 неделя): Data Quality
+
 - [ ] Валидация с Gemini
 - [ ] Metadata enrichment с Gemini
 - [ ] Quality monitoring
@@ -1358,17 +1373,20 @@ export const GeminiUploadDialog: React.FC<UploadDialogProps> = ({
 ## 📊 Метрики успеха
 
 ### Производительность
+
 - [ ] RAG latency < 2s (Flash)
 - [ ] RAG latency < 5s (Pro для сложных задач)
 - [ ] Embedding generation < 500ms
 - [ ] Code search < 1s
 
 ### Качество
+
 - [ ] Code generation accuracy > 85%
 - [ ] RAG answer quality > 90%
 - [ ] Embedding quality > 95% similarity
 
 ### Стоимость
+
 - [ ] 80%+ запросов используют Flash
 - [ ] Средняя стоимость на запрос < $0.01
 - [ ] Оптимизация через thinking budget
@@ -1378,12 +1396,14 @@ export const GeminiUploadDialog: React.FC<UploadDialogProps> = ({
 ## 🎯 Ключевые рекомендации
 
 ### Для программирования:
+
 1. **Code Generation:** Gemini 2.5 Flash, temperature 0.2, thinking_budget 2048
 2. **Code Analysis:** Gemini 2.5 Pro, temperature 0.1, thinking_budget 4096+
 3. **Code Search:** Gemini embeddings (text-embedding-004), dimension 768
 4. **RAG для кода:** Gemini 2.5 Flash, temperature 0.3, thinking_budget -1 (dynamic)
 
 ### Для общего использования:
+
 1. **RAG:** Gemini 2.5 Flash, temperature 0.3, thinking_budget -1
 2. **Fast Responses:** Gemini 2.5 Flash, thinking_budget 0
 3. **Quality Critical:** Gemini 2.5 Pro, thinking_budget 8192+

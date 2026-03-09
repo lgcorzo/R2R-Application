@@ -1,4 +1,5 @@
 # Технический план улучшений для программиста
+
 ## R2R-Application Code Quality & Architecture Improvements
 
 > **Цель:** Улучшить качество кода, архитектуру, производительность и поддерживаемость проекта
@@ -8,6 +9,7 @@
 ## 📊 Текущее состояние кодовой базы
 
 ### Метрики
+
 - **Строк кода:** ~15,000+ (только src/)
 - **Компонентов:** 50+
 - **Страниц:** 15+
@@ -76,6 +78,7 @@ src/pages/explorer/
 ```
 
 **Задачи:**
+
 - [ ] Создать структуру папок для explorer
 - [ ] Выделить FileManager в отдельный компонент
 - [ ] Создать кастомные хуки для логики
@@ -106,6 +109,7 @@ src/services/
 ```
 
 **Задачи:**
+
 - [ ] Выделить AuthContext для аутентификации
 - [ ] Создать authService для бизнес-логики
 - [ ] Разделить UserContext на более мелкие контексты
@@ -180,13 +184,14 @@ export class DocumentsService {
 ```
 
 **Задачи:**
+
 - [ ] Создать структуру services/api
 - [ ] Реализовать DocumentsService
 - [ ] Реализовать CollectionsService
 - [ ] Реализовать SearchService
 - [ ] Реализовать ChatService
 - [ ] Создать React Query hooks для каждого сервиса
-- [ ] Заменить прямые вызовы client.* на сервисы
+- [ ] Заменить прямые вызовы client.\* на сервисы
 
 **Оценка:** 4-5 дней
 
@@ -224,6 +229,7 @@ function handleError(error: ApiError | Error) { ... }
 ```
 
 **Задачи:**
+
 - [ ] Проанализировать все использования `any`
 - [ ] Создать типы для каждого случая
 - [ ] Заменить `any` на конкретные типы
@@ -244,9 +250,9 @@ function handleError(error: ApiError | Error) { ... }
 // .eslintrc.json
 {
   "rules": {
-    "@typescript-eslint/no-explicit-any": "error",        // Включить
-    "@typescript-eslint/no-unused-vars": "error",         // Включить
-    "react-hooks/exhaustive-deps": "warn",                // Включить
+    "@typescript-eslint/no-explicit-any": "error", // Включить
+    "@typescript-eslint/no-unused-vars": "error", // Включить
+    "react-hooks/exhaustive-deps": "warn", // Включить
     "@typescript-eslint/explicit-function-return-type": "warn",
     "@typescript-eslint/no-floating-promises": "error",
     "@typescript-eslint/await-thenable": "error",
@@ -257,6 +263,7 @@ function handleError(error: ApiError | Error) { ... }
 ```
 
 **Задачи:**
+
 - [ ] Обновить .eslintrc.json
 - [ ] Исправить все ошибки ESLint
 - [ ] Настроить pre-commit hook для проверки
@@ -287,6 +294,7 @@ logger.error('Login failed', error, { email, attemptCount: 3 });
 ```
 
 **Задачи:**
+
 - [ ] Найти все `console.log/error/warn`
 - [ ] Заменить на `logger.info/error/warn`
 - [ ] Добавить контекст к логам
@@ -330,6 +338,7 @@ export function useErrorHandler() {
 ```
 
 **Задачи:**
+
 - [ ] Создать ErrorHandler класс
 - [ ] Создать useErrorHandler hook
 - [ ] Заменить try-catch блоки на использование ErrorHandler
@@ -356,25 +365,25 @@ import { DocumentsService } from './documentsService';
 export const documentsKeys = {
   all: ['documents'] as const,
   lists: () => [...documentsKeys.all, 'list'] as const,
-  list: (params: ListDocumentsParams) => 
+  list: (params: ListDocumentsParams) =>
     [...documentsKeys.lists(), params] as const,
   detail: (id: string) => [...documentsKeys.all, 'detail', id] as const,
 };
 
 export function useDocuments(params: ListDocumentsParams) {
   const service = useDocumentsService();
-  
+
   return useQuery({
     queryKey: documentsKeys.list(params),
     queryFn: () => service.list(params),
     staleTime: 5 * 60 * 1000, // 5 минут
-    gcTime: 10 * 60 * 1000,   // 10 минут
+    gcTime: 10 * 60 * 1000, // 10 минут
   });
 }
 
 export function useDocument(id: string) {
   const service = useDocumentsService();
-  
+
   return useQuery({
     queryKey: documentsKeys.detail(id),
     queryFn: () => service.retrieve(id),
@@ -385,7 +394,7 @@ export function useDocument(id: string) {
 export function useDeleteDocument() {
   const queryClient = useQueryClient();
   const service = useDocumentsService();
-  
+
   return useMutation({
     mutationFn: (id: string) => service.delete(id),
     onSuccess: () => {
@@ -396,6 +405,7 @@ export function useDeleteDocument() {
 ```
 
 **Задачи:**
+
 - [ ] Установить @tanstack/react-query
 - [ ] Создать query keys для каждого ресурса
 - [ ] Создать hooks для всех API вызовов
@@ -453,6 +463,7 @@ function VirtualizedList({ items }: { items: Item[] }) {
 ```
 
 **Задачи:**
+
 - [ ] Проанализировать компоненты на ненужные ре-рендеры
 - [ ] Добавить React.memo где необходимо
 - [ ] Использовать useMemo для тяжелых вычислений
@@ -490,6 +501,7 @@ const KnowledgeGraph = dynamic(
 ```
 
 **Задачи:**
+
 - [ ] Добавить dynamic imports для тяжелых страниц
 - [ ] Разделить компоненты на chunks
 - [ ] Настроить preloading для критических компонентов
@@ -539,6 +551,7 @@ afterAll(() => server.close());
 ```
 
 **Задачи:**
+
 - [ ] Установить Jest, React Testing Library
 - [ ] Настроить jest.config.js
 - [ ] Настроить MSW для моков API
@@ -571,11 +584,11 @@ describe('DocumentsService', () => {
     it('should return documents list', async () => {
       const params = { offset: 0, limit: 10 };
       const expected = { results: [], totalEntries: 0 };
-      
+
       mockClient.documents.list.mockResolvedValue(expected);
-      
+
       const result = await service.list(params);
-      
+
       expect(result).toEqual(expected);
       expect(mockClient.documents.list).toHaveBeenCalledWith(params);
     });
@@ -584,6 +597,7 @@ describe('DocumentsService', () => {
 ```
 
 **Задачи:**
+
 - [ ] Написать тесты для всех сервисов
 - [ ] Написать тесты для утилит
 - [ ] Написать тесты для хуков
@@ -610,7 +624,7 @@ describe('DocumentsTable', () => {
 
   it('should render documents', () => {
     render(<DocumentsTable documents={mockDocuments} />);
-    
+
     expect(screen.getByText('Doc 1')).toBeInTheDocument();
     expect(screen.getByText('Doc 2')).toBeInTheDocument();
   });
@@ -618,12 +632,12 @@ describe('DocumentsTable', () => {
   it('should handle selection', () => {
     const onSelect = jest.fn();
     render(
-      <DocumentsTable 
-        documents={mockDocuments} 
+      <DocumentsTable
+        documents={mockDocuments}
         onSelect={onSelect}
       />
     );
-    
+
     fireEvent.click(screen.getByLabelText('Select Doc 1'));
     expect(onSelect).toHaveBeenCalledWith('1', true);
   });
@@ -631,6 +645,7 @@ describe('DocumentsTable', () => {
 ```
 
 **Задачи:**
+
 - [ ] Написать тесты для критических компонентов
 - [ ] Написать тесты для форм
 - [ ] Написать тесты для таблиц
@@ -650,23 +665,24 @@ import { test, expect } from '@playwright/test';
 
 test('should display documents in explorer', async ({ page }) => {
   await page.goto('/explorer');
-  
+
   await expect(page.locator('text=Documents')).toBeVisible();
   await expect(page.locator('[data-testid="document-item"]')).toHaveCount(10);
 });
 
 test('should filter documents', async ({ page }) => {
   await page.goto('/explorer');
-  
+
   await page.fill('[data-testid="search-input"]', 'test');
   await page.waitForSelector('[data-testid="document-item"]');
-  
+
   const items = await page.locator('[data-testid="document-item"]').count();
   expect(items).toBeGreaterThan(0);
 });
 ```
 
 **Задачи:**
+
 - [ ] Установить Playwright
 - [ ] Написать E2E тесты для критических путей
 - [ ] Настроить CI для запуска E2E тестов
@@ -707,6 +723,7 @@ export const Default: Story = {
 ```
 
 **Задачи:**
+
 - [ ] Установить и настроить Storybook
 - [ ] Создать stories для всех UI компонентов
 - [ ] Добавить документацию к компонентам
@@ -720,10 +737,10 @@ export const Default: Story = {
 
 **Решение:**
 
-```typescript
+````typescript
 /**
  * Service for managing documents in R2R system
- * 
+ *
  * @class DocumentsService
  * @example
  * ```typescript
@@ -734,7 +751,7 @@ export const Default: Story = {
 export class DocumentsService {
   /**
    * Retrieves a list of documents with pagination
-   * 
+   *
    * @param params - Query parameters for listing documents
    * @param params.offset - Number of documents to skip
    * @param params.limit - Maximum number of documents to return
@@ -746,9 +763,10 @@ export class DocumentsService {
     // ...
   }
 }
-```
+````
 
 **Задачи:**
+
 - [ ] Добавить JSDoc ко всем публичным методам
 - [ ] Добавить JSDoc к компонентам
 - [ ] Добавить примеры использования
@@ -761,29 +779,34 @@ export class DocumentsService {
 ## 📋 Чеклист выполнения
 
 ### Неделя 1-2: Критический рефакторинг
+
 - [ ] Разбить explorer.tsx на модули
 - [ ] Рефакторинг UserContext
 - [ ] Создать API Layer
-- [ ] Начать замену прямых вызовов client.*
+- [ ] Начать замену прямых вызовов client.\*
 
 ### Неделя 3-4: Качество кода
+
 - [ ] Устранить все `any`
 - [ ] Включить строгие ESLint правила
 - [ ] Заменить console.log на logger
 - [ ] Централизованная обработка ошибок
 
 ### Неделя 5-6: Производительность
+
 - [ ] Внедрить React Query
 - [ ] Оптимизация рендеринга
 - [ ] Code splitting
 
 ### Неделя 7-9: Тестирование
+
 - [ ] Настроить тестовое окружение
 - [ ] Unit тесты для сервисов
 - [ ] Component тесты
 - [ ] E2E тесты
 
 ### Неделя 10: Документация
+
 - [ ] Storybook
 - [ ] JSDoc комментарии
 
@@ -820,18 +843,21 @@ export class DocumentsService {
 ## 📈 Метрики успеха
 
 ### Качество кода
+
 - [ ] 0 использований `any` (кроме необходимых случаев)
 - [ ] 0 ESLint ошибок
 - [ ] 80%+ test coverage
 - [ ] Все компоненты < 300 строк
 
 ### Производительность
+
 - [ ] Bundle size < 500KB (gzipped)
 - [ ] Time to Interactive < 3s
 - [ ] Lighthouse score > 90
 - [ ] 0 ненужных ре-рендеров (по React DevTools)
 
 ### Архитектура
+
 - [ ] Все API вызовы через сервисы
 - [ ] Все данные через React Query
 - [ ] Четкое разделение ответственности
@@ -842,18 +868,21 @@ export class DocumentsService {
 ## 🎯 Приоритеты
 
 ### 🔴 Критично (сделать первым)
+
 1. Разбить монолитные компоненты
 2. Создать API Layer
 3. Внедрить React Query
 4. Устранить `any`
 
 ### 🟡 Важно (следующий спринт)
+
 5. Рефакторинг UserContext
 6. Централизованная обработка ошибок
 7. Оптимизация рендеринга
 8. Unit тесты
 
 ### 🟢 Желательно (когда будет время)
+
 9. E2E тесты
 10. Storybook
 11. JSDoc документация
@@ -863,6 +892,7 @@ export class DocumentsService {
 ## 💡 Best Practices
 
 ### Структура файлов
+
 ```
 src/
 ├── components/          # UI компоненты
@@ -882,6 +912,7 @@ src/
 ```
 
 ### Naming conventions
+
 - Компоненты: `PascalCase` (DocumentsTable.tsx)
 - Хуки: `camelCase` с префиксом `use` (useDocuments.ts)
 - Сервисы: `PascalCase` с суффиксом `Service` (DocumentsService.ts)
@@ -889,6 +920,7 @@ src/
 - Типы: `PascalCase` с суффиксом `Type` или `Interface` (DocumentType.ts)
 
 ### Code organization
+
 - Один компонент = один файл
 - Максимум 300 строк на файл
 - Явные импорты (не `import *`)

@@ -13,12 +13,13 @@
 ## Справочник: r2r-js SDK API
 
 ### Documents API
+
 ```javascript
 // Создание документа
 const result = await client.documents.create({
-  file: { path: "document.pdf", name: "document.pdf" },
-  metadata: { category: "research" },
-  ingestionMode: "hi-res"  // "fast" | "hi-res" | "custom"
+  file: { path: 'document.pdf', name: 'document.pdf' },
+  metadata: { category: 'research' },
+  ingestionMode: 'hi-res', // "fast" | "hi-res" | "custom"
 });
 
 // Получение документа
@@ -37,7 +38,7 @@ const blob = await client.documents.download({ id: documentId });
 const chunks = await client.documents.listChunks({
   id: documentId,
   offset: 0,
-  limit: 50
+  limit: 50,
 });
 
 // Извлечение (KG extraction)
@@ -47,18 +48,19 @@ await client.documents.extract({ id: documentId });
 const entities = await client.documents.listEntities({
   id: documentId,
   offset: 0,
-  limit: 50
+  limit: 50,
 });
 
 // Список relationships документа
 const relationships = await client.documents.listRelationships({
   id: documentId,
   offset: 0,
-  limit: 50
+  limit: 50,
 });
 ```
 
 ### Collections API
+
 ```javascript
 // Список коллекций
 const collections = await client.collections.list({ limit: 100, offset: 0 });
@@ -67,23 +69,24 @@ const collections = await client.collections.list({ limit: 100, offset: 0 });
 const docs = await client.collections.listDocuments({
   id: collectionId,
   limit: 100,
-  offset: 0
+  offset: 0,
 });
 
 // Добавить документ в коллекцию
 await client.collections.addDocument({
   id: collectionId,
-  documentId: documentId
+  documentId: documentId,
 });
 
 // Удалить документ из коллекции
 await client.collections.removeDocument({
   id: collectionId,
-  documentId: documentId
+  documentId: documentId,
 });
 ```
 
 ### Chunks API
+
 ```javascript
 // Получить chunk
 const chunk = await client.chunks.retrieve({ id: chunkId });
@@ -91,8 +94,8 @@ const chunk = await client.chunks.retrieve({ id: chunkId });
 // Обновить chunk
 await client.chunks.update({
   id: chunkId,
-  text: "Updated text",
-  metadata: { edited: true }
+  text: 'Updated text',
+  metadata: { edited: true },
 });
 
 // Удалить chunk
@@ -100,14 +103,15 @@ await client.chunks.delete({ id: chunkId });
 ```
 
 ### Retrieval API (Search & RAG)
+
 ```javascript
 // Semantic search
 const results = await client.retrieval.search({
-  query: "What is machine learning?",
+  query: 'What is machine learning?',
   searchSettings: {
     useSemanticSearch: true,
-    limit: 10
-  }
+    limit: 10,
+  },
 });
 
 // Hybrid search (semantic + fulltext)
@@ -119,35 +123,36 @@ const hybridResults = await client.retrieval.search({
       fullTextWeight: 1.0,
       semanticWeight: 5.0,
       fullTextLimit: 200,
-      rrfK: 50
+      rrfK: 50,
     },
-    filters: { "metadata.title": { "$in": ["uber_2021.pdf"] } },
-    limit: 10
-  }
+    filters: { 'metadata.title': { $in: ['uber_2021.pdf'] } },
+    limit: 10,
+  },
 });
 
 // Knowledge Graph search
 const kgResults = await client.retrieval.search({
-  query: "Who was Aristotle?",
+  query: 'Who was Aristotle?',
   graphSearchSettings: {
     useGraphSearch: true,
-    kgSearchType: "local"
-  }
+    kgSearchType: 'local',
+  },
 });
 
 // RAG (Retrieval-Augmented Generation)
 const ragResponse = await client.retrieval.rag({
-  query: "Summarize the main findings",
+  query: 'Summarize the main findings',
   searchSettings: { useHybridSearch: true },
   ragGenerationConfig: {
-    model: "anthropic/claude-3-haiku-20240307",
+    model: 'anthropic/claude-3-haiku-20240307',
     temperature: 0.5,
-    stream: false
-  }
+    stream: false,
+  },
 });
 ```
 
 ### Graphs API (Knowledge Graph)
+
 ```javascript
 // Извлечь entities и relationships из документа
 await client.documents.extract({ id: documentId });
@@ -156,7 +161,7 @@ await client.documents.extract({ id: documentId });
 const entities = await client.documents.listEntities({
   id: documentId,
   offset: 0,
-  limit: 50
+  limit: 50,
 });
 // Response: { results: [{ name, category, description, id }], totalEntries }
 
@@ -164,7 +169,7 @@ const entities = await client.documents.listEntities({
 const relationships = await client.documents.listRelationships({
   id: documentId,
   offset: 0,
-  limit: 50
+  limit: 50,
 });
 // Response: { results: [{ subject, predicate, object, description }], totalEntries }
 
@@ -177,25 +182,25 @@ const graphRelationships = await client.graphs.listRelationships(collectionId);
 // Создать custom entity
 await client.graphs.createEntity({
   collectionId,
-  name: "Custom Entity",
-  category: "CONCEPT",
-  description: "Description of the entity",
-  metadata: { source: "manual" }
+  name: 'Custom Entity',
+  category: 'CONCEPT',
+  description: 'Description of the entity',
+  metadata: { source: 'manual' },
 });
 
 // Создать custom relationship
 await client.graphs.createRelationship({
   collectionId,
-  subject: "Entity A",
-  predicate: "RELATES_TO",
-  object: "Entity B",
-  description: "Description of relationship"
+  subject: 'Entity A',
+  predicate: 'RELATES_TO',
+  object: 'Entity B',
+  description: 'Description of relationship',
 });
 
 // Удалить entity из графа
 await client.graphs.removeEntity({
   collectionId,
-  entityId
+  entityId,
 });
 ```
 
@@ -204,54 +209,87 @@ await client.graphs.removeEntity({
 ## Справочник: shadcn/ui компоненты
 
 ### Используемые компоненты в explorer
-| Компонент | Зависимости | Назначение |
-|-----------|-------------|------------|
-| `sidebar` | @radix-ui/react-slot, class-variance-authority, lucide-react | Боковая панель с коллекциями |
-| `dialog` | @radix-ui/react-dialog | Модальные окна (upload, details) |
-| `table` | - | Список документов |
-| `button` | @radix-ui/react-slot, class-variance-authority | Кнопки действий |
-| `input` | - | Поля ввода (поиск, метаданные) |
-| `badge` | class-variance-authority | Статусы документов |
-| `breadcrumb` | @radix-ui/react-slot | Навигация по коллекциям |
-| `dropdown-menu` | @radix-ui/react-dropdown-menu | Контекстные меню |
-| `tooltip` | @radix-ui/react-tooltip | Подсказки |
-| `tabs` | @radix-ui/react-tabs | Вкладки (file/url upload) |
-| `select` | @radix-ui/react-select | Выбор коллекций, качества |
-| `checkbox` | @radix-ui/react-checkbox | Выбор документов |
-| `scroll-area` | @radix-ui/react-scroll-area | Скроллируемые области |
-| `progress` | @radix-ui/react-progress | Прогресс загрузки |
+
+| Компонент       | Зависимости                                                  | Назначение                       |
+| --------------- | ------------------------------------------------------------ | -------------------------------- |
+| `sidebar`       | @radix-ui/react-slot, class-variance-authority, lucide-react | Боковая панель с коллекциями     |
+| `dialog`        | @radix-ui/react-dialog                                       | Модальные окна (upload, details) |
+| `table`         | -                                                            | Список документов                |
+| `button`        | @radix-ui/react-slot, class-variance-authority               | Кнопки действий                  |
+| `input`         | -                                                            | Поля ввода (поиск, метаданные)   |
+| `badge`         | class-variance-authority                                     | Статусы документов               |
+| `breadcrumb`    | @radix-ui/react-slot                                         | Навигация по коллекциям          |
+| `dropdown-menu` | @radix-ui/react-dropdown-menu                                | Контекстные меню                 |
+| `tooltip`       | @radix-ui/react-tooltip                                      | Подсказки                        |
+| `tabs`          | @radix-ui/react-tabs                                         | Вкладки (file/url upload)        |
+| `select`        | @radix-ui/react-select                                       | Выбор коллекций, качества        |
+| `checkbox`      | @radix-ui/react-checkbox                                     | Выбор документов                 |
+| `scroll-area`   | @radix-ui/react-scroll-area                                  | Скроллируемые области            |
+| `progress`      | @radix-ui/react-progress                                     | Прогресс загрузки                |
 
 ### Импорты shadcn/ui
+
 ```typescript
 // Типичный паттерн импорта
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import {
-  Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
-  SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton,
-  SidebarMenuItem, SidebarRail, SidebarInset, SidebarProvider, SidebarTrigger
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarRail,
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
 ```
 
 ### Пример: Sidebar с иконками
-```tsx
-"use client"
 
-import { HomeIcon, InboxIcon, SettingsIcon } from "lucide-react"
+```tsx
+'use client';
+
+import { HomeIcon, InboxIcon, SettingsIcon } from 'lucide-react';
 import {
-  Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent,
-  SidebarGroupLabel, SidebarInset, SidebarMenu, SidebarMenuButton,
-  SidebarMenuItem, SidebarProvider, SidebarTrigger
-} from "@/components/ui/sidebar"
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar';
 
 const items = [
-  { title: "Home", url: "#", icon: HomeIcon },
-  { title: "Inbox", url: "#", icon: InboxIcon },
-  { title: "Settings", url: "#", icon: SettingsIcon },
-]
+  { title: 'Home', url: '#', icon: HomeIcon },
+  { title: 'Inbox', url: '#', icon: InboxIcon },
+  { title: 'Settings', url: '#', icon: SettingsIcon },
+];
 
 export default function AppSidebar() {
   return (
@@ -283,19 +321,25 @@ export default function AppSidebar() {
         </header>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }
 ```
 
 ### Пример: Dialog с формой
+
 ```tsx
 import {
-  Dialog, DialogContent, DialogDescription, DialogFooter,
-  DialogHeader, DialogTitle, DialogTrigger
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export function DialogDemo() {
   return (
@@ -312,7 +356,9 @@ export function DialogDemo() {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">Name</Label>
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
             <Input id="name" className="col-span-3" />
           </div>
         </div>
@@ -321,16 +367,22 @@ export function DialogDemo() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 ```
 
 ### Пример: Table с данными
+
 ```tsx
 import {
-  Table, TableBody, TableCaption, TableCell,
-  TableHead, TableHeader, TableRow
-} from "@/components/ui/table"
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 export function TableDemo() {
   return (
@@ -353,7 +405,7 @@ export function TableDemo() {
         </TableRow>
       </TableBody>
     </Table>
-  )
+  );
 }
 ```
 
@@ -362,6 +414,7 @@ export function TableDemo() {
 ## Обзор рефакторинга
 
 ### Текущая структура
+
 ```text
 src/pages/explorer.tsx (4079 строк)
 ├── formatFileSize()           # helper
@@ -379,6 +432,7 @@ src/pages/explorer.tsx (4079 строк)
 ```
 
 ### Целевая структура
+
 ```text
 src/
 ├── pages/explorer.tsx                    # ~150 строк (layout only)
@@ -411,6 +465,7 @@ src/
 ## Task 1: Создание утилит и типов
 
 **Files:**
+
 - Create: `src/lib/explorer-utils.ts`
 - Create: `src/types/explorer.ts`
 
@@ -552,6 +607,7 @@ git commit -m "refactor(explorer): add utility functions and types"
 ## Task 2: Исправить useDocumentPolling hook
 
 **Files:**
+
 - Modify: `src/hooks/useDocumentPolling.ts`
 
 **Step 1: Добавить реактивный state для isPolling**
@@ -665,7 +721,7 @@ export function useDocumentPolling(
       documentCount: documentIds.length,
     });
 
-    setIsPolling(true);  // ИСПРАВЛЕНИЕ: обновляем state
+    setIsPolling(true); // ИСПРАВЛЕНИЕ: обновляем state
     fetchDocumentUpdates();
     intervalRef.current = setInterval(fetchDocumentUpdates, interval);
   }, [interval, documentIds.length, fetchDocumentUpdates]);
@@ -674,7 +730,7 @@ export function useDocumentPolling(
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
-      setIsPolling(false);  // ИСПРАВЛЕНИЕ: обновляем state
+      setIsPolling(false); // ИСПРАВЛЕНИЕ: обновляем state
       logger.info('Stopped document polling');
     }
   }, []);
@@ -702,7 +758,7 @@ export function useDocumentPolling(
     startPolling,
     stopPolling,
     restartPolling,
-    isPolling,  // Теперь реактивен!
+    isPolling, // Теперь реактивен!
   };
 }
 ```
@@ -724,6 +780,7 @@ git commit -m "fix(hooks): make isPolling reactive in useDocumentPolling"
 ## Task 3: Создать hook useFileUpload
 
 **Files:**
+
 - Create: `src/hooks/useFileUpload.ts`
 
 **Step 1: Создать hook для логики загрузки файлов**
@@ -734,7 +791,11 @@ import { useState, useCallback, useRef } from 'react';
 
 import { useUserContext } from '@/context/UserContext';
 import { useToast } from '@/components/ui/use-toast';
-import { FileUploadStatus, UploadQuality, MetadataField } from '@/types/explorer';
+import {
+  FileUploadStatus,
+  UploadQuality,
+  MetadataField,
+} from '@/types/explorer';
 import { getFileNameOnly } from '@/lib/explorer-utils';
 
 interface UseFileUploadOptions {
@@ -755,7 +816,9 @@ export function useFileUpload(options: UseFileUploadOptions = {}) {
   const { toast } = useToast();
 
   const [files, setFiles] = useState<File[]>([]);
-  const [uploadStatus, setUploadStatus] = useState<Record<string, FileUploadStatus>>({});
+  const [uploadStatus, setUploadStatus] = useState<
+    Record<string, FileUploadStatus>
+  >({});
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -858,7 +921,11 @@ export function useFileUpload(options: UseFileUploadOptions = {}) {
               };
             }
           }
-          return { file: file.name, success: false, error: `Document already exists` };
+          return {
+            file: file.name,
+            success: false,
+            error: `Document already exists`,
+          };
         }
 
         return {
@@ -878,7 +945,11 @@ export function useFileUpload(options: UseFileUploadOptions = {}) {
       if (error.name === 'AbortError') {
         return { file: file.name, success: false, error: 'Upload cancelled' };
       }
-      return { file: file.name, success: false, error: error.message || 'Unknown error' };
+      return {
+        file: file.name,
+        success: false,
+        error: error.message || 'Unknown error',
+      };
     }
   };
 
@@ -913,7 +984,10 @@ export function useFileUpload(options: UseFileUploadOptions = {}) {
           const pipeline = JSON.parse(pipelineStr);
           baseUrl = pipeline?.deploymentUrl || '';
         }
-        if (!baseUrl && window.__RUNTIME_CONFIG__?.NEXT_PUBLIC_R2R_DEPLOYMENT_URL) {
+        if (
+          !baseUrl &&
+          window.__RUNTIME_CONFIG__?.NEXT_PUBLIC_R2R_DEPLOYMENT_URL
+        ) {
           baseUrl = window.__RUNTIME_CONFIG__.NEXT_PUBLIC_R2R_DEPLOYMENT_URL;
         }
         baseUrl = baseUrl.trim().replace(/\/$/, '');
@@ -1036,6 +1110,7 @@ git commit -m "feat(hooks): add useFileUpload hook for upload logic"
 ## Task 4: Создать hook useBulkActions
 
 **Files:**
+
 - Create: `src/hooks/useBulkActions.ts`
 
 **Step 1: Создать hook для bulk операций**
@@ -1314,6 +1389,7 @@ git commit -m "feat(hooks): add useBulkActions hook for bulk operations"
 ## Task 5: Создать ExplorerSidebar компонент
 
 **Files:**
+
 - Create: `src/components/explorer/ExplorerSidebar.tsx`
 
 **Step 1: Извлечь AppSidebar в отдельный файл**
@@ -1462,6 +1538,7 @@ git commit -m "feat(explorer): extract ExplorerSidebar component"
 ## Task 6: Создать BulkActionsBar компонент
 
 **Files:**
+
 - Create: `src/components/explorer/BulkActionsBar.tsx`
 
 **Step 1: Создать компонент bulk actions toolbar**
@@ -1600,6 +1677,7 @@ git commit -m "feat(explorer): add BulkActionsBar component"
 ## Task 7: Создать FileManagerHeader компонент
 
 **Files:**
+
 - Create: `src/components/explorer/FileManagerHeader.tsx`
 
 **Step 1: Создать header с поиском и view toggle**
@@ -1784,6 +1862,7 @@ git commit -m "feat(explorer): add FileManagerHeader component"
 ## Task 8: Удалить неиспользуемые импорты из explorer.tsx
 
 **Files:**
+
 - Modify: `src/pages/explorer.tsx`
 
 **Step 1: Запустить ESLint с автофиксом**
@@ -1808,11 +1887,13 @@ git commit -m "refactor(explorer): remove unused imports"
 ## Task 9: Интегрировать новые компоненты в explorer.tsx
 
 **Files:**
+
 - Modify: `src/pages/explorer.tsx`
 
 **Step 1: Заменить inline компоненты на импортированные**
 
 Заменить использование:
+
 1. `AppSidebar` → `ExplorerSidebar`
 2. Inline bulk actions → `BulkActionsBar`
 3. Inline header → `FileManagerHeader`
@@ -1823,7 +1904,10 @@ git commit -m "refactor(explorer): remove unused imports"
 ```typescript
 // Добавить новые импорты
 import { ExplorerSidebar } from '@/components/explorer/ExplorerSidebar';
-import { BulkActionsBar, BulkAction } from '@/components/explorer/BulkActionsBar';
+import {
+  BulkActionsBar,
+  BulkAction,
+} from '@/components/explorer/BulkActionsBar';
 import { FileManagerHeader } from '@/components/explorer/FileManagerHeader';
 import { useBulkActions } from '@/hooks/useBulkActions';
 import { useFileUpload } from '@/hooks/useFileUpload';
@@ -1857,6 +1941,7 @@ Expected: All pass
 Run: `cd /Users/laptop/mcp/R2R-Application && pnpm dev`
 
 Checklist:
+
 - [ ] Страница `/explorer` загружается
 - [ ] Sidebar отображает коллекции
 - [ ] Документы загружаются и отображаются
@@ -1886,15 +1971,16 @@ git commit -m "refactor(explorer): complete modular refactoring
 
 ## Summary
 
-| До | После |
-|-----|-------|
+| До                         | После                       |
+| -------------------------- | --------------------------- |
 | `explorer.tsx`: 4079 строк | `explorer.tsx`: ~1500 строк |
-| Монолитный компонент | 5 модульных компонентов |
-| Inline логика | 4 переиспользуемых hooks |
-| 10 unused imports | 0 unused imports |
-| `isPolling` не реактивен | `isPolling` реактивен |
+| Монолитный компонент       | 5 модульных компонентов     |
+| Inline логика              | 4 переиспользуемых hooks    |
+| 10 unused imports          | 0 unused imports            |
+| `isPolling` не реактивен   | `isPolling` реактивен       |
 
 ### Новые файлы
+
 ```text
 src/
 ├── lib/explorer-utils.ts              # 60 строк

@@ -1,4 +1,5 @@
 # План интеграции MCP и улучшений R2R-Application для программирования
+
 ## Maximizing R2R API & MCP Protocol for Developer Productivity
 
 > **Цель:** Создать мощный dashboard для программирования с полной интеграцией MCP сервера и максимальным использованием возможностей R2R API
@@ -8,6 +9,7 @@
 ## 📊 Текущее состояние
 
 ### Анализ кодовой базы
+
 - **Страниц:** 13 файлов в `/src/pages`
 - **Размер страниц:** от 580 байт до 18,524 байт
 - **MCP интеграция:** ❌ Отсутствует
@@ -17,6 +19,7 @@
 - **Codebase Search:** ❌ Нет
 
 ### Доступные возможности R2R API (не используются)
+
 - ✅ Agentic RAG с research mode
 - ✅ Python executor tool
 - ✅ Reasoning и critique tools
@@ -71,17 +74,20 @@ export class MCPClient {
       command: serverPath,
       args: args || [],
     });
-    
-    this.client = new Client({
-      name: 'r2r-dashboard',
-      version: '1.0.0',
-    }, {
-      capabilities: {
-        tools: {},
-        resources: {},
-        prompts: {},
+
+    this.client = new Client(
+      {
+        name: 'r2r-dashboard',
+        version: '1.0.0',
       },
-    });
+      {
+        capabilities: {
+          tools: {},
+          resources: {},
+          prompts: {},
+        },
+      }
+    );
 
     await this.client.connect(this.transport);
   }
@@ -105,6 +111,7 @@ export class MCPClient {
 ```
 
 **Задачи:**
+
 - [ ] Установить `@modelcontextprotocol/sdk`
 - [ ] Создать MCPClient wrapper
 - [ ] Настроить подключение к MCP серверу R2R
@@ -122,6 +129,7 @@ export class MCPClient {
 **Цель:** Предоставить все R2R возможности через MCP tools
 
 **Доступные MCP Tools (из r2r-rag-search-agent):**
+
 - `search_documents` - Поиск в документах
 - `get_document` - Получить документ
 - `rag_query` - RAG запрос
@@ -139,12 +147,12 @@ export const R2R_MCP_TOOLS = {
   searchDocuments: async (query: string, filters?: Record<string, any>) => {
     // Вызов через MCP
   },
-  
+
   // RAG operations
   ragQuery: async (query: string, config?: RAGConfig) => {
     // Вызов через MCP с полной конфигурацией
   },
-  
+
   // Agent operations
   agentQuery: async (
     message: string,
@@ -153,16 +161,16 @@ export const R2R_MCP_TOOLS = {
   ) => {
     // Вызов agent через MCP
   },
-  
+
   // Code-specific operations
   codebaseSearch: async (query: string, codebasePath?: string) => {
     // Поиск в кодовой базе через R2R
   },
-  
+
   generateEmbeddings: async (text: string | string[]) => {
     // Генерация embeddings
   },
-  
+
   // Knowledge Graph operations
   extractEntities: async (text: string) => {
     // Извлечение entities из кода
@@ -171,6 +179,7 @@ export const R2R_MCP_TOOLS = {
 ```
 
 **Задачи:**
+
 - [ ] Создать типизированные обертки для всех MCP tools
 - [ ] Реализовать error handling для MCP calls
 - [ ] Добавить retry logic
@@ -192,17 +201,17 @@ export const R2R_MCP_RESOURCES = {
   'r2r://documents/{id}': async (id: string) => {
     // Получить документ через MCP
   },
-  
+
   // Collection resources
   'r2r://collections/{id}': async (id: string) => {
     // Получить коллекцию
   },
-  
+
   // Embedding resources
   'r2r://embeddings/{id}': async (id: string) => {
     // Получить embeddings
   },
-  
+
   // Knowledge Graph resources
   'r2r://kg/entities/{id}': async (id: string) => {
     // Получить entity из KG
@@ -211,6 +220,7 @@ export const R2R_MCP_RESOURCES = {
 ```
 
 **Задачи:**
+
 - [ ] Определить схему ресурсов R2R
 - [ ] Реализовать чтение ресурсов через MCP
 - [ ] Добавить кэширование ресурсов
@@ -236,13 +246,13 @@ interface CodebaseSearchPage {
   - Поиск по паттернам кода
   - Поиск по зависимостям
   - Поиск по тестам
-  
+
   // Анализ кода
   - Извлечение entities из кода (функции, классы, переменные)
   - Построение Knowledge Graph кодовой базы
   - Анализ зависимостей
   - Поиск дубликатов кода
-  
+
   // Code understanding
   - Объяснение сложных участков кода
   - Генерация документации
@@ -256,22 +266,28 @@ interface CodebaseSearchPage {
 // src/services/codebase/codebaseService.ts
 export class CodebaseService {
   // Загрузка кодовой базы в R2R
-  async indexCodebase(path: string, options?: {
-    filePatterns?: string[];
-    excludePatterns?: string[];
-    chunkSize?: number;
-  }) {
+  async indexCodebase(
+    path: string,
+    options?: {
+      filePatterns?: string[];
+      excludePatterns?: string[];
+      chunkSize?: number;
+    }
+  ) {
     // Рекурсивно обходит директорию
     // Загружает файлы в R2R как документы
     // Создает коллекцию "codebase"
   }
 
   // Семантический поиск по коду
-  async searchCode(query: string, filters?: {
-    fileType?: string[];
-    language?: string[];
-    functionName?: string;
-  }) {
+  async searchCode(
+    query: string,
+    filters?: {
+      fileType?: string[];
+      language?: string[];
+      functionName?: string;
+    }
+  ) {
     return this.client.retrieval.search({
       query,
       search_settings: {
@@ -315,6 +331,7 @@ export class CodebaseService {
 ```
 
 **Задачи:**
+
 - [ ] Создать страницу `/codebase`
 - [ ] Реализовать CodebaseService
 - [ ] Создать UI компоненты для поиска
@@ -339,17 +356,17 @@ interface ProgrammingAssistant {
   - Использование research_tools: ['rag', 'reasoning', 'critique', 'python_executor']
   - Extended thinking для сложных задач
   - Python executor для вычислений
-  
+
   // Code Generation
   - Генерация кода на основе документации
   - Рефакторинг кода
   - Генерация тестов
-  
+
   // Code Analysis
   - Анализ сложности кода
   - Поиск багов
   - Оптимизация производительности
-  
+
   // Documentation
   - Генерация документации из кода
   - Объяснение алгоритмов
@@ -363,10 +380,7 @@ interface ProgrammingAssistant {
 // src/services/programming/programmingAssistant.ts
 export class ProgrammingAssistant {
   // Research mode для сложных задач
-  async researchCodeTask(
-    task: string,
-    codebaseContext?: string
-  ) {
+  async researchCodeTask(task: string, codebaseContext?: string) {
     return this.client.retrieval.agent({
       message: {
         role: 'user',
@@ -381,21 +395,17 @@ export class ProgrammingAssistant {
         stream: true,
       },
       research_tools: [
-        'rag',              // Поиск в документации
-        'reasoning',        // Логическое рассуждение
-        'critique',         // Критический анализ
-        'python_executor',  // Выполнение кода
+        'rag', // Поиск в документации
+        'reasoning', // Логическое рассуждение
+        'critique', // Критический анализ
+        'python_executor', // Выполнение кода
       ],
       mode: 'research',
     });
   }
 
   // Генерация кода
-  async generateCode(
-    description: string,
-    language: string,
-    context?: string
-  ) {
+  async generateCode(description: string, language: string, context?: string) {
     const prompt = `Generate ${language} code for: ${description}
 ${context ? `\nContext:\n${context}` : ''}`;
 
@@ -416,7 +426,10 @@ ${context ? `\nContext:\n${context}` : ''}`;
   }
 
   // Анализ кода
-  async analyzeCode(code: string, analysisType: 'complexity' | 'bugs' | 'performance') {
+  async analyzeCode(
+    code: string,
+    analysisType: 'complexity' | 'bugs' | 'performance'
+  ) {
     const prompts = {
       complexity: 'Analyze the complexity of this code',
       bugs: 'Find potential bugs in this code',
@@ -446,6 +459,7 @@ ${context ? `\nContext:\n${context}` : ''}`;
 ```
 
 **Задачи:**
+
 - [ ] Создать ProgrammingAssistant service
 - [ ] Реализовать research mode integration
 - [ ] Добавить Python executor UI
@@ -465,11 +479,14 @@ ${context ? `\nContext:\n${context}` : ''}`;
 // src/services/embeddings/codeEmbeddings.ts
 export class CodeEmbeddings {
   // Генерация embeddings для кода
-  async embedCode(code: string, metadata?: {
-    filePath?: string;
-    functionName?: string;
-    language?: string;
-  }) {
+  async embedCode(
+    code: string,
+    metadata?: {
+      filePath?: string;
+      functionName?: string;
+      language?: string;
+    }
+  ) {
     return this.client.retrieval.embedding({
       text: code,
       model: 'text-embedding-ada-002', // или специализированная модель для кода
@@ -479,7 +496,7 @@ export class CodeEmbeddings {
   // Поиск похожего кода
   async findSimilarCode(code: string, threshold = 0.8) {
     const embedding = await this.embedCode(code);
-    
+
     return this.client.retrieval.search({
       query: '', // Используем embedding напрямую
       search_settings: {
@@ -495,9 +512,9 @@ export class CodeEmbeddings {
   // Кластеризация кода
   async clusterCode(files: string[]) {
     const embeddings = await Promise.all(
-      files.map(file => this.embedCode(file))
+      files.map((file) => this.embedCode(file))
     );
-    
+
     // Используем t-SNE или PCA для визуализации
     // Показываем кластеры похожего кода
   }
@@ -514,6 +531,7 @@ export class CodeEmbeddings {
 ```
 
 **Задачи:**
+
 - [ ] Реализовать CodeEmbeddings service
 - [ ] Создать UI для визуализации embeddings
 - [ ] Добавить поиск похожего кода
@@ -563,6 +581,7 @@ export class AdvancedSearch {
 ```
 
 **Задачи:**
+
 - [ ] Реализовать HyDE search
 - [ ] Добавить multi-query search
 - [ ] Реализовать contextual compression
@@ -622,6 +641,7 @@ export class CodeKnowledgeGraph {
 ```
 
 **Задачи:**
+
 - [ ] Реализовать CodeKnowledgeGraph service
 - [ ] Создать UI для графа зависимостей
 - [ ] Добавить graph search
@@ -659,6 +679,7 @@ export class WebSearch {
 ```
 
 **Задачи:**
+
 - [ ] Реализовать WebSearch service
 - [ ] Добавить UI для web search results
 - [ ] Интегрировать в programming assistant
@@ -707,6 +728,7 @@ export class DataQualityService {
 ```
 
 **Задачи:**
+
 - [ ] Реализовать DataQualityService
 - [ ] Добавить валидацию входящих данных
 - [ ] Реализовать очистку данных
@@ -759,6 +781,7 @@ export class FeedbackService {
 ```
 
 **Задачи:**
+
 - [ ] Реализовать FeedbackService
 - [ ] Создать UI для сбора feedback
 - [ ] Добавить анализ качества
@@ -791,6 +814,7 @@ export class FeedbackService {
 ```
 
 **Задачи:**
+
 - [ ] Интегрировать Monaco Editor
 - [ ] Добавить AI подсказки
 - [ ] Создать code viewer компоненты
@@ -820,6 +844,7 @@ export class CollaborationService {
 ```
 
 **Задачи:**
+
 - [ ] Реализовать CollaborationService
 - [ ] Добавить real-time синхронизацию
 - [ ] Создать UI для совместной работы
@@ -831,30 +856,35 @@ export class CollaborationService {
 ## 📋 Roadmap выполнения
 
 ### Sprint 1-2 (2 недели): MCP Integration
+
 - [ ] MCP Client setup
 - [ ] MCP Tools integration
 - [ ] MCP Resources integration
 - [ ] UI для MCP управления
 
 ### Sprint 3-4 (2 недели): Codebase Features
+
 - [ ] Codebase search
 - [ ] Code indexing
 - [ ] Knowledge Graph для кода
 - [ ] Embeddings для кода
 
 ### Sprint 5-6 (2 недели): Programming Assistant
+
 - [ ] Research mode integration
 - [ ] Python executor
 - [ ] Code generation
 - [ ] Code analysis
 
 ### Sprint 7-8 (2 недели): Advanced Features
+
 - [ ] Advanced search strategies
 - [ ] Web search integration
 - [ ] Data quality pipeline
 - [ ] Feedback loop
 
 ### Sprint 9-10 (2 недели): UI/UX
+
 - [ ] Code editor integration
 - [ ] Real-time collaboration
 - [ ] Improved visualizations
@@ -929,18 +959,21 @@ src/
 ## 📊 Метрики успеха
 
 ### Функциональность
+
 - [ ] 100% MCP tools доступны через UI
 - [ ] Codebase полностью индексирован в R2R
 - [ ] Research mode работает для всех задач
 - [ ] Knowledge Graph построен для кода
 
 ### Качество данных
+
 - [ ] Валидация всех входящих данных
 - [ ] Обогащение данных автоматически
 - [ ] Feedback loop работает
 - [ ] Качество ответов улучшилось на 30%+
 
 ### Производительность
+
 - [ ] Codebase search < 500ms
 - [ ] Code generation < 5s
 - [ ] Embeddings generation < 1s
@@ -951,16 +984,19 @@ src/
 ## 🎯 Приоритеты
 
 ### 🔴 Критично (Sprint 1-2)
+
 1. MCP Integration
 2. Codebase Search
 3. Research Mode
 
 ### 🟡 Важно (Sprint 3-4)
+
 4. Code Generation
 5. Knowledge Graph
 6. Embeddings
 
 ### 🟢 Желательно (Sprint 5+)
+
 7. Web Search
 8. Data Quality
 9. Collaboration

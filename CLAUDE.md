@@ -39,6 +39,7 @@ pnpm format:check  # Проверка без изменений
 ### Настройка окружения
 
 1. **Создай `.env`** на основе `.env.example` (ОБЯЗАТЕЛЬНО перед первым запуском):
+
    ```bash
    cp .env.example .env
    ```
@@ -172,10 +173,10 @@ R2R клиент автоматически прикрепляет токен и
 ```tsx
 // Логин
 const { login } = useUserContext();
-await login(email, password);  // Сохраняет токен в localStorage
+await login(email, password); // Сохраняет токен в localStorage
 
 // Использование
-const client = await getClient();  // Токен прикрепляется автоматически
+const client = await getClient(); // Токен прикрепляется автоматически
 ```
 
 ## 📊 Интеграции
@@ -231,6 +232,7 @@ logger.warn('Runtime config not found');
 ### Ошибки аутентификации
 
 Проверь:
+
 1. Валиден ли токен в `localStorage.getItem('userToken')`
 2. Не истек ли refresh token
 3. Логи в Sentry (если настроен NEXT_PUBLIC_SENTRY_DSN)
@@ -270,6 +272,7 @@ docker run -p 3000:3000 \
 **Расположение**: Explorer → Upload → вкладка "URL Upload"
 
 **Основные фичи**:
+
 - Загрузка текстовых файлов напрямую по ссылке
 - Автоматическое разбиение `llms-full.txt` по Markdown заголовкам
 - Все настройки из File Upload: Collections, Quality, Metadata
@@ -287,15 +290,16 @@ docker run -p 3000:3000 \
 При создании функционала автообновления данных используй паттерн custom hook с polling:
 
 **Структура hook:**
+
 ```typescript
 // src/hooks/useDocumentPolling.ts
 export function useDocumentPolling(
   documentIds: string[],
   options: {
-    interval?: number;        // Интервал polling (default 5000ms)
-    onlyPending?: boolean;    // Останавливать при завершении
+    interval?: number; // Интервал polling (default 5000ms)
+    onlyPending?: boolean; // Останавливать при завершении
     onUpdate?: (data) => void; // Callback обновления
-    maxRetries?: number;      // Retry mechanism (default 3)
+    maxRetries?: number; // Retry mechanism (default 3)
   }
 ) {
   // Автоматический lifecycle management через useEffect
@@ -306,24 +310,26 @@ export function useDocumentPolling(
 ```
 
 **Интеграция:**
+
 ```typescript
 // Вычисление pending документов через useMemo
 const pendingIds = useMemo(() => {
-  return files.filter(isPending).map(f => f.id);
+  return files.filter(isPending).map((f) => f.id);
 }, [files]);
 
 // Подписка на обновления
 const { isPolling } = useDocumentPolling(pendingIds, {
   interval: 5000,
   onUpdate: (updatedDocs) => {
-    setFiles(prevFiles =>
-      prevFiles.map(file => updatedDocs.find(d => d.id === file.id) || file)
+    setFiles((prevFiles) =>
+      prevFiles.map((file) => updatedDocs.find((d) => d.id === file.id) || file)
     );
   },
 });
 ```
 
 **Best Practices:**
+
 - ✅ Используй `useMemo` для вычисления списка документов
 - ✅ Функциональный setState для atomic updates
 - ✅ Автоматическая остановка при `pendingIds.length === 0`
@@ -335,11 +341,12 @@ const { isPolling } = useDocumentPolling(pendingIds, {
 При добавлении bulk операций в explorer/documents:
 
 **1. Валидация перед операцией:**
+
 ```typescript
 const handleBulkExtract = async () => {
   // Фильтрация eligible документов
-  const eligibleFiles = selectedFiles.filter(fileId => {
-    const file = files.find(f => f.id === fileId);
+  const eligibleFiles = selectedFiles.filter((fileId) => {
+    const file = files.find((f) => f.id === fileId);
     return file && file.ingestionStatus === IngestionStatus.SUCCESS;
   });
 
@@ -348,17 +355,18 @@ const handleBulkExtract = async () => {
     toast({ variant: 'destructive', title: 'No Eligible Documents' });
     return;
   }
-}
+};
 ```
 
 **2. Последовательная обработка с задержками:**
+
 ```typescript
 // НЕ Promise.all — это может перегрузить backend!
 for (const fileId of eligibleFiles) {
   try {
     await client.documents.extract({ id: fileId });
     successCount++;
-    await new Promise(resolve => setTimeout(resolve, 300)); // Rate limiting
+    await new Promise((resolve) => setTimeout(resolve, 300)); // Rate limiting
   } catch (error) {
     failCount++;
   }
@@ -366,6 +374,7 @@ for (const fileId of eligibleFiles) {
 ```
 
 **3. Детальный feedback:**
+
 ```typescript
 toast({
   title: 'Extraction Started',
@@ -379,26 +388,29 @@ toast({
 При показе статуса фоновых операций:
 
 ```tsx
-{isPolling && pendingCount > 0 && (
-  <TooltipProvider>
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-blue-500/10 border border-blue-500/20">
-          <Loader2 className="h-3.5 w-3.5 animate-spin text-blue-500" />
-          <span className="text-xs text-blue-500 font-medium">
-            Syncing {pendingCount}
-          </span>
-        </div>
-      </TooltipTrigger>
-      <TooltipContent>
-        Auto-updating {pendingCount} document{pendingCount !== 1 ? 's' : ''}
-      </TooltipContent>
-    </Tooltip>
-  </TooltipProvider>
-)}
+{
+  isPolling && pendingCount > 0 && (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-blue-500/10 border border-blue-500/20">
+            <Loader2 className="h-3.5 w-3.5 animate-spin text-blue-500" />
+            <span className="text-xs text-blue-500 font-medium">
+              Syncing {pendingCount}
+            </span>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          Auto-updating {pendingCount} document{pendingCount !== 1 ? 's' : ''}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
 ```
 
 **Ключевые моменты:**
+
 - Показывай индикатор только когда `isPolling && count > 0`
 - Используй shadcn/ui Tooltip для доп. информации
 - Цветовая схема: blue для процесса, green для success, red для error
@@ -407,6 +419,7 @@ toast({
 ### Работа с R2R API для массовых операций
 
 **Extract операции:**
+
 ```typescript
 // Одиночная экстракция
 await client.documents.extract({ id: documentId });
@@ -419,15 +432,16 @@ for (const id of documentIds) {
 ```
 
 **Получение обновленных данных:**
+
 ```typescript
 // Batch retrieve для polling
-const promises = documentIds.map(id =>
+const promises = documentIds.map((id) =>
   client.documents.retrieve({ id }).catch(() => null)
 );
 const results = await Promise.all(promises);
 const documents = results
   .filter((r): r is { results: DocumentResponse } => r !== null)
-  .map(r => r.results);
+  .map((r) => r.results);
 ```
 
 ## 📝 Git Workflow

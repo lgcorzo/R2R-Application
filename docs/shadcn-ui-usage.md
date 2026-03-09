@@ -11,14 +11,11 @@
 ```tsx
 import { Input } from '@/components/ui/input';
 
-<Input
-  placeholder="Введите текст..."
-  className="h-12 px-6"
-  disabled={false}
-/>
+<Input placeholder="Введите текст..." className="h-12 px-6" disabled={false} />;
 ```
 
 **Design tokens:**
+
 - `text-foreground` - цвет текста
 - `placeholder:text-muted-foreground` - цвет placeholder
 - `border-input` - цвет границы
@@ -33,10 +30,11 @@ import { Card, CardContent } from '@/components/ui/card';
   <CardContent className="p-4">
     <p>Текст сообщения</p>
   </CardContent>
-</Card>
+</Card>;
 ```
 
 **Варианты Card:**
+
 - Пользователь: `bg-primary text-primary-foreground`
 - Ассистент: `bg-muted/50 border-border/50`
 - С анимацией: `animate-in slide-in-from-right-2`
@@ -46,16 +44,13 @@ import { Card, CardContent } from '@/components/ui/card';
 ```tsx
 import { Button } from '@/components/ui/button';
 
-<Button
-  size="icon"
-  className="h-12 w-12"
-  disabled={false}
->
+<Button size="icon" className="h-12 w-12" disabled={false}>
   <ArrowRight className="h-5 w-5" />
-</Button>
+</Button>;
 ```
 
 **Размеры:**
+
 - `size="sm"` - маленькая
 - `size="default"` - обычная
 - `size="lg"` - большая
@@ -80,7 +75,7 @@ import {
     <SelectItem value="rag">RAG</SelectItem>
     <SelectItem value="rag_agent">RAG Agent</SelectItem>
   </SelectContent>
-</Select>
+</Select>;
 ```
 
 ### 5. Accordion (настройки в Sidebar)
@@ -96,11 +91,9 @@ import {
 <Accordion type="single" collapsible>
   <AccordionItem value="settings">
     <AccordionTrigger>Настройки</AccordionTrigger>
-    <AccordionContent>
-      {/* Контент */}
-    </AccordionContent>
+    <AccordionContent>{/* Контент */}</AccordionContent>
   </AccordionItem>
-</Accordion>
+</Accordion>;
 ```
 
 ---
@@ -109,34 +102,34 @@ import {
 
 ### Цвета
 
-| Token | Использование |
-|-------|---------------|
-| `bg-background` | Основной фон страницы |
-| `text-foreground` | Основной текст |
-| `bg-card` | Фон карточек |
-| `bg-primary` | Акцентный цвет (кнопки, активные элементы) |
-| `text-primary-foreground` | Текст на акцентном фоне |
-| `bg-muted` | Приглушенный фон |
-| `text-muted-foreground` | Вторичный текст |
-| `border-border` | Цвет границ |
-| `border-input` | Границы инпутов |
-| `ring-ring` | Focus ring |
+| Token                     | Использование                              |
+| ------------------------- | ------------------------------------------ |
+| `bg-background`           | Основной фон страницы                      |
+| `text-foreground`         | Основной текст                             |
+| `bg-card`                 | Фон карточек                               |
+| `bg-primary`              | Акцентный цвет (кнопки, активные элементы) |
+| `text-primary-foreground` | Текст на акцентном фоне                    |
+| `bg-muted`                | Приглушенный фон                           |
+| `text-muted-foreground`   | Вторичный текст                            |
+| `border-border`           | Цвет границ                                |
+| `border-input`            | Границы инпутов                            |
+| `ring-ring`               | Focus ring                                 |
 
 ### Эффекты
 
 ```tsx
 // Backdrop blur
-className="bg-background/95 backdrop-blur"
+className = 'bg-background/95 backdrop-blur';
 
 // Gradient
-className="bg-gradient-to-t from-background via-background to-transparent"
+className = 'bg-gradient-to-t from-background via-background to-transparent';
 
 // Transition
-className="transition-all duration-300 ease-in-out"
+className = 'transition-all duration-300 ease-in-out';
 
 // Animations
-className="animate-in slide-in-from-right-2 duration-300"
-className="animate-pulse"
+className = 'animate-in slide-in-from-right-2 duration-300';
+className = 'animate-pulse';
 ```
 
 ---
@@ -147,13 +140,13 @@ className="animate-pulse"
 
 ```tsx
 // Mobile first
-className="p-2 sm:p-4 md:p-6 lg:p-8"
+className = 'p-2 sm:p-4 md:p-6 lg:p-8';
 
 // Max width
-className="max-w-xs lg:max-w-md"
+className = 'max-w-xs lg:max-w-md';
 
 // Hide/Show
-className="hidden md:block"
+className = 'hidden md:block';
 ```
 
 ---
@@ -207,6 +200,7 @@ import { cn } from '@/lib/utils';
 ```
 
 **Пример:**
+
 ```tsx
 <Card className={cn(
   'bg-muted/50 transition-all',
@@ -231,9 +225,7 @@ import { cn } from '@/lib/utils';
 
 ```tsx
 <div className="fixed top-16 left-0 right-0 bottom-0 flex justify-center">
-  <div className="w-full max-w-4xl">
-    {/* Content */}
-  </div>
+  <div className="w-full max-w-4xl">{/* Content */}</div>
 </div>
 ```
 

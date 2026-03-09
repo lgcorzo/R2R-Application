@@ -9,11 +9,13 @@
 ### 1. **Полная поддержка SSE событий R2R**
 
 #### До:
+
 - Обрабатывались только 2 типа событий: `search_results` и `message`
 - Пользователь НЕ видел процесс работы агента
 - Отсутствовала визуализация thinking и tool calls
 
 #### После:
+
 - ✅ Обработка **всех 7 типов событий**:
   - `search_results` - результаты поиска
   - `thinking` - размышления агента (extended thinking mode)
@@ -26,6 +28,7 @@
 ### 2. **Типизация событий**
 
 #### Создан файл `src/types/r2r-events.ts`:
+
 ```typescript
 // Строгая типизация всех SSE событий
 export type R2REventType =
@@ -45,6 +48,7 @@ export interface ToolResultEventData { ... }
 ```
 
 #### Обновлён тип Message:
+
 ```typescript
 export interface Message {
   role: 'user' | 'assistant';
@@ -59,11 +63,13 @@ export interface Message {
 ### 3. **Визуализация активности агента**
 
 #### Новый компонент `AgentActivityIndicator`:
+
 - 🧠 **Thinking** (Brain icon) - фиолетовый badge с анимацией pulse
 - 🔧 **Tool Call** (Wrench icon) - синий badge
 - 📊 **Tool Result** (BarChart icon) - зелёный badge
 
 #### Особенности:
+
 - Аккордеон для сворачивания/разворачивания
 - Группировка по типам с подсчётом
 - Временные метки для каждой активности
@@ -106,23 +112,27 @@ if (eventType === TOOL_CALL_EVENT) {
 ### 5. **Использование shadcn/ui компонентов**
 
 #### Badge:
+
 - Используется для индикации типов активности
 - Варианты: `default`, `secondary`, `outline`
 - Анимация pulse для активных событий
 
 #### Accordion:
+
 - Для сворачивания деталей активности
 - Улучшенная навигация по истории агента
 
 ## 📊 Улучшения UX
 
 ### До:
+
 ```text
 User: "What does DeepSeek R1 imply?"
 Assistant: [ответ появляется сразу без контекста]
 ```
 
 ### После:
+
 ```
 User: "What does DeepSeek R1 imply?"
 
@@ -143,3 +153,4 @@ search_file_knowledge({"query": "DeepSeek R1"})
 Found 5 documents mentioning DeepSeek R1...
      STDIN   <EMPTY>
      STDIN   <EMPTY>
+```

@@ -7,36 +7,30 @@
 ### Интегрированные паттерны
 
 1. **File Tree Sidebar** ✅
-
    - Рекурсивное дерево коллекций с Collapsible
    - Компонент `CollectionTree` для вложенных структур
    - Использование `SidebarMenuSub` для подменю
 
 2. **File Manager List** ✅
-
    - Таблица документов с действиями
    - Поиск и фильтрация
    - Пагинация
 
 3. **Dynamic Table** ✅
-
    - Использование существующего `DocumentsTable`
    - Поддержка фильтров, сортировки, пагинации
 
 4. **Sidebar in Dialog** ✅
-
    - Компонент `SettingsDialog` с sidebar внутри
    - Breadcrumb навигация в диалоге
    - Настройки в отдельном модальном окне
 
 5. **Vercel Tabs** ✅
-
    - Анимированные табы с hover эффектами
    - Плавные переходы между вкладками
    - Компонент `VercelTabs` с анимацией
 
 6. **Fluid Dropdown** ✅
-
    - Анимированный dropdown с framer-motion
    - Плавные переходы и hover эффекты
    - Компонент `FluidDropdown` для фильтрации
@@ -72,11 +66,9 @@
 ### Созданные компоненты
 
 1. **`src/hooks/use-click-away.ts`**
-
    - Хук для закрытия dropdown при клике вне элемента
 
 2. **`src/components/ui/breadcrumb.tsx`**
-
    - Компонент breadcrumb из shadcn/ui (установлен автоматически)
 
 3. **`src/pages/explorer.tsx`**

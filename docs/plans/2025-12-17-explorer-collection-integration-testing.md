@@ -33,21 +33,25 @@
 ## Запуск тестирования
 
 **Запустить dev сервер:**
+
 ```bash
 pnpm dev
 ```
 
 **Открыть в браузере:**
+
 ```text
 http://localhost:3005/explorer
 ```
 
 **Проверка lazy loading:**
+
 1. Открыть DevTools -> Network tab
 2. Перейти на Users таб
 3. Убедиться что API запрос `collections.listUsers` отправился только сейчас (не при загрузке страницы)
 
 **Проверка query parameters:**
+
 1. Переключить на Entities таб
 2. Проверить URL обновился: `/explorer?tab=entities`
 3. Выбрать коллекцию в sidebar
@@ -56,6 +60,7 @@ http://localhost:3005/explorer
 6. Убедиться что правильный таб и коллекция открыты
 
 **Проверка редиректа:**
+
 1. Найти ID коллекции (например: `abc123`)
 2. Перейти на `/collections/abc123`
 3. Убедиться что редирект на `/explorer?collection=abc123&tab=documents` произошел

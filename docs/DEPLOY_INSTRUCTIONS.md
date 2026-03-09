@@ -15,11 +15,13 @@
 ### 1. Сделать репозиторий приватным (Docker Hub)
 
 Откройте в браузере:
+
 ```text
 https://hub.docker.com/repository/docker/goldmeat/r2r-dashboard/general
 ```
 
 В интерфейсе:
+
 - Перейдите в **Settings** → **Repository Visibility**
 - Нажмите **Make Private**
 - Подтвердите действие
@@ -80,22 +82,26 @@ docker login -u goldmeat
 ## 🔍 Проверка после деплоя
 
 ### Проверить статус контейнера:
+
 ```bash
 docker compose ps dashboard
 ```
 
 **Ожидаемый результат:**
+
 ```text
 NAME             IMAGE                               STATUS         PORTS
 r2r-dashboard    goldmeat/r2r-dashboard:latest       Up 10 seconds  0.0.0.0:3000->3000/tcp
 ```
 
 ### Проверить логи:
+
 ```bash
 docker compose logs -f dashboard
 ```
 
 **Ожидаемые логи:**
+
 ```bash
 Replacing environment variables in env-config.js...
   ▲ Next.js 14.2.5
@@ -104,6 +110,7 @@ Replacing environment variables in env-config.js...
 ```
 
 ### Проверить доступность:
+
 ```bash
 # На сервере:
 curl -I http://localhost:3000
@@ -117,6 +124,7 @@ http://136.119.36.216:3000
 ## 🎯 Ключевые изменения в docker-compose.yml
 
 **ДО (volume-based deployment):**
+
 ```yaml
 dashboard:
   image: node:20-alpine
@@ -127,13 +135,14 @@ dashboard:
 ```
 
 **ПОСЛЕ (private Docker image):**
+
 ```yaml
 dashboard:
   image: goldmeat/r2r-dashboard:latest
   environment:
-    NEXT_PUBLIC_R2R_DEPLOYMENT_URL: "http://136.119.36.216:7272"
-    NEXT_PUBLIC_HATCHET_DASHBOARD_URL: "http://136.119.36.216:7274"
-    R2R_DASHBOARD_DISABLE_TELEMETRY: "false"
+    NEXT_PUBLIC_R2R_DEPLOYMENT_URL: 'http://136.119.36.216:7272'
+    NEXT_PUBLIC_HATCHET_DASHBOARD_URL: 'http://136.119.36.216:7274'
+    R2R_DASHBOARD_DISABLE_TELEMETRY: 'false'
 ```
 
 ---
@@ -143,6 +152,7 @@ dashboard:
 Когда нужно обновить код dashboard:
 
 ### На локальной машине:
+
 ```bash
 cd /Users/laptop/mcp/R2R-Application
 
@@ -156,6 +166,7 @@ docker push goldmeat/r2r-dashboard:v1.1
 ```
 
 ### На сервере:
+
 ```bash
 cd /home/laptop/dev/r2r-deploy
 
@@ -168,6 +179,7 @@ cd /home/laptop/dev/r2r-deploy
 ## 📦 Технические детали
 
 ### Размер образа:
+
 - **345MB** (оптимизированный production build)
 - Базовый образ: `node:22-alpine` (~180MB)
 - Next.js standalone build: ~80MB
@@ -175,6 +187,7 @@ cd /home/laptop/dev/r2r-deploy
 - Static assets: ~15MB
 
 ### Архитектура Docker образа:
+
 ```text
 ┌─────────────────────────────────────────┐
 │  Multi-stage build:                     │
@@ -192,6 +205,7 @@ cd /home/laptop/dev/r2r-deploy
 ```
 
 ### Runtime Config Injection:
+
 Скрипт `startup.sh` заменяет плейсхолдеры в `/app/public/env-config.js` на актуальные значения из environment variables при старте контейнера.
 
 ---
@@ -208,11 +222,13 @@ cd /home/laptop/dev/r2r-deploy
 ## ❓ Troubleshooting
 
 ### Проблема: Cannot pull image
+
 ```bash
 Error response from daemon: pull access denied for goldmeat/r2r-dashboard
 ```
 
 **Решение:**
+
 ```bash
 # Логин в Docker Hub на сервере
 docker login -u goldmeat
@@ -222,6 +238,7 @@ docker login -u goldmeat
 ---
 
 ### Проблема: Dashboard не отвечает
+
 ```bash
 # Проверить логи контейнера
 docker compose logs dashboard
@@ -231,6 +248,7 @@ docker compose exec dashboard env | grep NEXT_PUBLIC
 ```
 
 **Ожидаемые env:**
+
 ```text
 NEXT_PUBLIC_R2R_DEPLOYMENT_URL=http://136.119.36.216:7272
 NEXT_PUBLIC_HATCHET_DASHBOARD_URL=http://136.119.36.216:7274
@@ -239,6 +257,7 @@ NEXT_PUBLIC_HATCHET_DASHBOARD_URL=http://136.119.36.216:7274
 ---
 
 ### Проблема: Старые volumes не удалились
+
 ```bash
 # Вручную удалить директорию
 sudo rm -rf /home/laptop/r2r-dashboard-build

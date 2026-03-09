@@ -9,11 +9,13 @@
 ### 1. Категориальный фильтр (Category Filter)
 
 **До:**
+
 - Обычный Select без визуальных индикаторов
 - Нет иконки фильтра
 - Placeholder "Filter by category"
 
 **После:**
+
 ```tsx
 <div className="relative">
   <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
@@ -43,6 +45,7 @@
 ```
 
 **Улучшения:**
+
 - ✅ Иконка `Filter` слева для визуальной идентификации
 - ✅ Увеличена ширина до 200px для лучшей читаемости
 - ✅ Градиентный индикатор для "All Categories"
@@ -52,10 +55,12 @@
 ### 2. Поисковое поле (Search Input)
 
 **До:**
+
 - Обычный Input без иконки
 - `className="max-w-sm"`
 
 **После:**
+
 ```tsx
 <div className="relative flex-1 max-w-sm">
   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
@@ -69,6 +74,7 @@
 ```
 
 **Улучшения:**
+
 - ✅ Иконка `Search` слева
 - ✅ Padding left увеличен до `pl-9` для иконки
 - ✅ `flex-1` для адаптивной ширины
@@ -77,6 +83,7 @@
 ### 3. Badges категорий (Category Badges)
 
 **До:**
+
 ```tsx
 const getCategoryVariant = (category: string) => {
   const hash = category.split('').reduce((a, b) => {
@@ -88,6 +95,7 @@ const getCategoryVariant = (category: string) => {
 ```
 
 **После:**
+
 ```tsx
 const getCategoryBadgeProps = (category: string): {
   variant: 'default' | 'secondary' | 'outline';
@@ -134,6 +142,7 @@ const getCategoryBadgeProps = (category: string): {
 ```
 
 **Улучшения:**
+
 - ✅ Семантические цвета для известных категорий (API_ENDPOINT, CLASS, MODULE, IMPORT, PERSON)
 - ✅ Dark mode поддержка через Tailwind dark: префикс
 - ✅ Мягкие цвета с opacity (10-20%) для фона
@@ -153,6 +162,7 @@ const getCategoryBadgeProps = (category: string): {
 ### 4. Кнопки действий (Action Buttons)
 
 **До:**
+
 ```tsx
 <RemoveButton
   itemId={entity.id?.toString() || ''}
@@ -175,11 +185,13 @@ const getCategoryBadgeProps = (category: string): {
 ```
 
 **Проблемы:**
+
 - ❌ Красная `variant="destructive"` кнопка всегда видна
 - ❌ RemoveButton использует внешний компонент
 - ❌ Нет Tooltip для кнопок
 
 **После:**
+
 ```tsx
 <div className="flex items-center justify-end gap-1">
   {/* Copy Actions Dropdown with Tooltip */}
@@ -235,8 +247,13 @@ const getCategoryBadgeProps = (category: string): {
 ```
 
 **Новый EntityRemoveButton компонент:**
+
 ```tsx
-function EntityRemoveButton({ entityId, collectionId, onSuccess }: EntityRemoveButtonProps) {
+function EntityRemoveButton({
+  entityId,
+  collectionId,
+  onSuccess,
+}: EntityRemoveButtonProps) {
   const { getClient } = useUserContext();
   const { toast } = useToast();
   const [isRemoving, setIsRemoving] = React.useState(false);
@@ -273,7 +290,8 @@ function EntityRemoveButton({ entityId, collectionId, onSuccess }: EntityRemoveB
         <AlertDialogHeader>
           <AlertDialogTitle>Remove entity from collection?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will remove the entity from the current collection. The entity will not be deleted from the system.
+            This will remove the entity from the current collection. The entity
+            will not be deleted from the system.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -293,6 +311,7 @@ function EntityRemoveButton({ entityId, collectionId, onSuccess }: EntityRemoveB
 ```
 
 **Улучшения:**
+
 - ✅ Кнопка удаления теперь `variant="ghost"` с hover эффектом
 - ✅ Цвет меняется на `text-destructive` только при hover
 - ✅ Фон `bg-destructive/10` при hover
@@ -306,6 +325,7 @@ function EntityRemoveButton({ entityId, collectionId, onSuccess }: EntityRemoveB
 ### 5. Results Counter
 
 **До:**
+
 ```tsx
 <div className="ml-auto text-sm text-muted-foreground">
   {searchQuery.trim() || categoryFilter !== 'all'
@@ -315,18 +335,22 @@ function EntityRemoveButton({ entityId, collectionId, onSuccess }: EntityRemoveB
 ```
 
 **После:**
+
 ```tsx
 <div className="ml-auto text-sm text-muted-foreground whitespace-nowrap">
   {searchQuery.trim() || categoryFilter !== 'all' ? (
-    <span className="font-medium text-foreground">{filteredEntities.length}</span>
+    <span className="font-medium text-foreground">
+      {filteredEntities.length}
+    </span>
   ) : null}
   {searchQuery.trim() || categoryFilter !== 'all' ? ' filtered of ' : ''}
-  <span className="font-medium text-foreground">{totalEntries}</span>
-  {' '}{totalEntries !== 1 ? 'entities' : 'entity'}
+  <span className="font-medium text-foreground">{totalEntries}</span>{' '}
+  {totalEntries !== 1 ? 'entities' : 'entity'}
 </div>
 ```
 
 **Улучшения:**
+
 - ✅ Числа выделены `font-medium text-foreground` для контраста
 - ✅ `whitespace-nowrap` предотвращает перенос строки
 - ✅ Более чёткое разделение фильтрованных и общих результатов
@@ -334,9 +358,11 @@ function EntityRemoveButton({ entityId, collectionId, onSuccess }: EntityRemoveB
 ### 6. Responsive Design
 
 **До:**
+
 - `<div className="flex items-center gap-4">`
 
 **После:**
+
 ```tsx
 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
   {/* Search и Filter */}
@@ -344,6 +370,7 @@ function EntityRemoveButton({ entityId, collectionId, onSuccess }: EntityRemoveB
 ```
 
 **Улучшения:**
+
 - ✅ Mobile-first подход через `flex-col` → `sm:flex-row`
 - ✅ Адаптивное выравнивание: `items-start` → `sm:items-center`
 - ✅ Уменьшен gap до `gap-3` для компактности
@@ -357,13 +384,13 @@ import {
   Copy,
   MoreHorizontal,
   Network,
-  Trash2,     // Новая иконка для удаления
-  Search,     // Новая иконка для поиска
-  Filter,     // Новая иконка для фильтра
+  Trash2, // Новая иконка для удаления
+  Search, // Новая иконка для поиска
+  Filter, // Новая иконка для фильтра
 } from 'lucide-react';
 
 import {
-  AlertDialog,               // Для EntityRemoveButton
+  AlertDialog, // Для EntityRemoveButton
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
@@ -375,7 +402,7 @@ import {
 } from '@/components/ui/alert-dialog';
 
 import {
-  Tooltip,                   // Для кнопок действий
+  Tooltip, // Для кнопок действий
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
@@ -394,6 +421,7 @@ import { RemoveButton } from '@/components/ChatDemo/remove';
 ## Проверка работоспособности
 
 ### ESLint
+
 ```bash
 pnpm lint
 ```
@@ -401,6 +429,7 @@ pnpm lint
 **Результат:** ✅ Все автофиксы применены, импорты отсортированы, форматирование корректное.
 
 ### TypeScript
+
 ```bash
 pnpm tsc --noEmit
 ```
@@ -408,11 +437,13 @@ pnpm tsc --noEmit
 **Ожидаемый результат:** Нет ошибок типов.
 
 ### Dev Server
+
 ```bash
 pnpm dev
 ```
 
 **Проверить:**
+
 - [ ] Search input отображается с иконкой слева
 - [ ] Category filter показывает badges в dropdown
 - [ ] Badges категорий используют семантические цвета
@@ -425,6 +456,7 @@ pnpm dev
 ## Сравнение до/после
 
 ### До:
+
 - ❌ Красная кнопка удаления всегда видна
 - ❌ Dropdown actions плохо видны
 - ❌ Category filter без визуальных индикаторов
@@ -434,6 +466,7 @@ pnpm dev
 - ❌ Зависимость от внешнего RemoveButton
 
 ### После:
+
 - ✅ Кнопка удаления появляется при hover
 - ✅ Мягкий hover эффект с `bg-destructive/10`
 - ✅ Category filter с иконкой и badge preview
@@ -462,11 +495,13 @@ const semanticCategories: Record<string, { variant: ...; className?: string }> =
 ### Использование в других табах
 
 Паттерны из `EntitiesTab` можно применить к:
+
 - `RelationshipsTab` (аналогичная структура)
 - `CommunitiesTab`
 - `UsersTab`
 
 **Ключевые элементы для переноса:**
+
 1. Search input с иконкой
 2. Category/Type filter с badge preview
 3. EntityRemoveButton → RelationshipRemoveButton
@@ -476,6 +511,7 @@ const semanticCategories: Record<string, { variant: ...; className?: string }> =
 ## Заключение
 
 Все улучшения следуют современным практикам UI/UX:
+
 - **Shadcn/ui компоненты:** AlertDialog, Tooltip, Select
 - **Lucide иконки:** Search, Filter, Trash2
 - **Tailwind CSS:** Responsive, dark mode, opacity

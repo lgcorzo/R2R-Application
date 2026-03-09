@@ -15,6 +15,7 @@
 ### Task 1: Создать useBatchFetch hook
 
 **Files:**
+
 - Create: `src/hooks/useBatchFetch.ts`
 
 **Step 1: Создать файл с типами и интерфейсом**
@@ -129,6 +130,7 @@ git commit -m "feat: добавлен useBatchFetch hook для batch loading д
 ### Task 2: Создать директорию для tab компонентов
 
 **Files:**
+
 - Create: `src/components/explorer/tabs/` (directory)
 
 **Step 1: Создать директорию**
@@ -165,6 +167,7 @@ git commit -m "chore: создана директория для tab компо�
 ### Task 3: Создать UsersTab компонент
 
 **Files:**
+
 - Create: `src/components/explorer/tabs/UsersTab.tsx`
 
 **Step 1: Создать компонент**
@@ -258,6 +261,7 @@ git commit -m "feat: добавлен UsersTab компонент"
 ### Task 4: Создать EntitiesTab компонент
 
 **Files:**
+
 - Create: `src/components/explorer/tabs/EntitiesTab.tsx`
 
 **Step 1: Создать компонент**
@@ -352,6 +356,7 @@ git commit -m "feat: добавлен EntitiesTab компонент"
 ### Task 5: Создать RelationshipsTab компонент
 
 **Files:**
+
 - Create: `src/components/explorer/tabs/RelationshipsTab.tsx`
 
 **Step 1: Создать компонент**
@@ -449,6 +454,7 @@ git commit -m "feat: добавлен RelationshipsTab компонент"
 ### Task 6: Создать CommunitiesTab компонент
 
 **Files:**
+
 - Create: `src/components/explorer/tabs/CommunitiesTab.tsx`
 
 **Step 1: Создать компонент**
@@ -544,6 +550,7 @@ git commit -m "feat: добавлен CommunitiesTab компонент"
 ### Task 7: Создать KnowledgeGraphTab компонент
 
 **Files:**
+
 - Create: `src/components/explorer/tabs/KnowledgeGraphTab.tsx`
 
 **Step 1: Создать компонент**
@@ -629,6 +636,7 @@ git commit -m "feat: добавлен KnowledgeGraphTab компонент"
 ### Task 8: Создать ExploreTab компонент
 
 **Files:**
+
 - Create: `src/components/explorer/tabs/ExploreTab.tsx`
 
 **Step 1: Создать компонент**
@@ -722,6 +730,7 @@ git commit -m "chore: обновлены экспорты tab компонент
 ### Task 9: Создать CollectionTabs с базовой структурой
 
 **Files:**
+
 - Create: `src/components/explorer/CollectionTabs.tsx`
 
 **Step 1: Создать компонент с типами**
@@ -843,6 +852,7 @@ git commit -m "feat: добавлен CollectionTabs с базовой стру�
 ### Task 10: Добавить lazy loading данных в CollectionTabs
 
 **Files:**
+
 - Modify: `src/components/explorer/CollectionTabs.tsx`
 
 **Step 1: Добавить состояние для загрузки данных**
@@ -850,130 +860,130 @@ git commit -m "feat: добавлен CollectionTabs с базовой стру�
 После строки `const [activeTab, setActiveTab] = useState<TabValue>('documents');` добавить:
 
 ```typescript
-  // Track which tabs have been loaded
-  const [loadedTabs, setLoadedTabs] = useState<Set<TabValue>>(
-    new Set(['documents'])
-  );
+// Track which tabs have been loaded
+const [loadedTabs, setLoadedTabs] = useState<Set<TabValue>>(
+  new Set(['documents'])
+);
 
-  // Mark tab as loaded when it becomes active
-  useEffect(() => {
-    setLoadedTabs((prev) => new Set(prev).add(activeTab));
-  }, [activeTab]);
+// Mark tab as loaded when it becomes active
+useEffect(() => {
+  setLoadedTabs((prev) => new Set(prev).add(activeTab));
+}, [activeTab]);
 
-  // Users data loading
-  const shouldLoadUsers = loadedTabs.has('users') && !!selectedCollectionId;
-  const {
-    data: users,
-    totalEntries: totalUserEntries,
-    loading: usersLoading,
-    refetch: refetchUsers,
-  } = useBatchFetch<User>({
-    fetchFn: useCallback(
-      async ({ offset, limit }) => {
-        const client = await getClient();
-        if (!client || !selectedCollectionId) {
-          throw new Error('Client or collection ID not available');
-        }
-        return await client.collections.listUsers({
-          id: selectedCollectionId,
-          offset,
-          limit,
-        });
-      },
-      [getClient, selectedCollectionId]
-    ),
-    collectionId: selectedCollectionId,
-    enabled: shouldLoadUsers,
-    pageSize: 100,
-  });
+// Users data loading
+const shouldLoadUsers = loadedTabs.has('users') && !!selectedCollectionId;
+const {
+  data: users,
+  totalEntries: totalUserEntries,
+  loading: usersLoading,
+  refetch: refetchUsers,
+} = useBatchFetch<User>({
+  fetchFn: useCallback(
+    async ({ offset, limit }) => {
+      const client = await getClient();
+      if (!client || !selectedCollectionId) {
+        throw new Error('Client or collection ID not available');
+      }
+      return await client.collections.listUsers({
+        id: selectedCollectionId,
+        offset,
+        limit,
+      });
+    },
+    [getClient, selectedCollectionId]
+  ),
+  collectionId: selectedCollectionId,
+  enabled: shouldLoadUsers,
+  pageSize: 100,
+});
 
-  // Entities data loading
-  const shouldLoadEntities =
-    (loadedTabs.has('entities') ||
-      loadedTabs.has('knowledge-graph') ||
-      loadedTabs.has('explore')) &&
-    !!selectedCollectionId;
-  const {
-    data: entities,
-    totalEntries: totalEntityEntries,
-    loading: entitiesLoading,
-    refetch: refetchEntities,
-  } = useBatchFetch<EntityResponse>({
-    fetchFn: useCallback(
-      async ({ offset, limit }) => {
-        const client = await getClient();
-        if (!client || !selectedCollectionId) {
-          throw new Error('Client or collection ID not available');
-        }
-        return await client.graphs.listEntities({
-          collectionId: selectedCollectionId,
-          offset,
-          limit,
-        });
-      },
-      [getClient, selectedCollectionId]
-    ),
-    collectionId: selectedCollectionId,
-    enabled: shouldLoadEntities,
-    pageSize: 100,
-  });
+// Entities data loading
+const shouldLoadEntities =
+  (loadedTabs.has('entities') ||
+    loadedTabs.has('knowledge-graph') ||
+    loadedTabs.has('explore')) &&
+  !!selectedCollectionId;
+const {
+  data: entities,
+  totalEntries: totalEntityEntries,
+  loading: entitiesLoading,
+  refetch: refetchEntities,
+} = useBatchFetch<EntityResponse>({
+  fetchFn: useCallback(
+    async ({ offset, limit }) => {
+      const client = await getClient();
+      if (!client || !selectedCollectionId) {
+        throw new Error('Client or collection ID not available');
+      }
+      return await client.graphs.listEntities({
+        collectionId: selectedCollectionId,
+        offset,
+        limit,
+      });
+    },
+    [getClient, selectedCollectionId]
+  ),
+  collectionId: selectedCollectionId,
+  enabled: shouldLoadEntities,
+  pageSize: 100,
+});
 
-  // Relationships data loading
-  const shouldLoadRelationships =
-    (loadedTabs.has('relationships') || loadedTabs.has('knowledge-graph')) &&
-    !!selectedCollectionId;
-  const {
-    data: relationships,
-    totalEntries: totalRelationshipEntries,
-    loading: relationshipsLoading,
-    refetch: refetchRelationships,
-  } = useBatchFetch<RelationshipResponse>({
-    fetchFn: useCallback(
-      async ({ offset, limit }) => {
-        const client = await getClient();
-        if (!client || !selectedCollectionId) {
-          throw new Error('Client or collection ID not available');
-        }
-        return await client.graphs.listRelationships({
-          collectionId: selectedCollectionId,
-          offset,
-          limit,
-        });
-      },
-      [getClient, selectedCollectionId]
-    ),
-    collectionId: selectedCollectionId,
-    enabled: shouldLoadRelationships,
-    pageSize: 100,
-  });
+// Relationships data loading
+const shouldLoadRelationships =
+  (loadedTabs.has('relationships') || loadedTabs.has('knowledge-graph')) &&
+  !!selectedCollectionId;
+const {
+  data: relationships,
+  totalEntries: totalRelationshipEntries,
+  loading: relationshipsLoading,
+  refetch: refetchRelationships,
+} = useBatchFetch<RelationshipResponse>({
+  fetchFn: useCallback(
+    async ({ offset, limit }) => {
+      const client = await getClient();
+      if (!client || !selectedCollectionId) {
+        throw new Error('Client or collection ID not available');
+      }
+      return await client.graphs.listRelationships({
+        collectionId: selectedCollectionId,
+        offset,
+        limit,
+      });
+    },
+    [getClient, selectedCollectionId]
+  ),
+  collectionId: selectedCollectionId,
+  enabled: shouldLoadRelationships,
+  pageSize: 100,
+});
 
-  // Communities data loading
-  const shouldLoadCommunities =
-    loadedTabs.has('communities') && !!selectedCollectionId;
-  const {
-    data: communities,
-    totalEntries: totalCommunityEntries,
-    loading: communitiesLoading,
-    refetch: refetchCommunities,
-  } = useBatchFetch<CommunityResponse>({
-    fetchFn: useCallback(
-      async ({ offset, limit }) => {
-        const client = await getClient();
-        if (!client || !selectedCollectionId) {
-          throw new Error('Client or collection ID not available');
-        }
-        return await client.graphs.listCommunities({
-          collectionId: selectedCollectionId,
-          offset,
-          limit,
-        });
-      },
-      [getClient, selectedCollectionId]
-    ),
-    collectionId: selectedCollectionId,
-    enabled: shouldLoadCommunities,
-    pageSize: 100,
-  });
+// Communities data loading
+const shouldLoadCommunities =
+  loadedTabs.has('communities') && !!selectedCollectionId;
+const {
+  data: communities,
+  totalEntries: totalCommunityEntries,
+  loading: communitiesLoading,
+  refetch: refetchCommunities,
+} = useBatchFetch<CommunityResponse>({
+  fetchFn: useCallback(
+    async ({ offset, limit }) => {
+      const client = await getClient();
+      if (!client || !selectedCollectionId) {
+        throw new Error('Client or collection ID not available');
+      }
+      return await client.graphs.listCommunities({
+        collectionId: selectedCollectionId,
+        offset,
+        limit,
+      });
+    },
+    [getClient, selectedCollectionId]
+  ),
+  collectionId: selectedCollectionId,
+  enabled: shouldLoadCommunities,
+  pageSize: 100,
+});
 ```
 
 **Step 2: Заменить placeholders на реальные компоненты**
@@ -1068,6 +1078,7 @@ git commit -m "feat: добавлен lazy loading данных для всех 
 ### Task 11: Добавить query parameters в ExplorerPage
 
 **Files:**
+
 - Modify: `src/pages/explorer.tsx`
 
 **Step 1: Добавить импорт useRouter**
@@ -1083,46 +1094,46 @@ import { useRouter } from 'next/router';
 После строки `const [collections, setCollections] = useState<CollectionResponse[]>([]);` добавить:
 
 ```typescript
-  const router = useRouter();
+const router = useRouter();
 
-  // Sync selectedCollectionId with query params
-  useEffect(() => {
-    if (!router.isReady) return;
+// Sync selectedCollectionId with query params
+useEffect(() => {
+  if (!router.isReady) return;
 
-    const collectionFromQuery = router.query.collection as string | undefined;
+  const collectionFromQuery = router.query.collection as string | undefined;
 
-    if (collectionFromQuery && collectionFromQuery !== selectedCollectionId) {
-      setSelectedCollectionId(collectionFromQuery);
-    } else if (!collectionFromQuery && selectedCollectionId === null) {
-      // Default collection logic - можно установить 'default' ID если известен
-      // Пока оставляем null
+  if (collectionFromQuery && collectionFromQuery !== selectedCollectionId) {
+    setSelectedCollectionId(collectionFromQuery);
+  } else if (!collectionFromQuery && selectedCollectionId === null) {
+    // Default collection logic - можно установить 'default' ID если известен
+    // Пока оставляем null
+  }
+}, [router.isReady, router.query.collection, selectedCollectionId]);
+
+// Update URL when selectedCollectionId changes
+const handleCollectionSelect = useCallback(
+  (collectionId: string | null) => {
+    setSelectedCollectionId(collectionId);
+
+    const query: Record<string, string> = {};
+    if (collectionId) {
+      query.collection = collectionId;
     }
-  }, [router.isReady, router.query.collection, selectedCollectionId]);
+    if (router.query.tab) {
+      query.tab = router.query.tab as string;
+    }
 
-  // Update URL when selectedCollectionId changes
-  const handleCollectionSelect = useCallback(
-    (collectionId: string | null) => {
-      setSelectedCollectionId(collectionId);
-
-      const query: Record<string, string> = {};
-      if (collectionId) {
-        query.collection = collectionId;
-      }
-      if (router.query.tab) {
-        query.tab = router.query.tab as string;
-      }
-
-      router.push(
-        {
-          pathname: '/explorer',
-          query,
-        },
-        undefined,
-        { shallow: true }
-      );
-    },
-    [router]
-  );
+    router.push(
+      {
+        pathname: '/explorer',
+        query,
+      },
+      undefined,
+      { shallow: true }
+    );
+  },
+  [router]
+);
 ```
 
 **Step 3: Заменить FileManager на CollectionTabs**
@@ -1134,6 +1145,7 @@ import { CollectionTabs } from '@/components/explorer/CollectionTabs';
 ```
 
 Удалить старый импорт:
+
 ```typescript
 // Удалить: import { FileManager } from '@/components/explorer/FileManager';
 ```
@@ -1165,6 +1177,7 @@ git commit -m "feat: интегрирован CollectionTabs в ExplorerPage с 
 ### Task 12: Добавить синхронизацию tab query parameter
 
 **Files:**
+
 - Modify: `src/components/explorer/CollectionTabs.tsx`
 
 **Step 1: Добавить импорт useRouter**
@@ -1180,53 +1193,53 @@ import { useRouter } from 'next/router';
 После строки `const [activeTab, setActiveTab] = useState<TabValue>('documents');` добавить:
 
 ```typescript
-  const router = useRouter();
+const router = useRouter();
 
-  // Sync activeTab with query params
-  useEffect(() => {
-    if (!router.isReady) return;
+// Sync activeTab with query params
+useEffect(() => {
+  if (!router.isReady) return;
 
-    const tabFromQuery = router.query.tab as TabValue | undefined;
-    const validTabs: TabValue[] = [
-      'documents',
-      'users',
-      'entities',
-      'relationships',
-      'communities',
-      'knowledge-graph',
-      'explore',
-    ];
+  const tabFromQuery = router.query.tab as TabValue | undefined;
+  const validTabs: TabValue[] = [
+    'documents',
+    'users',
+    'entities',
+    'relationships',
+    'communities',
+    'knowledge-graph',
+    'explore',
+  ];
 
-    if (tabFromQuery && validTabs.includes(tabFromQuery)) {
-      setActiveTab(tabFromQuery);
+  if (tabFromQuery && validTabs.includes(tabFromQuery)) {
+    setActiveTab(tabFromQuery);
+  }
+}, [router.isReady, router.query.tab]);
+
+// Update URL when activeTab changes
+const handleTabChange = useCallback(
+  (value: string) => {
+    const newTab = value as TabValue;
+    setActiveTab(newTab);
+
+    const query: Record<string, string> = {};
+    if (router.query.collection) {
+      query.collection = router.query.collection as string;
     }
-  }, [router.isReady, router.query.tab]);
+    if (newTab !== 'documents') {
+      query.tab = newTab;
+    }
 
-  // Update URL when activeTab changes
-  const handleTabChange = useCallback(
-    (value: string) => {
-      const newTab = value as TabValue;
-      setActiveTab(newTab);
-
-      const query: Record<string, string> = {};
-      if (router.query.collection) {
-        query.collection = router.query.collection as string;
-      }
-      if (newTab !== 'documents') {
-        query.tab = newTab;
-      }
-
-      router.push(
-        {
-          pathname: '/explorer',
-          query,
-        },
-        undefined,
-        { shallow: true }
-      );
-    },
-    [router]
-  );
+    router.push(
+      {
+        pathname: '/explorer',
+        query,
+      },
+      undefined,
+      { shallow: true }
+    );
+  },
+  [router]
+);
 ```
 
 **Step 3: Использовать handleTabChange**
@@ -1255,6 +1268,7 @@ git commit -m "feat: добавлена синхронизация activeTab с 
 ### Task 13: Создать редирект на /collections/[id]
 
 **Files:**
+
 - Modify: `src/pages/collections/[id].tsx`
 
 **Step 1: Полностью заменить содержимое файла**
@@ -1343,6 +1357,7 @@ pnpm dev
 Открыть в браузере: http://localhost:3005/explorer
 
 Проверить:
+
 - ✅ Страница загружается
 - ✅ Sidebar с коллекциями виден
 - ✅ Табы отображаются корректно

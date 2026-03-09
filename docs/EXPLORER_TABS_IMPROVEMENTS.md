@@ -1,6 +1,7 @@
 # Explorer Tabs Improvements (2025-12-17)
 
 ## Цель
+
 Унификация страниц Users, Entities, Relationships, Communities с использованием shadcn/ui компонентов, улучшенной пагинации и real-time обновлений.
 
 ## Что было сделано
@@ -15,22 +16,25 @@
 // src/hooks/useBatchFetch.ts
 const isFetchingRef = useRef(false);
 
-const fetchAllData = useCallback(async (silent = false) => {
-  // Prevent race conditions with concurrent fetches
-  if (isFetchingRef.current) {
-    return;
-  }
+const fetchAllData = useCallback(
+  async (silent = false) => {
+    // Prevent race conditions with concurrent fetches
+    if (isFetchingRef.current) {
+      return;
+    }
 
-  try {
-    isFetchingRef.current = true;
-    // ... fetch logic ...
+    try {
+      isFetchingRef.current = true;
+      // ... fetch logic ...
 
-    // ИСПРАВЛЕНИЕ: Atomic update используя функциональный setState
-    setData(() => allData);
-  } finally {
-    isFetchingRef.current = false;
-  }
-}, [fetchFn, collectionId, enabled, pageSize]);
+      // ИСПРАВЛЕНИЕ: Atomic update используя функциональный setState
+      setData(() => allData);
+    } finally {
+      isFetchingRef.current = false;
+    }
+  },
+  [fetchFn, collectionId, enabled, pageSize]
+);
 ```
 
 **Результат:** Данные больше не мигают при обновлении.
@@ -53,6 +57,7 @@ const fetchAllData = useCallback(async (silent = false) => {
 ```
 
 **Применено в:**
+
 - ✅ `src/components/explorer/tabs/UsersTab.tsx`
 - ✅ `src/components/explorer/tabs/EntitiesTab.tsx`
 - ✅ `src/components/explorer/tabs/RelationshipsTab.tsx`
@@ -65,6 +70,7 @@ const fetchAllData = useCallback(async (silent = false) => {
 **Текущая реализация:**
 
 Все табы уже используют `EnhancedPagination` компонент с:
+
 - ✅ Выбор размера страницы: 20, 50, 100, 250, 500
 - ✅ Навигация: First, Previous, Next, Last
 - ✅ Индикатор: "Showing X to Y of Z"
@@ -103,12 +109,14 @@ const { data: users, isPolling: usersPolling } = useBatchFetch<User>({
 ```
 
 **Как это работает:**
+
 - Polling активируется только когда таб открыт (`activeTab === 'users'`)
 - Интервал: 10 секунд (10000ms)
 - Silent refresh: не показывает loader при обновлении
 - Auto-stop: polling останавливается при переключении на другой таб
 
 **Применено в:**
+
 - ✅ Users tab (10s polling)
 - ✅ Entities tab (10s polling)
 - ✅ Relationships tab (10s polling)
@@ -121,6 +129,7 @@ const { data: users, isPolling: usersPolling } = useBatchFetch<User>({
 **Текущая реализация:**
 
 Все табы уже используют shadcn/ui компоненты:
+
 - `Table`, `TableHeader`, `TableBody`, `TableRow`, `TableCell`
 - `Skeleton` для loading состояния
 - `Input` для поиска
@@ -138,20 +147,22 @@ const { data: users, isPolling: usersPolling } = useBatchFetch<User>({
 ### useBatchFetch Hook
 
 **Ключевые особенности:**
+
 - Загружает ВСЕ данные коллекции за несколько batch запросов (pageSize: 100)
 - Поддерживает polling через `pollingInterval` параметр
 - Предотвращает race conditions через `isFetchingRef`
 - Silent refresh для polling (без loader'а)
 
 **Пример использования:**
+
 ```typescript
 const {
-  data,           // Массив всех элементов
-  totalEntries,   // Точное количество из API
-  loading,        // Loading state (только для первой загрузки)
-  error,          // Error state
-  refetch,        // Ручное обновление
-  isPolling       // Индикатор active polling
+  data, // Массив всех элементов
+  totalEntries, // Точное количество из API
+  loading, // Loading state (только для первой загрузки)
+  error, // Error state
+  refetch, // Ручное обновление
+  isPolling, // Индикатор active polling
 } = useBatchFetch<T>({
   fetchFn: async ({ offset, limit }) => {
     // API вызов
@@ -160,7 +171,7 @@ const {
   collectionId: 'collection-id',
   enabled: true,
   pageSize: 100,
-  pollingInterval: 10000 // 0 = disabled
+  pollingInterval: 10000, // 0 = disabled
 });
 ```
 
@@ -171,11 +182,12 @@ const {
 **Расположение:** `src/components/ui/enhanced-pagination.tsx`
 
 **Props:**
+
 ```typescript
 interface EnhancedPaginationProps {
-  currentPage: number;        // 1-indexed
-  pageSize: number;           // 20, 50, 100, 250, 500
-  totalCount: number;         // Количество элементов
+  currentPage: number; // 1-indexed
+  pageSize: number; // 20, 50, 100, 250, 500
+  totalCount: number; // Количество элементов
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
   pageSizeOptions?: number[]; // Default: [20, 50, 100, 250, 500]
@@ -183,6 +195,7 @@ interface EnhancedPaginationProps {
 ```
 
 **Features:**
+
 - Первая/Последняя страница (скрыто на мобильных)
 - Previous/Next навигация
 - Выбор размера страницы (скрыто на мобильных)
@@ -197,12 +210,14 @@ interface EnhancedPaginationProps {
 ### Почему client-side pagination?
 
 **Причины:**
+
 1. **useBatchFetch загружает ВСЕ данные** — для коллекций с сотнями элементов это быстрее чем множественные API запросы
 2. **Мгновенная фильтрация** — поиск и фильтрация работают без задержки
 3. **Меньше нагрузки на API** — один batch вместо запросов при каждом page change
 4. **Polling эффективнее** — обновляется весь набор данных за один цикл
 
 **Когда переходить на API-based pagination:**
+
 - Коллекции с >1000 элементов
 - Медленный API (>2s для batch fetching)
 - Ограничения памяти браузера
@@ -212,12 +227,14 @@ interface EnhancedPaginationProps {
 ### Почему polling вместо WebSockets?
 
 **Причины:**
+
 1. **R2R API не поддерживает WebSockets** — только REST endpoints
 2. **Простота реализации** — не требуется сложная инфраструктура
 3. **Достаточная частота** — 10 секунд приемлемо для dashboard
 4. **Graceful degradation** — работает через proxy/firewall
 
 **Оптимизации:**
+
 - Polling только для активного таба
 - Silent refresh (без loader)
 - Race condition protection
@@ -230,6 +247,7 @@ interface EnhancedPaginationProps {
 ### Checklist для тестирования
 
 #### Users Tab
+
 - [ ] Загружаются все пользователи коллекции
 - [ ] Счетчик показывает точное количество из API
 - [ ] Поиск работает (по email, user ID)
@@ -242,6 +260,7 @@ interface EnhancedPaginationProps {
 - [ ] Remove button работает
 
 #### Entities Tab
+
 - [ ] Загружаются все entities коллекции
 - [ ] Счетчик показывает точное количество из API
 - [ ] Поиск работает (по name, entity ID, category)
@@ -255,6 +274,7 @@ interface EnhancedPaginationProps {
 - [ ] Remove button работает
 
 #### Relationships Tab
+
 - [ ] Загружаются все relationships коллекции
 - [ ] Счетчик показывает точное количество из API
 - [ ] Поиск работает (по subject, predicate, object, IDs)
@@ -267,6 +287,7 @@ interface EnhancedPaginationProps {
 - [ ] Remove button работает
 
 #### Communities Tab
+
 - [ ] Загружаются все communities коллекции
 - [ ] Счетчик показывает точное количество из API
 - [ ] Поиск работает (по name, summary, ID)
@@ -279,6 +300,7 @@ interface EnhancedPaginationProps {
 - [ ] Remove button работает
 
 #### Edge Cases
+
 - [ ] Пустая коллекция → EmptyState отображается
 - [ ] Поиск без результатов → "No X match your search"
 - [ ] Переключение между табами не ломает state
@@ -295,11 +317,13 @@ interface EnhancedPaginationProps {
 ### Метрики
 
 **До оптимизации:**
+
 - Flickering при polling ❌
 - Multiple concurrent requests ❌
 - Неточные счетчики ❌
 
 **После оптимизации:**
+
 - Smooth polling без flickering ✅
 - Race condition protection ✅
 - Точные счетчики из API ✅
@@ -309,11 +333,13 @@ interface EnhancedPaginationProps {
 ### Рекомендации по масштабированию
 
 **Если коллекция >500 элементов:**
+
 1. Увеличить `pageSize` в useBatchFetch до 200-500
 2. Добавить debounce в search input (300ms)
 3. Добавить virtual scrolling для таблиц
 
 **Если коллекция >1000 элементов:**
+
 1. Переходить на API-based pagination
 2. Использовать server-side search/filter
 3. Кешировать запросы через React Query
@@ -332,6 +358,7 @@ docs/EXPLORER_TABS_IMPROVEMENTS.md             # Эта документация
 ```
 
 **НЕ требуется изменять:**
+
 - `src/components/ui/enhanced-pagination.tsx` (уже готов)
 - `src/components/explorer/CollectionTabs.tsx` (polling уже настроен)
 - Структура табов (shadcn Table уже используется)
@@ -341,11 +368,13 @@ docs/EXPLORER_TABS_IMPROVEMENTS.md             # Эта документация
 ## Заключение
 
 Все требуемые улучшения УЖЕ были реализованы ранее:
+
 - ✅ Shadcn Table UI
 - ✅ Enhanced pagination (20/50/100/250/500)
 - ✅ Real-time polling (10s)
 
 В этом рефакторинге:
+
 - ✅ Исправлен race condition bug
 - ✅ Добавлены точные счетчики totalEntries
 - ✅ Документирована архитектура

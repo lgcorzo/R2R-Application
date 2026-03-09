@@ -3,9 +3,11 @@
 ## Проблемы которые были решены
 
 ### 1. Маленький размер графов (КРИТИЧНО)
+
 **Проблема:** Фиксированная высота 550px/600px не использовала доступное пространство экрана.
 
 **Решение:**
+
 ```diff
 - className="w-full h-[550px] flex items-center justify-center"
 + className="w-full h-[calc(100vh-280px)]"
@@ -14,19 +16,23 @@
 **Результат:** Графы теперь адаптивно занимают доступную высоту экрана.
 
 ### 2. Отсутствие fullscreen режима
+
 **Проблема:** Невозможно развернуть граф на весь экран для детального изучения.
 
 **Решение:** Добавлен Dialog с fullscreen режимом (95vw x 95vh).
 
 **Компоненты:**
+
 - Button с иконкой Maximize2 для открытия
 - Dialog от shadcn/ui для fullscreen
 - Button с Minimize2 для закрытия
 
 ### 3. Медленная загрузка данных
+
 **Проблема:** pageSize: 100 требовал множественных запросов для больших коллекций.
 
 **Решение:**
+
 ```diff
 - pageSize: 100,
 + pageSize: 200, // Увеличен с 100 до 200 для более быстрой загрузки
@@ -35,6 +41,7 @@
 **Результат:** В 2 раза меньше API запросов для загрузки графов.
 
 ### 4. Плохой loading state
+
 **Проблема:** Простой текст "Loading..." не давал визуального feedback.
 
 **Решение:** Skeleton компонент от shadcn/ui.
@@ -51,6 +58,7 @@
 ### KnowledgeGraphTab.tsx
 
 #### Новые импорты
+
 ```tsx
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -59,11 +67,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 ```
 
 #### Новый state
+
 ```tsx
 const [isFullscreen, setIsFullscreen] = useState(false);
 ```
 
 #### Адаптивная высота
+
 ```tsx
 const GraphContent = () => (
   <div
@@ -80,6 +90,7 @@ const GraphContent = () => (
 ```
 
 #### Header с информацией
+
 ```tsx
 <div className="flex items-center justify-between mb-4 px-4 pt-4">
   <div>
@@ -101,14 +112,13 @@ const GraphContent = () => (
 ```
 
 #### Fullscreen Dialog
+
 ```tsx
 <Dialog open={isFullscreen} onOpenChange={setIsFullscreen}>
   <DialogContent className="max-w-[95vw] max-h-[95vh] p-6">
     <div className="flex items-center justify-between mb-4">
       <div>
-        <h3 className="text-lg font-semibold">
-          Knowledge Graph - Fullscreen
-        </h3>
+        <h3 className="text-lg font-semibold">Knowledge Graph - Fullscreen</h3>
         <p className="text-sm text-muted-foreground">
           {entities.length} entities, {relationships.length} relationships
         </p>
@@ -129,19 +139,21 @@ const GraphContent = () => (
 ```
 
 #### Увеличенный maxNodes в fullscreen
+
 ```tsx
 <KnowledgeGraphD3
   entities={entities}
   relationships={relationships}
   width={containerDimensions.width}
   height={containerDimensions.height}
-  maxNodes={isFullscreen ? 500 : 250}  // В 2 раза больше в fullscreen
+  maxNodes={isFullscreen ? 500 : 250} // В 2 раза больше в fullscreen
 />
 ```
 
 ### ExploreTab.tsx
 
 Аналогичные изменения:
+
 - ✅ Адаптивная высота: h-[calc(100vh-280px)]
 - ✅ Fullscreen режим через Dialog
 - ✅ Header с количеством entities
@@ -151,6 +163,7 @@ const GraphContent = () => (
 ### CollectionTabs.tsx
 
 #### Оптимизация загрузки
+
 ```diff
 const { data: entities, loading: entitiesLoading } =
   useBatchFetch<EntityResponse>({
@@ -168,6 +181,7 @@ const { data: entities, loading: entitiesLoading } =
 ### Размеры графов
 
 #### Обычный режим
+
 ```text
 Width: 100% контейнера
 Height: calc(100vh - 280px)
@@ -175,6 +189,7 @@ Height: calc(100vh - 280px)
 ```
 
 #### Fullscreen режим
+
 ```text
 Width: 95vw (95% viewport width)
 Height: 95vh (95% viewport height)
@@ -186,6 +201,7 @@ Actual graph: calc(95vh - 100px)
 ### Производительность
 
 #### До оптимизации
+
 ```text
 pageSize: 100
 1000 entities → 10 API requests
@@ -194,6 +210,7 @@ Total: 20 requests для полной загрузки
 ```
 
 #### После оптимизации
+
 ```text
 pageSize: 200
 1000 entities → 5 API requests
@@ -203,6 +220,7 @@ Total: 10 requests для полной загрузки
 ```
 
 #### maxNodes оптимизация
+
 ```text
 Normal view: maxNodes=250
   → Рисует до 250 узлов
@@ -217,16 +235,19 @@ Fullscreen: maxNodes=500
 ### UX Improvements
 
 #### Loading States
+
 - ✅ Skeleton вместо простого текста
 - ✅ Animated placeholder
 - ✅ Consistent height во время загрузки
 
 #### Information Display
+
 - ✅ Header с counts (entities, relationships)
 - ✅ Четкие названия: "Knowledge Graph" vs "Explore Graph"
 - ✅ Fullscreen label для clarity
 
 #### Controls
+
 - ✅ Явная кнопка Fullscreen
 - ✅ Exit Fullscreen button в dialog
 - ✅ ESC key для закрытия (native Dialog behavior)
@@ -237,6 +258,7 @@ Fullscreen: maxNodes=500
 ### До рефакторинга
 
 #### KnowledgeGraphTab
+
 ```tsx
 // Фиксированная высота
 <div className="w-full h-[550px] flex items-center justify-center">
@@ -256,6 +278,7 @@ Fullscreen: maxNodes=500
 ```
 
 **Проблемы:**
+
 - ❌ Только 550px высоты (мало для детального изучения)
 - ❌ Нет fullscreen режима
 - ❌ Простой loading текст
@@ -264,6 +287,7 @@ Fullscreen: maxNodes=500
 ### После рефакторинга
 
 #### KnowledgeGraphTab
+
 ```tsx
 // Адаптивная высота
 <div className="flex flex-col h-full">
@@ -303,6 +327,7 @@ Fullscreen: maxNodes=500
 ```
 
 **Улучшения:**
+
 - ✅ calc(100vh-280px) - адаптивная высота
 - ✅ Fullscreen режим (95vw x 95vh)
 - ✅ Skeleton loading state
@@ -313,6 +338,7 @@ Fullscreen: maxNodes=500
 ## Best Practices применены
 
 ### 1. Responsive Design
+
 ```tsx
 // Используем calc() для адаптивной высоты
 h-[calc(100vh-280px)]  // Normal
@@ -323,6 +349,7 @@ max-w-[95vw] max-h-[95vh]
 ```
 
 ### 2. Progressive Enhancement
+
 ```tsx
 // Normal view: maxNodes=250 для быстрого рендера
 // Fullscreen: maxNodes=500 для detail
@@ -330,6 +357,7 @@ maxNodes={isFullscreen ? 500 : 250}
 ```
 
 ### 3. Consistent Loading States
+
 ```tsx
 // Skeleton с той же высотой что и контент
 <div className="flex flex-col h-[calc(100vh-280px)] gap-4 p-4">
@@ -339,16 +367,20 @@ maxNodes={isFullscreen ? 500 : 250}
 ```
 
 ### 4. Clear Information Hierarchy
+
 ```tsx
 <div>
-  <h3>Knowledge Graph</h3>            // Primary
-  <p className="text-sm text-muted">   // Secondary
+  <h3>Knowledge Graph</h3> // Primary
+  <p className="text-sm text-muted">
+    {' '}
+    // Secondary
     {count} entities, {count} relationships
   </p>
 </div>
 ```
 
 ### 5. Accessibility
+
 - ✅ Keyboard navigation (Dialog ESC to close)
 - ✅ Focus management (Dialog traps focus)
 - ✅ Semantic HTML (h3 для заголовков)
@@ -357,6 +389,7 @@ maxNodes={isFullscreen ? 500 : 250}
 ## Файлы изменены
 
 ### 1. `src/components/explorer/tabs/KnowledgeGraphTab.tsx`
+
 - ✅ Добавлен fullscreen state
 - ✅ Адаптивная высота
 - ✅ Fullscreen Dialog
@@ -365,27 +398,31 @@ maxNodes={isFullscreen ? 500 : 250}
 - ✅ maxNodes optimization
 
 ### 2. `src/components/explorer/tabs/ExploreTab.tsx`
+
 - ✅ Идентичные улучшения
 - ✅ Empty state для нет entities
 
 ### 3. `src/components/explorer/CollectionTabs.tsx`
+
 - ✅ pageSize: 100 → 200
 - ✅ Комментарии об оптимизации
 
 ## Дальнейшие возможные улучшения
 
 ### 1. Progressive Loading
+
 Загружать первые 200 entities сразу, остальные по требованию:
+
 ```tsx
 const [loadMore, setLoadMore] = useState(false);
 
-<Button onClick={() => setLoadMore(true)}>
-  Load More Entities
-</Button>
+<Button onClick={() => setLoadMore(true)}>Load More Entities</Button>;
 ```
 
 ### 2. Виртуализация
+
 Для очень больших графов (>1000 nodes):
+
 ```tsx
 import { VirtualGraph } from '@/components/virtual-graph';
 
@@ -393,10 +430,11 @@ import { VirtualGraph } from '@/components/virtual-graph';
   entities={entities}
   chunkSize={250}
   renderWindow={visibleNodes}
-/>
+/>;
 ```
 
 ### 3. Export функционал
+
 ```tsx
 <Button onClick={exportGraphAsSVG}>
   <Download className="h-4 w-4" />
@@ -405,6 +443,7 @@ import { VirtualGraph } from '@/components/virtual-graph';
 ```
 
 ### 4. Zoom controls
+
 ```tsx
 <div className="absolute top-4 right-4 flex gap-2">
   <Button onClick={() => zoom.in()}>+</Button>
@@ -414,6 +453,7 @@ import { VirtualGraph } from '@/components/virtual-graph';
 ```
 
 ### 5. Search в графе
+
 ```tsx
 <Input
   placeholder="Search entities..."
@@ -422,6 +462,7 @@ import { VirtualGraph } from '@/components/virtual-graph';
 ```
 
 ### 6. Filter по категориям
+
 ```tsx
 <Select onValueChange={setCategory}>
   <SelectItem value="all">All Categories</SelectItem>
@@ -435,6 +476,7 @@ import { VirtualGraph } from '@/components/virtual-graph';
 ### Loading Time Comparison
 
 #### До оптимизации
+
 ```text
 pageSize: 100
 1000 entities:
@@ -448,6 +490,7 @@ maxNodes: 250 (always)
 ```
 
 #### После оптимизации
+
 ```text
 pageSize: 200
 1000 entities:
@@ -465,6 +508,7 @@ maxNodes: 250 (normal) / 500 (fullscreen)
 ```
 
 ### Memory Usage
+
 ```bash
 Normal view (maxNodes=250):
   - DOM nodes: ~1,000

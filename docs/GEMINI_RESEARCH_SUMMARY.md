@@ -1,4 +1,5 @@
 # Краткое резюме исследования Gemini для R2R
+
 ## Executive Summary: Gemini Models Research & R2R Integration
 
 ---
@@ -8,18 +9,21 @@
 ### 1. Модели Gemini для R2R
 
 #### Gemini 2.5 Flash (Рекомендуется для большинства задач)
+
 - **Скорость:** ⚡⚡⚡⚡⚡ (5/5)
 - **Стоимость:** 💰💰 (2/5) - $0.10/1M input, $0.40/1M output
 - **Качество:** ⭐⭐⭐⭐ (4/5)
 - **Использование:** RAG, code generation, fast responses, chunk enrichment
 
 #### Gemini 2.5 Pro (Для сложных задач)
+
 - **Скорость:** ⚡⚡⚡ (3/5)
 - **Стоимость:** 💰💰💰💰 (4/5) - Premium pricing
 - **Качество:** ⭐⭐⭐⭐⭐ (5/5)
 - **Использование:** Complex reasoning, code analysis, deep research
 
 #### Gemini 2.0 Flash (Бюджетный вариант)
+
 - **Скорость:** ⚡⚡⚡⚡ (4/5)
 - **Стоимость:** 💰 (1/5) - Самый дешевый
 - **Качество:** ⭐⭐⭐ (3/5)
@@ -37,6 +41,7 @@
 ## ⚙️ Оптимальные настройки для R2R
 
 ### Code Generation
+
 ```typescript
 {
   model: 'google/gemini-2.5-flash',
@@ -48,6 +53,7 @@
 ```
 
 ### RAG Generation
+
 ```typescript
 {
   model: 'google/gemini-2.5-flash',
@@ -59,6 +65,7 @@
 ```
 
 ### Complex Reasoning
+
 ```typescript
 {
   model: 'google/gemini-2.5-pro',
@@ -70,6 +77,7 @@
 ```
 
 ### Fast Responses
+
 ```typescript
 {
   model: 'google/gemini-2.5-flash',
@@ -110,6 +118,7 @@ export GOOGLE_API_KEY=your_gemini_api_key
 ## 🚀 Быстрый старт
 
 1. **Установить API ключ:**
+
    ```bash
    export GOOGLE_API_KEY=your_key
    ```
@@ -128,21 +137,25 @@ export GOOGLE_API_KEY=your_gemini_api_key
 ## 💡 Best Practices
 
 ### Выбор модели:
+
 - **80% задач:** Gemini 2.5 Flash
 - **20% сложных задач:** Gemini 2.5 Pro
 
 ### Thinking Budget:
+
 - **Простые задачи:** 0 (отключено)
 - **Большинство задач:** -1 (dynamic)
 - **Сложные задачи:** 2048-8192
 - **Очень сложные:** 16384+
 
 ### Temperature:
+
 - **Код:** 0.1-0.3 (низкая)
 - **RAG:** 0.3-0.5 (сбалансированная)
 - **Креативные задачи:** 0.7-1.0
 
 ### Embeddings:
+
 - **Всегда:** text-embedding-004
 - **Размерность:** 768 (оптимально)
 
@@ -151,16 +164,19 @@ export GOOGLE_API_KEY=your_gemini_api_key
 ## 📊 Ожидаемые результаты
 
 ### Производительность:
+
 - RAG latency: < 2s (Flash), < 5s (Pro)
 - Embedding generation: < 500ms
 - Code search: < 1s
 
 ### Качество:
+
 - Code generation accuracy: > 85%
 - RAG answer quality: > 90%
 - Embedding similarity: > 95%
 
 ### Стоимость:
+
 - Средняя стоимость на запрос: < $0.01
 - 80%+ запросов используют Flash (экономия)
 

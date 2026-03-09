@@ -1,12 +1,12 @@
 # Codegen AI Agent Configuration
 # Правила и настройки для работы Codegen агента как полноценного разработчика
 
-version: "1.0"
+version: '1.0'
 
 # Общие настройки агента
 agent:
-  name: "Codegen AI Developer"
-  role: "Full-Stack Developer"
+  name: 'Codegen AI Developer'
+  role: 'Full-Stack Developer'
   capabilities:
     - code_implementation
     - code_review
@@ -21,245 +21,245 @@ triggers:
   auto_assign:
     enabled: true
     conditions:
-      - assignee: "codegen[bot]"
-      - label: "codegen-agent"
-      - label: "ai-task"
-  
+      - assignee: 'codegen[bot]'
+      - label: 'codegen-agent'
+      - label: 'ai-task'
+
   # Активация через упоминание в комментариях
   mention:
     enabled: true
     patterns:
-      - "@codegen"
-      - "/codegen"
-  
+      - '@codegen'
+      - '/codegen'
+
   # Автоматическая активация для определенных типов задач
   auto_trigger:
     enabled: true
     labels:
-      - "bug"
-      - "enhancement"
-      - "refactor"
-      - "tests-needed"
+      - 'bug'
+      - 'enhancement'
+      - 'refactor'
+      - 'tests-needed'
     conditions:
-      - complexity: "low"  # Только простые задачи без подтверждения
-      - priority: "high"   # Срочные задачи
+      - complexity: 'low' # Только простые задачи без подтверждения
+      - priority: 'high' # Срочные задачи
 
 # Workflow для различных типов задач
 workflows:
   # Новый Issue
   issue:
     steps:
-      - name: "Analyze requirements"
-        action: "analyze_issue"
+      - name: 'Analyze requirements'
+        action: 'analyze_issue'
         tools:
-          - context7  # Для поиска документации
-          - github_search  # Для поиска похожих issues
-      
-      - name: "Plan implementation"
-        action: "create_plan"
-        output: ".codegen/plans/issue-{number}.md"
-      
-      - name: "Request approval"
-        action: "comment"
-        template: "plan_approval"
-        wait_for: "approval"  # Ждать подтверждения от человека
-      
-      - name: "Create feature branch"
-        action: "create_branch"
-        pattern: "codegen/issue-{number}-{slug}"
-      
-      - name: "Implement solution"
-        action: "implement"
+          - context7 # Для поиска документации
+          - github_search # Для поиска похожих issues
+
+      - name: 'Plan implementation'
+        action: 'create_plan'
+        output: '.codegen/plans/issue-{number}.md'
+
+      - name: 'Request approval'
+        action: 'comment'
+        template: 'plan_approval'
+        wait_for: 'approval' # Ждать подтверждения от человека
+
+      - name: 'Create feature branch'
+        action: 'create_branch'
+        pattern: 'codegen/issue-{number}-{slug}'
+
+      - name: 'Implement solution'
+        action: 'implement'
         context:
-          - ".codegen/context.md"
-          - "CLAUDE.md"
+          - '.codegen/context.md'
+          - 'CLAUDE.md'
           - related_files
-      
-      - name: "Run tests"
-        action: "test"
+
+      - name: 'Run tests'
+        action: 'test'
         commands:
-          - "make test"
-          - "npm test"
-      
-      - name: "Create Pull Request"
-        action: "create_pr"
-        template: "implementation_pr"
+          - 'make test'
+          - 'npm test'
+
+      - name: 'Create Pull Request'
+        action: 'create_pr'
+        template: 'implementation_pr'
         auto_request_review: true
         reviewers:
-          - "@team/developers"
+          - '@team/developers'
 
   # Pull Request Review
   pull_request_review:
     steps:
-      - name: "Analyze changes"
-        action: "analyze_pr"
+      - name: 'Analyze changes'
+        action: 'analyze_pr'
         checks:
           - code_quality
           - security
           - performance
           - test_coverage
-      
-      - name: "Run static analysis"
-        action: "run_checks"
+
+      - name: 'Run static analysis'
+        action: 'run_checks'
         tools:
           - eslint
           - prettier
           - type_check
-      
-      - name: "Submit review"
-        action: "submit_review"
-        template: "code_review"
-        auto_approve: false  # Не одобрять автоматически
-  
+
+      - name: 'Submit review'
+        action: 'submit_review'
+        template: 'code_review'
+        auto_approve: false # Не одобрять автоматически
+
   # Bug Fix
   bug_fix:
     steps:
-      - name: "Reproduce bug"
-        action: "reproduce"
+      - name: 'Reproduce bug'
+        action: 'reproduce'
         create_test: true
-      
-      - name: "Root cause analysis"
-        action: "analyze_bug"
+
+      - name: 'Root cause analysis'
+        action: 'analyze_bug'
         tools:
           - trace_execution
           - check_logs
-      
-      - name: "Implement fix"
-        action: "fix"
+
+      - name: 'Implement fix'
+        action: 'fix'
         verify_test: true
-      
-      - name: "Regression testing"
-        action: "test"
-        scope: "full"
-      
-      - name: "Create fix PR"
-        action: "create_pr"
-        template: "bug_fix_pr"
+
+      - name: 'Regression testing'
+        action: 'test'
+        scope: 'full'
+
+      - name: 'Create fix PR'
+        action: 'create_pr'
+        template: 'bug_fix_pr'
 
   # Refactoring
   refactor:
     steps:
-      - name: "Analyze current code"
-        action: "analyze_code"
+      - name: 'Analyze current code'
+        action: 'analyze_code'
         metrics:
           - complexity
           - duplication
           - maintainability
-      
-      - name: "Plan refactoring"
-        action: "plan_refactor"
+
+      - name: 'Plan refactoring'
+        action: 'plan_refactor'
         safe_mode: true
-      
-      - name: "Implement refactoring"
-        action: "refactor"
+
+      - name: 'Implement refactoring'
+        action: 'refactor'
         preserve_behavior: true
-      
-      - name: "Verify tests pass"
-        action: "test"
+
+      - name: 'Verify tests pass'
+        action: 'test'
         require_100_percent_pass: true
 
 # Настройки коммуникации
 communication:
   # Язык комментариев
-  language: "ru"  # Russian by default
-  
+  language: 'ru' # Russian by default
+
   # Частота обновлений статуса
   status_updates:
     enabled: true
-    interval: "10m"  # Каждые 10 минут
-  
+    interval: '10m' # Каждые 10 минут
+
   # Шаблоны сообщений
   templates:
     plan_approval: |
       ## 📋 План реализации
-      
+
       {plan_details}
-      
+
       **Оценка времени:** {estimated_time}
       **Затронутые файлы:** {affected_files}
-      
+
       Пожалуйста, подтвердите план командой `/approve` или внесите корректировки.
-    
+
     implementation_pr: |
       ## 🚀 Реализация: {issue_title}
-      
+
       Решает #{issue_number}
-      
+
       ### Что было сделано
       {changes_summary}
-      
+
       ### Тесты
       {test_summary}
-      
+
       ### Checklist
       - [x] Код реализован
       - [x] Тесты написаны и проходят
       - [x] Документация обновлена
       - [ ] Code review пройден
-      
+
       🤖 Создано Codegen AI Agent
-    
+
     code_review: |
       ## 🔍 Code Review
-      
+
       ### Общая оценка: {overall_rating}
-      
+
       {review_details}
-      
+
       ### Рекомендации
       {recommendations}
-      
+
       🤖 Review by Codegen AI Agent
 
 # Правила безопасности и ограничения
 security:
   # Запретить автоматический merge
   auto_merge: false
-  
+
   # Требовать human review для критичных изменений
   require_human_review:
-    - path: ".github/workflows/**"
-    - path: "infrastructure/**"
-    - path: "**/*secret*"
-    - path: "**/*config*"
-    - type: "breaking_change"
-  
+    - path: '.github/workflows/**'
+    - path: 'infrastructure/**'
+    - path: '**/*secret*'
+    - path: '**/*config*'
+    - type: 'breaking_change'
+
   # Файлы, которые агент не может изменять
   protected_files:
-    - ".env"
-    - ".env.production"
-    - "**/*.key"
-    - "**/*.pem"
-    - ".git/**"
-  
+    - '.env'
+    - '.env.production'
+    - '**/*.key'
+    - '**/*.pem'
+    - '.git/**'
+
   # Максимальные лимиты
   limits:
     max_files_per_pr: 50
     max_lines_changed: 1000
-    max_execution_time: "30m"
+    max_execution_time: '30m'
 
 # Интеграция с существующими инструментами
 integrations:
   # Codegen API
   codegen:
-    api_url: "https://api.codegen.com"
-    webhook_secret: "${CODEGEN_WEBHOOK_SECRET}"
-  
+    api_url: 'https://api.codegen.com'
+    webhook_secret: '${CODEGEN_WEBHOOK_SECRET}'
+
   # Linear для отслеживания задач
   linear:
     enabled: true
     auto_sync: true
-    project_id: "${LINEAR_PROJECT_ID}"
-  
+    project_id: '${LINEAR_PROJECT_ID}'
+
   # Slack для уведомлений
   slack:
     enabled: true
-    channel: "#dev-ai-agents"
+    channel: '#dev-ai-agents'
     notify_on:
       - pr_created
       - review_completed
       - error
-  
+
   # CircleCI для CI/CD
   circleci:
     enabled: true
@@ -270,35 +270,35 @@ integrations:
 models:
   # Модель для анализа и планирования
   planner:
-    provider: "anthropic"
-    model: "claude-3-5-sonnet-20241022"
+    provider: 'anthropic'
+    model: 'claude-3-5-sonnet-20241022'
     temperature: 0.3
-  
+
   # Модель для реализации кода
   implementer:
-    provider: "anthropic"
-    model: "claude-3-5-sonnet-20241022"
+    provider: 'anthropic'
+    model: 'claude-3-5-sonnet-20241022'
     temperature: 0.1
-  
+
   # Модель для code review
   reviewer:
-    provider: "anthropic"
-    model: "claude-3-5-sonnet-20241022"
+    provider: 'anthropic'
+    model: 'claude-3-5-sonnet-20241022'
     temperature: 0.2
 
 # Метрики и мониторинг
 monitoring:
   # Отслеживать метрики работы агента
   track_metrics: true
-  
+
   metrics:
     - tasks_completed
     - average_time
     - success_rate
     - code_quality_score
     - test_coverage
-  
+
   # Dashboard для визуализации
   dashboard:
     enabled: true
-    url: "https://r2r-production/codegen-metrics"
+    url: 'https://r2r-production/codegen-metrics'

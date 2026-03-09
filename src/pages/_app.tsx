@@ -24,10 +24,16 @@ function MyAppContent({ Component, pageProps }: AppProps) {
     const publicRoutes = ['/auth/login', '/auth/signup'];
     const userRoutes = [
       '/documents',
+      '/documents-detail',
       '/collections',
       '/collection',
+      '/collection-detail',
       '/chat',
       '/account',
+      '/manage',
+      '/explorer',
+      '/search',
+      '/indexLogs',
     ];
     const currentPath = router.pathname;
 

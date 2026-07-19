@@ -184,7 +184,7 @@
     "react-day-picker": "^9.11.2",
     "react-dom": "18.3.1",
     "react-dropzone": "^14.3.5",
-    "react-hook-form": "^7.66.1",
+    "react-hook-form": "^7.82.0",
     "react-markdown": "^9.0.3",
     "react-resizable-panels": "^3.0.6",
     "recharts": "2.15.4",

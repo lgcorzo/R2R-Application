@@ -1,6 +1,6 @@
 ---
 name: protect_branch
-description: "Process to secure a GitHub repository by requiring code owner approval and branch protection."
+description: 'Process to secure a GitHub repository by requiring code owner approval and branch protection.'
 ---
 
 # Skill: Protect Branch
@@ -15,7 +15,9 @@ This skill defines the process to secure a GitHub repository so that only author
 ## Steps
 
 ### 1. Identify User and Repository
+
 Get the authenticated user and repository details.
+
 ```bash
 gh auth status
 git remote -v
@@ -23,7 +25,9 @@ git branch --show-current
 ```
 
 ### 2. Create CODEOWNERS
+
 Define who can approve changes. Replace `@user` with the authorized GitHub username.
+
 ```bash
 mkdir -p .github
 echo "* @user" > .github/CODEOWNERS
@@ -33,7 +37,9 @@ git push origin <branch_name>
 ```
 
 ### 3. Apply Branch Protection
+
 Use the GitHub API to enforce code owner reviews and a minimum approval count.
+
 ```bash
 echo '{
   "required_status_checks": null,
@@ -48,7 +54,9 @@ echo '{
 ```
 
 ## Verification
+
 Confirm the configuration.
+
 ```bash
 gh api /repos/:owner/:repo/branches/:branch/protection
 ```

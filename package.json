@@ -188,7 +188,7 @@
     "react-markdown": "^9.0.3",
     "react-resizable-panels": "^3.0.6",
     "recharts": "2.15.4",
-    "sass": "^1.83.4",
+    "sass": "^1.101.0",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7",

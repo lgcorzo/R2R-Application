@@ -27,6 +27,8 @@ export function Logo({
     }
   };
 
+  const isSvg = brandingConfig.logo.src.endsWith('.svg');
+
   const imageElement = (
     <Image
       alt={brandingConfig.logo.alt}
@@ -35,6 +37,7 @@ export function Logo({
       height={height}
       className={className}
       priority={true}
+      unoptimized={isSvg}
       {...rest}
     />
   );

@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/nextjs';
-import { Analytics } from '@vercel/analytics/react';
+
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useEffect, useCallback } from 'react';
@@ -137,7 +137,6 @@ function MyApp(props: AppProps) {
       >
         <UserProvider>
           <MyAppContent {...props} />
-          <Analytics />
         </UserProvider>
       </ThemeProvider>
     </ErrorBoundary>

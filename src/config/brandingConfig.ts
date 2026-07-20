@@ -12,7 +12,7 @@ const defaultConfig = {
     discord: { enabled: true, url: 'https://discord.gg/p6KqD2kjtB' },
   },
   navbar: {
-    appName: 'SciPhi',
+    appName: 'lgcorzo',
     showDocsButton: true,
     menuItems: {
       home: true,
@@ -27,8 +27,8 @@ const defaultConfig = {
     },
   },
   logo: {
-    src: '/images/sciphi.svg',
-    alt: 'sciphi.svg',
+    src: '/images/lgcorzo.svg',
+    alt: 'lgcorzo.svg',
   },
   theme: 'dark',
   homePage: {

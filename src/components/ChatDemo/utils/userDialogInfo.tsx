@@ -241,11 +241,11 @@ export const UserInfoDialog: React.FC<UserInfoDialogProps> = ({
             <Loader className="animate-spin" size={32} />
           </div>
         ) : userProfile ? (
-          <Card className="bg-zinc-900">
+          <Card className="glass-panel border-white/10 shadow-2xl rounded-2xl border">
             <CardHeader>
               <div className="flex items-center">
                 <div className="flex items-center space-x-4">
-                  <div className="bg-zinc-800 p-4 rounded-full">
+                  <div className="glass-surface border border-white/[0.04] p-4 rounded-full text-indigo-400">
                     <UserRound size={40} />
                   </div>
                   <div>

@@ -99,12 +99,15 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       <div
-        className={`fixed left-0 top-16 z-50 h-[calc(100%-4rem)] w-80 glass-panel shadow-2xl border-r border-white/10 transition-transform duration-300 ease-in-out overflow-hidden`}
+        className={`fixed left-0 top-14 z-50 h-[calc(100%-3.5rem)] w-80 shadow-2xl border-r border-white/[0.06] transition-transform duration-300 ease-in-out overflow-hidden`}
         style={{
           transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
+          background: 'rgba(6, 10, 20, 0.88)',
+          backdropFilter: 'blur(24px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(24px) saturate(180%)',
         }}
       >
-        <div className="p-4 overflow-y-auto h-[calc(100%-var(--header-height))]">
+        <div className="p-4 overflow-y-auto h-full">
           {/* Conversation History */}
           {/* {config.showConversations && (
             <div>
@@ -116,7 +119,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   {conversations.map((conversation) => (
                     <div
                       key={conversation.id}
-                      className="p-2 hover:bg-zinc-700 cursor-pointer"
+                      className="p-2 hover:bg-white/5 rounded-lg cursor-pointer transition-colors"
                       onClick={() => {
                         if (onConversationSelect) {
                           onConversationSelect(conversation.id);
@@ -131,7 +134,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             </div>
           )} */}
 
-          <h3 className="text-lg font-semibold text-accent-base mt-2">
+          <h3 className="text-sm font-semibold text-indigo-300 mt-2 mb-3 uppercase tracking-wider">
             Search Settings
           </h3>
 
@@ -394,15 +397,18 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
       <button
-        className={`fixed left-0 top-0 z-50 h-full w-6 bg-zinc-1000 flex items-center justify-center transition-transform duration-300 ease-in-out ${
+        className={`fixed left-0 top-14 z-50 h-[calc(100%-3.5rem)] w-6 flex items-center justify-center transition-all duration-300 ease-in-out ${
           isOpen ? 'translate-x-80' : 'translate-x-0'
         }`}
+        style={{
+          background: 'linear-gradient(180deg, rgba(99, 102, 241, 0.06) 0%, transparent 50%, rgba(99, 102, 241, 0.06) 100%)',
+        }}
         onClick={onToggle}
       >
         {isOpen ? (
-          <ChevronLeft className="h-6 w-6 text-white" />
+          <ChevronLeft className="h-5 w-5 text-indigo-400/60 hover:text-indigo-300 transition-colors" />
         ) : (
-          <ChevronRight className="h-6 w-6 text-white" />
+          <ChevronRight className="h-5 w-5 text-indigo-400/60 hover:text-indigo-300 transition-colors" />
         )}
       </button>
     </>

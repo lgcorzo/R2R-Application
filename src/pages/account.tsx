@@ -41,11 +41,11 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-zinc-900 p-6 rounded-lg w-full max-w-md">
-        <h2 className="text-xl font-semibold mb-4">Update Profile</h2>
+      <div className="glass-panel border border-white/10 shadow-2xl p-6 rounded-2xl w-full max-w-md backdrop-blur-xl">
+        <h2 className="text-xl font-bold mb-4 text-foreground">Update Profile</h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Name</label>
+            <label className="block text-sm font-medium mb-1 text-muted-foreground">Name</label>
             <Input
               value={formData.name}
               onChange={(e) =>
@@ -55,7 +55,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
+            <label className="block text-sm font-medium mb-1 text-muted-foreground">Email</label>
             <Input
               value={formData.email}
               onChange={(e) =>
@@ -66,7 +66,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Bio</label>
+            <label className="block text-sm font-medium mb-1 text-muted-foreground">Bio</label>
             <Input
               value={formData.bio}
               onChange={(e) =>
@@ -164,22 +164,22 @@ const Index: React.FC = () => {
       <main className="w-full flex flex-col container h-screen-[calc(100%-4rem)]">
         <div className="mx-auto max-w-3xl mb-12 mt-20 w-full">
           <div className="mb-6">
-            <h1 className="text-2xl font-bold text-white mb-6">
+            <h1 className="text-2xl font-bold text-foreground mb-6">
               Account Settings
             </h1>
 
-            <Card className="bg-zinc-900">
+            <Card className="glass-panel border-white/10 shadow-2xl rounded-2xl border">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
-                    <div className="bg-zinc-800 p-4 rounded-full">
+                    <div className="glass-surface border border-white/[0.04] p-4 rounded-full text-indigo-400">
                       <UserRound size={40} />
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold">
+                      <h2 className="text-xl font-bold text-foreground">
                         {userProfile?.name || 'Unnamed User'}
                       </h2>
-                      <p className="text-gray-400">{userProfile?.email}</p>
+                      <p className="text-muted-foreground">{userProfile?.email}</p>
                     </div>
                   </div>
                   <Button onClick={() => setIsUpdateModalOpen(true)}>
@@ -191,26 +191,26 @@ const Index: React.FC = () => {
               <CardContent>
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-sm font-medium text-gray-400 mb-2">
+                    <h3 className="text-sm font-medium text-muted-foreground mb-2">
                       Bio
                     </h3>
-                    <p>{userProfile?.bio || 'No bio provided'}</p>
+                    <p className="text-foreground">{userProfile?.bio || 'No bio provided'}</p>
                   </div>
 
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-gray-400">
+                    <h3 className="text-sm font-medium text-muted-foreground">
                       Account Details
                     </h3>
                     <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <span className="text-sm text-gray-400">User ID</span>
-                        <p className="font-mono text-sm">{userProfile?.id}</p>
+                      <div className="glass-surface border border-white/[0.04] p-4 rounded-xl">
+                        <span className="text-sm text-muted-foreground">User ID</span>
+                        <p className="font-mono text-sm text-foreground mt-1">{userProfile?.id}</p>
                       </div>
-                      <div>
-                        <span className="text-sm text-gray-400">
+                      <div className="glass-surface border border-white/[0.04] p-4 rounded-xl">
+                        <span className="text-sm text-muted-foreground">
                           Created At
                         </span>
-                        <p>
+                        <p className="text-foreground mt-1">
                           {new Date(
                             userProfile?.createdAt || ''
                           ).toLocaleDateString()}
@@ -219,8 +219,8 @@ const Index: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="pt-6 border-t border-zinc-800">
-                    <h3 className="text-sm font-medium text-gray-400 mb-4">
+                  <div className="pt-6 border-t border-white/10 mt-6">
+                    <h3 className="text-sm font-medium text-muted-foreground mb-4">
                       Danger Zone
                     </h3>
                     <DeleteButton

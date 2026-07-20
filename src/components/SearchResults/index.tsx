@@ -148,8 +148,8 @@ const ResultCarousel: FC<{
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="absolute -left-4 hover:bg-zinc-800" />
-      <CarouselNext className="absolute -right-4 hover:bg-zinc-800" />
+      <CarouselPrevious className="absolute -left-4 hover:bg-white/10 glass-surface border-white/[0.04]" />
+      <CarouselNext className="absolute -right-4 hover:bg-white/10 glass-surface border-white/[0.04]" />
     </Carousel>
   </div>
 );
@@ -160,7 +160,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
   communities,
 }) => {
   return (
-    <div className="flex justify-center text-zinc-200 bg-zinc-900">
+    <div className="flex justify-center text-foreground bg-transparent">
       <Tabs
         defaultValue="vectorSearch"
         className="text-zinc-900 w-[95%] max-w-2xl px-10"

@@ -101,7 +101,7 @@ const AttributesSection: React.FC<{
       </div>
       {isExpanded && (
         <div className="mt-2">
-          <pre className="bg-zinc-900 p-3 rounded-md text-sm overflow-x-auto">
+          <pre className="glass-surface border border-white/[0.04] p-3 rounded-xl text-sm overflow-x-auto text-muted-foreground">
             {JSON.stringify(attributes, null, 2)}
           </pre>
         </div>

@@ -29,19 +29,18 @@ module.exports = {
         '3xl': ['20px', { lineHeight: '1.3' }],
       },
       fontFamily: {
-        // Моноширинный шрифт для кода и данных
         mono: [
+          'JetBrains Mono',
           'SF Mono',
           'Monaco',
           'Cascadia Code',
           'Consolas',
           'Fira Code',
-          'JetBrains Mono',
           'Courier New',
           'monospace',
         ],
-        // Системный шрифт для UI элементов
         sans: [
+          'Inter',
           '-apple-system',
           'BlinkMacSystemFont',
           'Segoe UI',
@@ -143,25 +142,27 @@ module.exports = {
       },
       keyframes: {
         'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
+        'fade-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'glow-pulse': {
+          '0%, 100%': { boxShadow: '0 0 12px rgba(99, 102, 241, 0.15)' },
+          '50%': { boxShadow: '0 0 24px rgba(99, 102, 241, 0.3)' },
         },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
+        'glow-pulse': 'glow-pulse 3s ease-in-out infinite',
       },
       boxShadow: {
         header: 'var(--header-box-shadow)',

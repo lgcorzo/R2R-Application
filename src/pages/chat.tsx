@@ -289,7 +289,7 @@ const Index: React.FC = () => {
 
         {/* Main Content */}
         <div
-          className={`fixed top-16 right-0 bottom-0 transition-all duration-300 ease-in-out flex justify-center overflow-x-hidden ${
+          className={`fixed top-14 right-0 bottom-0 transition-all duration-300 ease-in-out flex justify-center overflow-x-hidden ${
             sidebarIsOpen ? 'left-80' : 'left-0'
           }`}
         >
@@ -298,9 +298,9 @@ const Index: React.FC = () => {
             ref={contentAreaRef}
           >
             {/* Mode Selector */}
-            <div className="fixed top-20 left-1/2 -translate-x-1/2 z-10">
+            <div className="fixed top-[4.5rem] left-1/2 -translate-x-1/2 z-10">
               <Select value={mode} onValueChange={handleModeChange}>
-                <SelectTrigger className="w-[200px] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg border-border">
+                <SelectTrigger className="w-[200px] glass-panel rounded-xl border-white/[0.08] shadow-lg text-sm">
                   <SelectValue placeholder="Select Mode" />
                 </SelectTrigger>
                 <SelectContent>
@@ -339,7 +339,7 @@ const Index: React.FC = () => {
               </div>
 
               {/* Search Bar */}
-              <div className="sticky bottom-0 pt-4 pb-2 px-2 sm:px-4 bg-gradient-to-t from-background via-background to-transparent">
+              <div className="sticky bottom-0 pt-4 pb-3 px-2 sm:px-4" style={{ background: 'linear-gradient(to top, hsl(var(--background)) 60%, transparent 100%)' }}>
                 <Search
                   pipeline={pipeline || undefined}
                   setQuery={setQuery}

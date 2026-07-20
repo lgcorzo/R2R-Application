@@ -497,7 +497,7 @@ const ManagePage: React.FC = () => {
       <SidebarProvider defaultOpen={true}>
         <AppSidebar
           collapsible="icon"
-          className="border-r border-zinc-700"
+          className="border-r border-white/10 glass-panel shadow-none rounded-none"
           personalCollections={personalCollections}
           sharedCollections={sharedCollections}
           selectedCollectionId={selectedCollectionId}
@@ -509,10 +509,10 @@ const ManagePage: React.FC = () => {
 
         <SidebarInset className="flex flex-col overflow-hidden">
           {/* Header */}
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b border-zinc-700 bg-zinc-900 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 h-4" />
-            <h1 className="text-2xl font-bold text-white">Manage</h1>
+          <header className="flex h-16 shrink-0 items-center gap-2 border-b border-white/10 glass-panel shadow-none rounded-none px-4">
+            <SidebarTrigger className="-ml-1 text-muted-foreground hover:text-foreground transition-colors" />
+            <Separator orientation="vertical" className="mr-2 h-4 bg-white/10" />
+            <h1 className="text-2xl font-bold text-foreground">Manage</h1>
           </header>
 
           {/* Tabs Content */}
@@ -562,7 +562,7 @@ const ManagePage: React.FC = () => {
                         placeholder="Search by Title or Document ID"
                         value={documentSearchQuery}
                         onChange={handleDocumentSearchInputChange}
-                        className="w-full bg-black border border-zinc-800 text-white rounded-md px-4 py-2 focus:outline-none"
+                        className="w-full glass-surface border border-white/[0.04] text-foreground placeholder:text-muted-foreground/50 rounded-xl px-4 py-2 focus:outline-none focus:border-indigo-500/40 focus:ring-1 focus:ring-indigo-500/20 transition-all"
                       />
                     </div>
                   }
@@ -575,7 +575,7 @@ const ManagePage: React.FC = () => {
               >
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold text-white">
+                    <h2 className="text-xl font-semibold text-foreground">
                       Collections
                     </h2>
                     <Button onClick={() => setIsCollectionModalOpen(true)}>
@@ -594,7 +594,7 @@ const ManagePage: React.FC = () => {
 
                   {filteredPersonalCollections.length > 0 && (
                     <div>
-                      <h3 className="text-lg font-medium text-white mb-4">
+                      <h3 className="text-lg font-medium text-foreground mb-4">
                         Your Collections
                       </h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -611,7 +611,7 @@ const ManagePage: React.FC = () => {
 
                   {filteredSharedCollections.length > 0 && (
                     <div>
-                      <h3 className="text-lg font-medium text-white mb-4">
+                      <h3 className="text-lg font-medium text-foreground mb-4">
                         Shared With You
                       </h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -629,7 +629,7 @@ const ManagePage: React.FC = () => {
                   {filteredPersonalCollections.length === 0 &&
                     filteredSharedCollections.length === 0 &&
                     !collectionsLoading && (
-                      <div className="text-center text-zinc-400 py-12">
+                      <div className="text-center text-muted-foreground py-12 glass-surface rounded-xl border border-white/[0.04]">
                         No collections found
                       </div>
                     )}

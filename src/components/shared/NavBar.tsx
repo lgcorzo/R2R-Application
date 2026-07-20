@@ -165,23 +165,28 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
     return (
       <nav
         ref={ref}
-        className="glass-panel border-b border-white/10 shadow-2xl z-50 w-full sticky top-0 backdrop-blur-xl"
+        className="glass-panel border-b border-white/[0.06] z-50 w-full sticky top-0"
+        style={{
+          background: 'rgba(8, 12, 24, 0.82)',
+          backdropFilter: 'blur(24px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+        }}
       >
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-14 items-center">
             <div className="flex items-center space-x-4">
               <Link
                 href={isSuperUser() ? '/' : '/documents'}
-                className="flex-shrink-0 flex items-center"
+                className="flex-shrink-0 flex items-center group"
               >
-                <Logo className="h-12 w-auto" disableLink={true} />
-                <span className="ml-2 text-xl font-bold text-foreground">
+                <Logo className="h-12 w-auto transition-transform duration-300 group-hover:scale-105" disableLink={true} />
+                <span className="ml-2 text-xl font-bold accent-gradient-text">
                   {brandingConfig.navbar.appName}
                 </span>
               </Link>
               {isSignedIn && (
                 <>
-                  <span className="text-muted-foreground">|</span>
+                  <span className="text-white/20 text-lg">|</span>
                   <NavItems
                     isAuthenticated={isAuthenticated}
                     role={role}
@@ -190,10 +195,12 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
                 </>
               )}
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
               <ThemeToggle />
               {brandingConfig.navbar.showDocsButton && (
                 <Button
+                  variant="outline"
+                  className="rounded-full border-white/10 hover:border-indigo-500/30 hover:bg-indigo-500/10 text-sm"
                   onClick={() =>
                     window.open('https://r2r-docs.sciphi.ai', '_blank')
                   }
@@ -205,21 +212,21 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
               {isSignedIn && (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Avatar className="cursor-pointer">
+                    <Avatar className="cursor-pointer ring-2 ring-white/10 hover:ring-indigo-500/30 transition-all duration-300">
                       <AvatarImage src="/images/default_profile.svg" />
                       <AvatarFallback></AvatarFallback>
                     </Avatar>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
+                  <DropdownMenuContent className="glass-panel border-white/10 rounded-xl mt-2">
                     <DropdownMenuItem
-                      className="cursor-pointer"
+                      className="cursor-pointer rounded-lg hover:bg-indigo-500/10 focus:bg-indigo-500/10"
                       onClick={() => router.push('/account')}
                     >
                       Account
                     </DropdownMenuItem>
-                    <DropdownMenuSeparator />
+                    <DropdownMenuSeparator className="bg-white/10" />
                     <DropdownMenuItem
-                      className="cursor-pointer"
+                      className="cursor-pointer rounded-lg hover:bg-red-500/10 focus:bg-red-500/10 text-red-400"
                       onClick={handleLogout}
                     >
                       Logout

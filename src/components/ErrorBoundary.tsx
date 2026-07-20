@@ -45,8 +45,8 @@ class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="flex min-h-screen items-center justify-center bg-zinc-900 p-4">
-          <div className="max-w-md w-full rounded-lg bg-zinc-800 p-6 shadow-lg">
+        <div className="flex min-h-screen items-center justify-center p-4 text-foreground">
+          <div className="max-w-md w-full rounded-2xl glass-panel p-6 shadow-2xl border border-white/10">
             <h2 className="text-xl font-bold text-red-400 mb-4">
               Something went wrong
             </h2>
@@ -58,7 +58,7 @@ class ErrorBoundary extends Component<Props, State> {
                 <summary className="text-sm text-gray-400 cursor-pointer mb-2">
                   Error details
                 </summary>
-                <pre className="text-xs text-gray-500 bg-zinc-900 p-2 rounded overflow-auto">
+                <pre className="text-xs text-muted-foreground glass-surface border border-white/[0.04] p-2 rounded-lg overflow-auto">
                   {this.state.error.toString()}
                 </pre>
               </details>

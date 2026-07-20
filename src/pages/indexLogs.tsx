@@ -52,16 +52,16 @@ const LogTable = ({ logs, loading }: { logs: Log[]; loading: boolean }) => {
     <div className="min-h-screen w-full">
       <div className="flex flex-col">
         <main className="flex flex-1 flex-col gap-4 md:gap-8 mb-4">
-          <header className="bg-zinc-800 py-2 px-6 rounded-t-lg">
-            <h3 className="text-xl font-bold">Server Logs</h3>
+          <header className="glass-surface border-b border-white/[0.04] py-4 px-6 rounded-t-xl transition-all">
+            <h3 className="text-xl font-bold text-foreground">Server Logs</h3>
           </header>
-          <div className="border shadow-sm rounded-lg w-full">
+          <div className="glass-panel shadow-2xl border-white/10 rounded-xl w-full transition-all">
             {isLoading ? (
-              <div className="flex items-center justify-center p-2">
-                <p className="text-center text-gray-700 dark:text-gray-300">
+              <div className="flex items-center justify-center p-8">
+                <p className="text-center text-muted-foreground mr-4">
                   Loading Logs...
                 </p>
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-400"></div>
               </div>
             ) : (
               <>

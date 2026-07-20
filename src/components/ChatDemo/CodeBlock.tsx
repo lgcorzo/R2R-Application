@@ -39,9 +39,9 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   };
 
   return (
-    <div className="relative group rounded-lg border border-zinc-700 bg-zinc-900/95 my-4">
+    <div className="relative group rounded-xl border border-white/10 glass-panel shadow-2xl my-4">
       {/* Header with language and copy button */}
-      <div className="flex items-center justify-between px-4 py-2 bg-zinc-800/50 border-b border-zinc-700">
+      <div className="flex items-center justify-between px-4 py-2 glass-surface border-b border-white/[0.04]">
         <span className="text-xs text-zinc-400 font-mono uppercase tracking-wide">
           {language || 'code'}
         </span>
@@ -49,7 +49,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
           variant="ghost"
           size="sm"
           onClick={handleCopy}
-          className="h-8 px-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
+          className="h-8 px-2 text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
         >
           {copied ? (
             <>

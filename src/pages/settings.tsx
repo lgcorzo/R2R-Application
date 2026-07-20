@@ -39,8 +39,8 @@ const renderNestedConfig = (
     const valueStr =
       typeof config === 'string' ? `"${config}"` : String(config);
     return (
-      <div className="bg-zinc-700 rounded p-3 ml-6 text-gray-300">
-        <span className="text-accent-base font-normal">Value: </span>
+      <div className="glass-surface border border-white/[0.04] rounded-xl p-4 ml-6 text-muted-foreground transition-all">
+        <span className="text-indigo-400 font-semibold">Value: </span>
         <span
           className={`whitespace-pre-wrap font-normal ${getFontSize(valueStr)}`}
         >
@@ -108,10 +108,10 @@ const renderNestedConfig = (
 
           // Use compact container for special cases
           const containerClass = needsCompactLayout
-            ? 'bg-zinc-700 rounded p-3 h-fit'
+            ? 'glass-surface border border-white/[0.04] rounded-xl p-4 h-fit transition-all'
             : isGroupedKey
-              ? 'bg-zinc-700 rounded p-3'
-              : 'bg-zinc-700 rounded p-4';
+              ? 'glass-surface border border-white/[0.04] rounded-xl p-4 transition-all'
+              : 'glass-surface border border-white/[0.04] rounded-xl p-5 transition-all';
 
           // For extraFields, format without curly brackets
           const valueStr =
@@ -129,11 +129,11 @@ const renderNestedConfig = (
           return (
             <div key={key} className={`${containerClass} ${spanClass}`}>
               <div
-                className="text-white"
+                className="text-foreground"
                 style={{ paddingLeft: `${depth * 16}px` }}
               >
-                <span className="text-accent-base font-normal">Key: </span>
-                <span className={`font-normal ${getFontSize(key, true)}`}>
+                <span className="text-indigo-400 font-semibold">Key: </span>
+                <span className={`font-semibold ${getFontSize(key, true)}`}>
                   {key}
                 </span>
                 <br />
@@ -142,9 +142,9 @@ const renderNestedConfig = (
                 key !== 'extraFields' ? (
                   Array.isArray(value) ? (
                     <span
-                      className={`whitespace-pre-wrap font-normal ${getFontSize(valueStr)}`}
+                      className={`whitespace-pre-wrap font-medium ${getFontSize(valueStr)}`}
                     >
-                      <span className="text-accent-base">Value: </span>
+                      <span className="text-indigo-400 font-semibold">Value: </span>
                       {valueStr}
                     </span>
                   ) : (
@@ -153,7 +153,7 @@ const renderNestedConfig = (
                     </div>
                   )
                 ) : (
-                  <span className="font-normal">
+                  <span className="font-medium text-muted-foreground">
                     {key === 'extraFields' ? (
                       <span
                         className={`whitespace-pre-wrap ${getFontSize(valueStr)}`}
@@ -162,7 +162,7 @@ const renderNestedConfig = (
                       </span>
                     ) : (
                       <>
-                        <span className="text-accent-base">Value: </span>
+                        <span className="text-indigo-400 font-semibold">Value: </span>
                         <span
                           className={`whitespace-pre-wrap ${getFontSize(valueStr)}`}
                         >
@@ -190,27 +190,27 @@ const PromptRow: React.FC<PromptRowProps> = ({ name, template, onEdit }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-zinc-700 rounded p-4 mb-4">
+    <div className="glass-surface border border-white/[0.04] rounded-xl p-5 mb-4 transition-all">
       <div className="flex flex-col">
         <div className="flex justify-between items-center mb-2">
-          <div className="text-accent-base font-medium">{name}</div>
+          <div className="text-indigo-400 font-semibold text-lg">{name}</div>
           <div className="flex gap-2">
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="text-gray-400 hover:text-accent-base"
+              className="text-muted-foreground hover:text-indigo-400 transition-colors"
             >
               {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
             <button
               onClick={() => onEdit(name, template)}
-              className="text-gray-400 hover:text-accent-base"
+              className="text-muted-foreground hover:text-indigo-400 transition-colors"
             >
               <SquarePen size={20} />
             </button>
           </div>
         </div>
         <div
-          className={`text-white mt-1 text-sm ${isExpanded ? 'whitespace-pre-wrap' : 'truncate'}`}
+          className={`text-muted-foreground mt-2 text-sm ${isExpanded ? 'whitespace-pre-wrap' : 'truncate'}`}
         >
           {template}
         </div>
@@ -276,7 +276,7 @@ const Index: React.FC = () => {
     return alphabet.map((letter) => (
       <button
         key={letter}
-        className="px-2 py-1 text-white hover:text-accent-base"
+        className="px-2 py-1 text-muted-foreground font-semibold hover:text-indigo-400 transition-colors"
         style={{ letterSpacing: '0.8em' }} // Adjust the spacing as needed
         onClick={() =>
           document
@@ -305,8 +305,8 @@ const Index: React.FC = () => {
       }
 
       groupedSections[sectionKey].push(
-        <div key={key} className="mb-4">
-          <h3 className="text-2xl font-bold mb-2 text-white">
+        <div key={key} className="mb-6">
+          <h3 className="text-2xl font-bold mb-4 text-foreground">
             {key.charAt(0).toUpperCase() + key.slice(1)}
           </h3>
           {renderNestedConfig(config[key])}
@@ -318,8 +318,8 @@ const Index: React.FC = () => {
     return Object.keys(groupedSections)
       .sort((a, b) => a.localeCompare(b))
       .map((letter) => (
-        <div key={letter} id={letter} className="mb-6">
-          <h4 className="text-xl font-bold text-accent-base pb-2">{letter}</h4>
+        <div key={letter} id={letter} className="mb-8">
+          <h4 className="text-xl font-bold text-indigo-400 pb-4 border-b border-white/10 mb-4">{letter}</h4>
           <div>{groupedSections[letter]}</div>
         </div>
       ));
@@ -327,36 +327,38 @@ const Index: React.FC = () => {
 
   return (
     <Layout pageTitle="Settings">
-      <main className="w-full flex flex-col min-h-screen container bg-zinc-900 text-white p-4 mt-4">
+      <main className="w-full flex flex-col min-h-screen container p-4 mt-4">
         <div className="mx-auto w-full max-w-5xl mb-12 mt-4">
           <div className="mt-8">
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex justify-center ml-auto">
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex justify-center ml-auto gap-3">
                 <Button
-                  className={`px-4 py-2 rounded mr-2`}
+                  variant={activeTab === 'config' ? 'default' : 'outline'}
+                  className={`px-6 py-2 rounded-xl`}
                   onClick={() => setActiveTab('config')}
                 >
                   Config
                 </Button>
                 <Button
-                  className={`px-4 py-2 rounded`}
+                  variant={activeTab === 'prompts' ? 'default' : 'outline'}
+                  className={`px-6 py-2 rounded-xl`}
                   onClick={() => setActiveTab('prompts')}
                 >
                   Prompts
                 </Button>
               </div>
             </div>
-            <div className="bg-zinc-800 p-4 rounded">
+            <div className="glass-panel p-8 rounded-2xl shadow-2xl border-white/10">
               {activeTab === 'config' && (
                 <>
-                  <h4 className="text-xl font-bold text-white pb-2">Config</h4>
-                  <div className="flex mb-4">{generateAlphabetList()}</div>
+                  <h4 className="text-2xl font-bold text-foreground pb-4 border-b border-white/10 mb-6">Configuration</h4>
+                  <div className="flex mb-8 overflow-x-auto pb-4 scrollbar-hide">{generateAlphabetList()}</div>
                   <div className="overflow-x-auto max-w-full">
-                    <div className="w-full bg-zinc-800">
+                    <div className="w-full">
                       {Object.keys(config).length > 0 ? (
                         renderAlphabeticalConfigSections()
                       ) : (
-                        <div className="px-4 py-2 text-white text-center">
+                        <div className="px-4 py-8 text-muted-foreground text-center glass-surface rounded-xl border border-white/[0.04]">
                           No valid configuration data available
                         </div>
                       )}
@@ -366,11 +368,11 @@ const Index: React.FC = () => {
               )}
               {activeTab === 'prompts' && (
                 <>
-                  <h4 className="text-xl font-bold text-white pb-2">Prompts</h4>
+                  <h4 className="text-2xl font-bold text-foreground pb-4 border-b border-white/10 mb-6">System Prompts</h4>
                   <div className="overflow-x-auto max-w-full">
-                    <div className="w-full bg-zinc-800">
+                    <div className="w-full">
                       {prompts && prompts.length > 0 ? (
-                        <div className="flex flex-col">
+                        <div className="flex flex-col gap-4">
                           {prompts.map((prompt) => (
                             <PromptRow
                               key={prompt.name}
@@ -381,7 +383,7 @@ const Index: React.FC = () => {
                           ))}
                         </div>
                       ) : (
-                        <div className="px-4 py-2 text-white text-center">
+                        <div className="px-4 py-8 text-muted-foreground text-center glass-surface rounded-xl border border-white/[0.04]">
                           No prompts available
                         </div>
                       )}

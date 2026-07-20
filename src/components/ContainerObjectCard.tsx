@@ -92,7 +92,7 @@ export function ContainerObjectCard({
     <div
       onClick={handleClick}
       onMouseMove={onMouseMove}
-      className={`group relative overflow-hidden cursor-pointer rounded-2xl bg-zinc-800 transition-shadow hover:shadow-md hover:shadow-zinc-900/5 dark:bg-white/2.5 dark:hover:shadow-black/5 hover:cursor-pointer ${className}`}
+      className={`group relative overflow-hidden cursor-pointer rounded-2xl glass-surface transition-all hover:shadow-xl dark:bg-white/2.5 hover:cursor-pointer ${className}`}
     >
       <div className="absolute inset-0">
         <ResourcePattern

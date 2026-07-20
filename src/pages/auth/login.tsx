@@ -214,11 +214,11 @@ const LoginPage: React.FC = () => {
   return (
     <Layout includeFooter={false}>
       <div className="flex flex-col items-center justify-center min-h-screen p-8 gap-16">
-        <div className="bg-zinc-100 dark:bg-zinc-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md flex flex-col">
+        <div className="glass-card shadow-2xl px-8 pt-8 pb-8 mb-4 w-full max-w-md flex flex-col">
           <div className="flex-grow">
             <div className="mb-4">
               <label
-                className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
+                className="block text-foreground text-sm font-semibold mb-2"
                 htmlFor="sanitizedDeploymentUrl"
               >
                 {brandingConfig.deploymentName} Deployment URL
@@ -244,14 +244,14 @@ const LoginPage: React.FC = () => {
               <div className="mb-4">
                 <div className="flex items-center justify-between">
                   <label
-                    className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
+                    className="block text-foreground text-sm font-semibold mb-2"
                     htmlFor="email"
                   >
                     Email
                   </label>
                   <span
                     onClick={() => router.push('/auth/signup')}
-                    className="text-sm font-semibold text-accent-base cursor-pointer hover:underline"
+                    className="text-sm font-semibold text-indigo-400 cursor-pointer hover:text-indigo-300 transition-colors"
                   >
                     Sign up with Email
                   </span>
@@ -268,7 +268,7 @@ const LoginPage: React.FC = () => {
 
               <div className="mb-6">
                 <label
-                  className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
+                  className="block text-foreground text-sm font-semibold mb-2"
                   htmlFor="password"
                 >
                   Password
@@ -287,7 +287,7 @@ const LoginPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={togglePasswordVisibility}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {showPassword ? (
                       <EyeOff className="h-5 w-5" aria-hidden="true" />
@@ -347,7 +347,7 @@ const LoginPage: React.FC = () => {
               </Button>
             </div>
           </div>
-          {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+          {error && <div className="text-red-400 text-sm mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20">{error}</div>}
         </div>
       </div>
     </Layout>

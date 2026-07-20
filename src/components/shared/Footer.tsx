@@ -90,7 +90,7 @@ function SmallPrint() {
 
 export function Footer() {
   return (
-    <footer className="w-full flex flex-col container space-y-4">
+    <footer className="w-full flex flex-col container space-y-4 border-t border-white/[0.04]">
       <SmallPrint />
     </footer>
   );

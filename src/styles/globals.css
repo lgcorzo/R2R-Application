@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Light theme - из репозитория v0-ai-agents-control-panel */
-    /* Конвертировано из oklch в HSL для совместимости */
+    /* Light theme */
     --background: 0 0% 98%;
     --foreground: 0 0% 15%;
     --card: 0 0% 100%;
@@ -25,7 +26,7 @@
     --border: 0 0% 90%;
     --input: 0 0% 90%;
     --ring: 252 70% 55%;
-    --radius: 0.5rem;
+    --radius: 0.625rem;
     --chart-1: 252 70% 55%;
     --chart-2: 200 70% 60%;
     --chart-3: 160 65% 65%;
@@ -40,7 +41,7 @@
     --sidebar-border: 0 0% 90%;
     --sidebar-ring: 252 70% 55%;
 
-    /* Семантические цвета для светлой темы */
+    /* Semantic colors */
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
@@ -50,76 +51,58 @@
   }
 
   .dark {
-    /* Dark theme - GitHub Dark Mode (классическая схема) */
+    /* ===== Obsidian Glass Dark Theme ===== */
 
-    /* === Фоны === */
-    /* Основной фон - #0d1117 */
-    --background: 216 28% 7%;
-    /* Карточки - #0d1117 (такой же как фон) */
-    --card: 216 28% 7%;
-    --popover: 216 28% 7%;
-    /* Secondary - #161b22 */
-    --secondary: 216 28% 11%;
-    /* Muted/overlay фон - #21262d */
-    --muted: 215 19% 15%;
-    /* Accent/hover фон - #30363d */
-    --accent: 214 13% 22%;
+    /* Backgrounds — deep obsidian layers */
+    --background: 222 47% 5%;
+    --card: 222 47% 7%;
+    --popover: 222 47% 7%;
+    --secondary: 220 40% 10%;
+    --muted: 220 30% 13%;
+    --accent: 220 25% 16%;
 
-    /* === Текст === */
-    /* fg.default - #c9d1d9 */
-    --foreground: 210 17% 82%;
-    --card-foreground: 210 17% 82%;
-    --popover-foreground: 210 17% 82%;
-    --secondary-foreground: 210 17% 82%;
-    --accent-foreground: 210 17% 82%;
-    /* fg.muted - #8b949e */
-    --muted-foreground: 212 9% 58%;
+    /* Foreground text */
+    --foreground: 214 32% 91%;
+    --card-foreground: 214 32% 91%;
+    --popover-foreground: 214 32% 91%;
+    --secondary-foreground: 214 32% 91%;
+    --accent-foreground: 214 32% 91%;
+    --muted-foreground: 217 15% 55%;
 
-    /* === Акценты === */
-    /* GitHub button green - #238636 */
-    --primary: 132 59% 33%;
+    /* Accent — indigo glow */
+    --primary: 239 84% 67%;
     --primary-foreground: 0 0% 100%;
-    /* danger.fg - #f85149 */
-    --destructive: 3 93% 63%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    /* === Границы === */
-    /* border - #30363d */
-    --border: 214 13% 22%;
-    /* input border - #21262d */
-    --input: 215 19% 15%;
-    /* focus ring - GitHub button green */
-    --ring: 132 59% 33%;
+    /* Borders — subtle translucent */
+    --border: 220 20% 18%;
+    --input: 220 25% 14%;
+    --ring: 239 84% 67%;
 
-    /* === Графики === */
-    --chart-1: 132 59% 33%;
-    --chart-2: 139 58% 53%;
-    --chart-3: 38 92% 50%;
-    --chart-4: 271 64% 71%;
-    --chart-5: 330 62% 62%;
+    /* Charts — vibrant gradient spectrum */
+    --chart-1: 239 84% 67%;
+    --chart-2: 187 92% 55%;
+    --chart-3: 142 71% 45%;
+    --chart-4: 280 87% 68%;
+    --chart-5: 330 81% 60%;
 
-    /* === Sidebar === */
-    /* Чуть темнее основного - #010409 */
-    --sidebar-background: 220 40% 2%;
-    --sidebar-foreground: 210 17% 82%;
-    --sidebar-primary: 132 59% 33%;
+    /* Sidebar — deepest layer */
+    --sidebar-background: 222 55% 3%;
+    --sidebar-foreground: 214 32% 91%;
+    --sidebar-primary: 239 84% 67%;
     --sidebar-primary-foreground: 0 0% 100%;
-    /* hover - #161b22 */
-    --sidebar-accent: 216 28% 11%;
-    --sidebar-accent-foreground: 210 17% 82%;
-    /* border - #21262d */
-    --sidebar-border: 215 19% 15%;
-    --sidebar-ring: 132 59% 33%;
+    --sidebar-accent: 220 40% 10%;
+    --sidebar-accent-foreground: 214 32% 91%;
+    --sidebar-border: 220 25% 12%;
+    --sidebar-ring: 239 84% 67%;
 
-    /* === Семантические цвета GitHub === */
-    /* success.fg - #3fb950 */
-    --success: 139 58% 53%;
+    /* Semantic */
+    --success: 142 71% 45%;
     --success-foreground: 0 0% 100%;
-    /* attention.fg - #d29922 */
-    --warning: 38 76% 48%;
+    --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
-    /* done.fg - #a371f7 */
-    --info: 271 91% 71%;
+    --info: 239 84% 67%;
     --info-foreground: 0 0% 100%;
   }
 }
@@ -133,6 +116,7 @@
   }
 }
 
+/* ===== Global Reset ===== */
 * {
   padding: 0;
   margin: 0;
@@ -143,24 +127,23 @@ html,
 body {
   width: 100%;
   height: 100%;
-  /* Системный шрифт для UI элементов (читаемость и консистентность) */
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  /* Размер шрифта как в IDE: 13px */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
   font-size: 13px;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Моноширинный шрифт только для кода, файлов и данных */
+/* Monospace for code elements */
 code,
 pre,
 .file-name,
 .code-block,
 .mono-text {
-  font-family:
-    'SF Mono', 'Monaco', 'Cascadia Code', 'Consolas', 'Fira Code',
-    'JetBrains Mono', 'Courier New', monospace;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Cascadia Code',
+    'Consolas', 'Fira Code', 'Courier New', monospace;
   font-size: 13px;
 }
 
@@ -175,6 +158,164 @@ a {
   }
 }
 
+/* ===== Custom Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ===== Ambient Background ===== */
+.ambient-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.ambient-bg::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+      ellipse at 20% 10%,
+      rgba(99, 102, 241, 0.06) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(139, 92, 246, 0.04) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 40% 80%,
+      rgba(56, 189, 248, 0.03) 0%,
+      transparent 45%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Glassmorphism Design Tokens ===== */
+.glass-panel {
+  background: rgba(10, 15, 30, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-interactive {
+  background: rgba(10, 15, 30, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-interactive:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow:
+    0 12px 40px rgba(99, 102, 241, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.75) 0%,
+    rgba(10, 15, 30, 0.85) 100%
+  );
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+}
+
+.glass-surface {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ===== Gradient Text ===== */
+.accent-gradient-text {
+  background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Glow Effects ===== */
+.glow-indigo {
+  box-shadow:
+    0 0 15px rgba(99, 102, 241, 0.15),
+    0 0 30px rgba(99, 102, 241, 0.05);
+}
+
+.glow-border-indigo {
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+}
+
+/* ===== Status Indicators ===== */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.online {
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.status-dot.offline {
+  background: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 16px rgba(34, 197, 94, 0.3);
+  }
+}
+
+/* ===== Animations ===== */
 @keyframes searchingAnimation {
   0% {
     background-position: -100% 0;
@@ -188,7 +329,7 @@ a {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    #ffffff 50%,
+    #818cf8 50%,
     transparent 100%
   );
   background-size: 200% 100%;
@@ -198,6 +339,41 @@ a {
   background-clip: text;
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ===== Layout Tokens ===== */
 .main-content-wrapper {
   position: fixed;
   top: var(--header-height);
@@ -236,6 +412,7 @@ a {
   z-index: 10;
 }
 
+/* ===== Prose ===== */
 .prose {
   @apply text-foreground;
 }
@@ -276,6 +453,7 @@ a {
   overflow-x: auto;
 }
 
+/* ===== Card variants ===== */
 .request-card {
   display: flex;
   flex-direction: column;
@@ -293,6 +471,7 @@ a {
   overflow: hidden;
 }
 
+/* ===== Tables ===== */
 .table-fixed {
   table-layout: fixed;
 }
@@ -320,10 +499,10 @@ td {
   white-space: nowrap;
 }
 
-/* Улучшения для explorer страницы */
+/* ===== Explorer Cards ===== */
 .explorer-card {
   @apply bg-card border-border shadow-sm;
-  transition: box-shadow 0.2s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .explorer-card:hover {
@@ -331,15 +510,17 @@ td {
 }
 
 .dark .explorer-card {
-  @apply bg-background border-border;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  background: rgba(10, 15, 30, 0.72);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .dark .explorer-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08);
 }
 
-/* Улучшенная читаемость таблиц */
+/* ===== Table Row Hover ===== */
 .table-row-hover {
   @apply transition-colors;
 }
@@ -349,83 +530,44 @@ td {
 }
 
 .dark .table-row-hover:hover {
-  @apply bg-muted/30;
+  background: rgba(99, 102, 241, 0.06);
 }
 
-/* Улучшенные границы для карточек */
+/* ===== Card borders ===== */
 .card-border {
   @apply border border-border;
 }
 
 .dark .card-border {
-  border-color: hsl(var(--border));
+  border-color: rgba(255, 255, 255, 0.06);
 }
 
-/* Улучшенная видимость статусов */
+/* ===== Status badges ===== */
 .status-badge {
   @apply font-medium;
 }
 
-/* Улучшенная видимость иконок */
+/* ===== Icon styles ===== */
 .icon-muted {
   @apply text-muted-foreground;
-  transition: color 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .icon-muted:hover {
   @apply text-foreground;
 }
 
-/* Плавные переходы для тем */
+/* ===== Smooth transitions ===== */
 * {
-  transition-property: background-color, border-color, color, fill, stroke;
+  transition-property: background-color, border-color, color, fill, stroke,
+    opacity, box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
 
-/* Glassmorphism Design Tokens */
-.glass-panel {
-  background-color: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow:
-    0 20px 40px -15px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-}
-
-.glass-panel-interactive {
-  background-color: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow:
-    0 20px 40px -15px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-panel-interactive:hover {
-  border-color: rgba(255, 255, 255, 0.18);
-  transform: translateY(-2px);
-  box-shadow:
-    0 25px 50px -12px rgba(99, 102, 241, 0.15),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-}
-
-.glass-card {
-  background: linear-gradient(
-    135deg,
-    rgba(30, 41, 59, 0.7) 0%,
-    rgba(15, 23, 42, 0.8) 100%
-  );
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-}
-
-.accent-gradient-text {
-  background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #38bdf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Exclude elements that shouldn't transition */
+input,
+textarea,
+[contenteditable] {
+  transition-property: border-color, box-shadow;
 }

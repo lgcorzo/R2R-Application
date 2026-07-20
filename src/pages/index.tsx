@@ -48,113 +48,114 @@ const HomePage = () => {
   return (
     <Layout includeFooter>
       <main className="w-full flex flex-col container h-screen-[calc(100%-4rem)]">
-        <div className="relative bg-zinc-900 p-5">
+        <div className="relative p-5">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Left column - Alert */}
             <div className="w-full lg:w-2/3 flex flex-col gap-4">
               <Alert variant="default" className="flex flex-col">
                 <AlertTitle className="text-lg ">
                   <div className="flex gap-2 text-xl">
-                    <span className="text-gray-500 dark:text-gray-200 font-semibold">
+                    <span className="font-semibold accent-gradient-text">
                       You're connected to your {brandingConfig.deploymentName}{' '}
                       deployment!
                     </span>
                   </div>
                 </AlertTitle>
                 <AlertDescription>
-                  <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
+                  <p className="mb-4 text-sm text-muted-foreground">
                     Here, you'll find a number of tools to help you manage your
                     pipelines and deploy user-facing applications directly to
                     users.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <div className="flex items-start space-x-3">
-                      <FileText className="w-5 h-5 text-primary" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                    <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
+                      <FileText className="w-5 h-5 text-indigo-400 group-hover:text-indigo-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-1">
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">
                           Documents
                         </h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-muted-foreground">
                           Upload, update, and delete documents and their
                           metadata.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <Boxes className="w-5 h-5 text-primary" />
+                    <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
+                      <Boxes className="w-5 h-5 text-purple-400 group-hover:text-purple-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-1">
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">
                           Collections
                         </h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-muted-foreground">
                           Manage and share groups of documents and create
                           knowledge graphs.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <MessageCircle className="w-5 h-5 text-primary" />
+                    <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
+                      <MessageCircle className="w-5 h-5 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-1">Chat</h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">Chat</h3>
+                        <p className="text-xs text-muted-foreground">
                           Generate RAG responses.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <ScanSearch className="w-5 h-5 text-primary" />
+                    <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
+                      <ScanSearch className="w-5 h-5 text-emerald-400 group-hover:text-emerald-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-1">Search</h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">Search</h3>
+                        <p className="text-xs text-muted-foreground">
                           Conduct search over your documents and collections.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <Users className="w-5 h-5 text-primary" />
+                    <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
+                      <Users className="w-5 h-5 text-amber-400 group-hover:text-amber-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-1">Users</h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">Users</h3>
+                        <p className="text-xs text-muted-foreground">
                           Track user queries, search results, and LLM responses.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <FileSearch className="w-5 h-5 text-primary" />
+                    <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
+                      <FileSearch className="w-5 h-5 text-rose-400 group-hover:text-rose-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-1">Logs</h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">Logs</h3>
+                        <p className="text-xs text-muted-foreground">
                           Track user queries, search results, and LLM responses.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <BarChart2 className="w-5 h-5 text-primary" />
+                    <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
+                      <BarChart2 className="w-5 h-5 text-violet-400 group-hover:text-violet-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-1">
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">
                           Analytics
                         </h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-muted-foreground">
                           Rich analytics and insights on your users' queries and
                           interactions.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <Settings className="w-5 h-5 text-primary" />
+                    <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
+                      <Settings className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-1">Settings</h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">Settings</h3>
+                        <p className="text-xs text-muted-foreground">
                           Manage your {brandingConfig.deploymentName} deployment
                           settings and configurations.
                         </p>
                       </div>
                     </div>
                   </div>
-                  <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                    <div className="flex space-x-4">
+                  <div className="border-t border-white/[0.06] pt-4">
+                    <div className="flex space-x-3">
                       <Button
-                        className="flex items-center justify-center px-4 py-2 text-sm"
+                        variant="outline"
+                        className="flex items-center justify-center px-4 py-2 text-sm rounded-xl"
                         onClick={() =>
                           window.open(
                             'https://github.com/SciPhi-AI/R2R/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=',
@@ -165,7 +166,8 @@ const HomePage = () => {
                         Feature Request
                       </Button>
                       <Button
-                        className="flex items-center justify-center px-4 py-2 text-sm"
+                        variant="outline"
+                        className="flex items-center justify-center px-4 py-2 text-sm rounded-xl"
                         onClick={() =>
                           window.open(
                             'https://github.com/SciPhi-AI/R2R/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=',
@@ -196,7 +198,8 @@ const HomePage = () => {
                       <CardContent className="flex flex-col justify-end flex-grow">
                         <div className="flex flex-row space-x-2">
                           <Button
-                            className="rounded-md py-1 px-3"
+                            variant="outline"
+                            className="rounded-xl py-1 px-3"
                             onClick={() =>
                               window.open(
                                 'https://r2r-docs.sciphi.ai/documentation/python-sdk/introduction',
@@ -210,7 +213,8 @@ const HomePage = () => {
                             </div>
                           </Button>
                           <Button
-                            className="rounded-md py-1 px-3"
+                            variant="outline"
+                            className="rounded-xl py-1 px-3"
                             onClick={() =>
                               window.open(
                                 'https://github.com/SciPhi-AI/R2R/tree/main/py',
@@ -247,7 +251,8 @@ const HomePage = () => {
                       <CardContent className="flex flex-col justify-end flex-grow">
                         <div className="flex flex-row space-x-2">
                           <Button
-                            className="rounded-md py-1 px-3"
+                            variant="outline"
+                            className="rounded-xl py-1 px-3"
                             onClick={() =>
                               window.open(
                                 'https://r2r-docs.sciphi.ai/documentation/js-sdk/introduction',
@@ -261,7 +266,8 @@ const HomePage = () => {
                             </div>
                           </Button>
                           <Button
-                            className="rounded-md py-1 px-3"
+                            variant="outline"
+                            className="rounded-xl py-1 px-3"
                             onClick={() =>
                               window.open(
                                 'https://github.com/SciPhi-AI/R2R/tree/main/js/sdk',
@@ -300,7 +306,8 @@ const HomePage = () => {
                       <CardContent className="flex flex-col justify-end flex-grow">
                         <div className="flex flex-row space-x-2">
                           <Button
-                            className="rounded-md py-1 px-3"
+                            variant="outline"
+                            className="rounded-xl py-1 px-3"
                             disabled={
                               !window.__RUNTIME_CONFIG__
                                 ?.NEXT_PUBLIC_HATCHET_DASHBOARD_URL ||
@@ -328,7 +335,8 @@ const HomePage = () => {
                             </div>
                           </Button>
                           <Button
-                            className="rounded-md py-1 px-3"
+                            variant="outline"
+                            className="rounded-xl py-1 px-3"
                             onClick={() =>
                               window.open(
                                 'https://github.com/hatchet-dev/hatchet',

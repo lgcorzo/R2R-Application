@@ -18,13 +18,19 @@ const Layout: React.FC<Props> = ({
   includeFooter = true,
 }) => {
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-900">
+    <div className="flex flex-col min-h-screen bg-background ambient-bg">
       <Head>
         <title>
           {pageTitle
             ? `${pageTitle} | ${brandingConfig.deploymentName}`
             : brandingConfig.deploymentName}
         </title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
       </Head>
       <Navbar />
       <main className="flex-1 flex flex-col overflow-hidden">{children}</main>

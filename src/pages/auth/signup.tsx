@@ -58,14 +58,14 @@ const LoginPage: React.FC = () => {
 
   return (
     <Layout includeFooter={false}>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-white dark:bg-zinc-900">
+      <div className="flex flex-col justify-center items-center min-h-screen p-8 gap-16">
         <form
           onSubmit={handleSubmit}
-          className="bg-zinc-100 dark:bg-zinc-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md"
+          className="glass-card shadow-2xl px-8 pt-8 pb-8 mb-4 w-full max-w-md flex flex-col"
         >
           <div className="mb-4">
             <label
-              className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
+              className="block text-foreground text-sm font-semibold mb-2"
               htmlFor="email"
             >
               Email
@@ -82,7 +82,7 @@ const LoginPage: React.FC = () => {
           <div className="mb-6">
             <div className="flex items-center justify-between">
               <label
-                className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2 flex-grow"
+                className="block text-foreground text-sm font-semibold mb-2 flex-grow"
                 htmlFor="password"
               >
                 Password
@@ -109,7 +109,7 @@ const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground hover:text-foreground transition-colors"
               >
                 {showPassword ? (
                   <EyeOff className="h-5 w-5" aria-hidden="true" />
@@ -121,7 +121,7 @@ const LoginPage: React.FC = () => {
           </div>
           <div className="mb-6">
             <label
-              className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2"
+              className="block text-foreground text-sm font-semibold mb-2"
               htmlFor="confirm-password"
             >
               Confirm Password
@@ -140,7 +140,7 @@ const LoginPage: React.FC = () => {
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground hover:text-foreground transition-colors"
               >
                 {showPassword ? (
                   <EyeOff className="h-5 w-5" aria-hidden="true" />
@@ -155,12 +155,12 @@ const LoginPage: React.FC = () => {
           </div>
         </form>
 
-        <div className="text-gray-700 dark:text-gray-400 text-sm font-bold mb-2">
+        <div className="text-muted-foreground text-sm font-semibold mb-2">
           <p>
             Already have an account?{' '}
             <span
               onClick={handleLoginClick}
-              className="text-accent-base cursor-pointer hover:underline"
+              className="text-indigo-400 cursor-pointer hover:text-indigo-300 transition-colors"
             >
               Log in
             </span>

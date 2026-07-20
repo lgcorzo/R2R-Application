@@ -204,31 +204,31 @@ export const Answer: FC<{
           <Markdown
             key={index}
             components={{
-              h1: (props) => <h1 className="white" {...props} />,
-              h2: (props) => <h2 className="white" {...props} />,
-              h3: (props) => <h3 style={{ color: 'white' }} {...props} />,
-              h4: (props) => <h4 style={{ color: 'white' }} {...props} />,
-              h5: (props) => <h5 style={{ color: 'white' }} {...props} />,
-              h6: (props) => <h6 style={{ color: 'white' }} {...props} />,
+              h1: (props) => <h1 className="text-foreground" {...props} />,
+              h2: (props) => <h2 className="text-foreground" {...props} />,
+              h3: (props) => <h3 className="text-foreground" {...props} />,
+              h4: (props) => <h4 className="text-foreground" {...props} />,
+              h5: (props) => <h5 className="text-foreground" {...props} />,
+              h6: (props) => <h6 className="text-foreground" {...props} />,
               strong: (props) => (
                 <strong
-                  style={{ color: 'white', fontWeight: 'bold' }}
+                  className="font-bold text-foreground"
                   {...props}
                 />
               ),
               p: ({ children }) => (
-                <p className="mb-4 leading-7 text-white">
+                <p className="mb-4 leading-7 text-muted-foreground">
                   {children}
                   {isStreaming && index === paragraphs.length - 1 && (
                     <AnimatedEllipsis />
                   )}
                 </p>
               ),
-              li: (props) => <li style={{ color: 'white' }} {...props} />,
+              li: (props) => <li className="text-muted-foreground" {...props} />,
               blockquote: (props) => (
-                <blockquote style={{ color: 'white' }} {...props} />
+                <blockquote className="border-l-indigo-500/50 text-muted-foreground/80" {...props} />
               ),
-              em: (props) => <em style={{ color: 'white' }} {...props} />,
+              em: (props) => <em className="text-muted-foreground" {...props} />,
 
               code: ({ node, inline, className, children, ...props }: any) => {
                 const match = /language-(\w+)/.exec(className || '');
@@ -250,7 +250,7 @@ export const Answer: FC<{
                 // Inline код
                 return (
                   <code
-                    className="px-1.5 py-0.5 mx-0.5 rounded bg-zinc-800 text-zinc-200 font-mono text-sm"
+                    className="px-1.5 py-0.5 mx-0.5 rounded-md glass-surface text-indigo-300 font-mono text-sm border border-white/[0.04]"
                     {...props}
                   >
                     {children}
@@ -263,7 +263,7 @@ export const Answer: FC<{
                 if (children?.type === 'code') {
                   return <>{children}</>;
                 }
-                return <pre style={{ color: 'white' }}>{children}</pre>;
+                return <pre className="text-foreground">{children}</pre>;
               },
 
               a: ({ href, ...props }) => {
@@ -316,42 +316,42 @@ export const Answer: FC<{
                       </PopoverTrigger>
                       <PopoverContent
                         align="start"
-                        className="max-w-screen-md flex flex-col gap-2 bg-zinc-800 shadow-transparent ring-zinc-600 border-zinc-600 ring-4 text-xs"
+                        className="max-w-screen-md flex flex-col gap-2 glass-panel shadow-2xl border-white/[0.08] text-xs"
                       >
                         {!isKGElement && metadata?.documentid && (
-                          <div className="text-zinc-200 font-medium border-b border-zinc-600 pb-1">
+                          <div className="text-indigo-300 font-medium border-b border-white/[0.06] pb-1">
                             DocumentId: {metadata.documentid}
                           </div>
                         )}
-                        <div className="text-zinc-200 text-ellipsis overflow-hidden whitespace-nowrap font-medium">
+                        <div className="text-foreground text-ellipsis overflow-hidden whitespace-nowrap font-medium">
                           {title ? `Title: ${title}` : ''}
                         </div>
                         <div className="flex gap-4">
                           <div className="flex-1 max-h-[200px] overflow-y-auto pr-2">
                             {isKGElement && (metadata as any).summary && (
-                              <div className="text-zinc-300 break-words mb-2">
-                                <strong>Summary:</strong>{' '}
+                              <div className="text-muted-foreground break-words mb-2">
+                                <strong className="text-foreground">Summary:</strong>{' '}
                                 {(metadata as any).summary}
                               </div>
                             )}
                             {!isKGElement && (
-                              <div className="text-zinc-300 break-words mb-2">
+                              <div className="text-muted-foreground break-words mb-2">
                                 {metadata?.snippet ?? ''}
                               </div>
                             )}
-                            <div className="text-zinc-300 break-words">
+                            <div className="text-muted-foreground break-words">
                               {description ?? ''}
                             </div>
                             {isKGElement && (metadata as any).impact_rating && (
-                              <div className="text-zinc-300 break-words mt-2">
-                                <strong>Impact Rating:</strong>{' '}
+                              <div className="text-muted-foreground break-words mt-2">
+                                <strong className="text-foreground">Impact Rating:</strong>{' '}
                                 {(metadata as any).impact_rating}
                               </div>
                             )}
                             {isKGElement &&
                               (metadata as any).rating_explanation && (
-                                <div className="text-zinc-300 break-words mt-2">
-                                  <strong>Rating Explanation:</strong>{' '}
+                                <div className="text-muted-foreground break-words mt-2">
+                                  <strong className="text-foreground">Rating Explanation:</strong>{' '}
                                   {(metadata as any).rating_explanation}
                                 </div>
                               )}
@@ -394,8 +394,8 @@ export const Answer: FC<{
         className="w-full"
         onValueChange={(value) => setIsOpen(value === 'answer')}
       >
-        <AccordionItem value="answer">
-          <AccordionTrigger className="py-2 text-lg font-bold text-zinc-200 hover:no-underline text-white">
+        <AccordionItem value="answer" className="border-white/[0.06]">
+          <AccordionTrigger className="py-2 text-lg font-bold text-foreground hover:text-indigo-300 transition-colors">
             <SourceInfo isSearching={isSearching} sourcesCount={sourcesCount} />
           </AccordionTrigger>
           <AccordionContent>
@@ -413,7 +413,7 @@ export const Answer: FC<{
       {/* Separator between sources and activities */}
       {message.activities && message.activities.length > 0 && (
         <>
-          <Separator className="my-4 bg-zinc-700" />
+          <Separator className="my-4 bg-white/10" />
           <AgentActivityIndicator
             activities={message.activities}
             isActive={isStreaming}
@@ -424,12 +424,12 @@ export const Answer: FC<{
       {/* Separator between activities and content */}
       {message.activities &&
         message.activities.length > 0 &&
-        message.content && <Separator className="my-4 bg-zinc-700" />}
+        message.content && <Separator className="my-4 bg-white/10" />}
 
       <div className="space-y-4 mt-4">
         {message.content || isStreaming ? (
           <ScrollArea className="max-h-[700px] rounded-lg">
-            <div className="prose prose-sm max-w-full text-zinc-300 prose-headings:text-white prose-p:text-white prose-strong:text-white prose-code:text-white p-4">
+            <div className="prose prose-sm max-w-full text-muted-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-code:text-indigo-300 p-4">
               {message.content ? (
                 renderContent()
               ) : (
@@ -448,10 +448,10 @@ export const Answer: FC<{
           </ScrollArea>
         ) : (
           <div className="flex flex-col gap-2">
-            <Skeleton className="max-w-lg h-4 bg-zinc-200" />
-            <Skeleton className="max-w-2xl h-4 bg-zinc-200" />
-            <Skeleton className="max-w-lg h-4 bg-zinc-200" />
-            <Skeleton className="max-w-xl h-4 bg-zinc-200" />
+            <Skeleton className="max-w-lg h-4 glass-surface" />
+            <Skeleton className="max-w-2xl h-4 glass-surface" />
+            <Skeleton className="max-w-lg h-4 glass-surface" />
+            <Skeleton className="max-w-xl h-4 glass-surface" />
           </div>
         )}
       </div>

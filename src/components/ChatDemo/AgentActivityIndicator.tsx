@@ -56,7 +56,7 @@ export const AgentActivityIndicator: React.FC<AgentActivityIndicatorProps> = ({
           icon: null,
           variant: 'default' as const,
           label: 'Activity',
-          bgColor: 'bg-zinc-500/10',
+          bgColor: 'bg-white/5',
           textColor: 'text-zinc-300',
         };
     }

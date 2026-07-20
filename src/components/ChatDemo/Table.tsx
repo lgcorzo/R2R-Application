@@ -260,11 +260,11 @@ function Table<T extends object>({
         className="overflow-x-auto"
         style={{ height: tableHeight, maxWidth: '100%' }}
       >
-        <table className="w-full bg-zinc-800 border border-gray-600">
-          <thead className="sticky top-0 bg-zinc-800 z-10">
-            <tr className="border-b border-gray-600">
+        <table className="w-full glass-surface border border-white/[0.04] rounded-lg overflow-hidden">
+          <thead className="sticky top-0 bg-black/40 backdrop-blur-xl z-10">
+            <tr className="border-b border-white/[0.08]">
               {onSelectAll && (
-                <th className="w-[50px] px-4 py-2 text-white text-center">
+                <th className="w-[50px] px-4 py-3 text-foreground text-center">
                   <Checkbox
                     checked={isAllSelected}
                     onCheckedChange={handleSelectAllInternal}
@@ -275,7 +275,7 @@ function Table<T extends object>({
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className="px-4 py-2 text-white text-center overflow-hidden"
+                  className="px-4 py-3 text-foreground font-semibold text-center overflow-hidden"
                 >
                   <div className="flex items-center justify-center">
                     <span className="mr-2 truncate">{col.label}</span>
@@ -286,11 +286,11 @@ function Table<T extends object>({
                             asChild
                             onClick={() => handleSort(col.key)}
                           >
-                            <div className="p-1 cursor-pointer">
+                            <div className="p-1 cursor-pointer text-muted-foreground hover:text-indigo-400 transition-colors">
                               {sort.key === col.key && sort.order === 'asc' ? (
-                                <ChevronUpSquare className="h-4 w-4 hover:bg-zinc-500" />
+                                <ChevronUpSquare className="h-4 w-4" />
                               ) : (
-                                <ChevronDownSquare className="h-4 w-4 hover:bg-zinc-500" />
+                                <ChevronDownSquare className="h-4 w-4" />
                               )}
                             </div>
                           </TooltipTrigger>
@@ -308,9 +308,9 @@ function Table<T extends object>({
                     {col.filterable && (
                       <Popover>
                         <PopoverTrigger asChild>
-                          <Filter className="h-4 w-4 hover:bg-zinc-500 cursor-pointer ml-2" />
+                          <Filter className="h-4 w-4 text-muted-foreground hover:text-indigo-400 transition-colors cursor-pointer ml-2" />
                         </PopoverTrigger>
-                        <PopoverContent className="w-80 z-50">
+                        <PopoverContent className="w-80 z-50 glass-panel shadow-2xl border-white/[0.08]">
                           <div className="grid gap-4">
                             <div className="space-y-2">
                               <h4 className="font-medium leading-none">
@@ -358,9 +358,9 @@ function Table<T extends object>({
                                 onChange={(e) =>
                                   handleFilter(col.key, e.target.value)
                                 }
-                                className="w-full p-2 border rounded"
+                                className="w-full p-2 glass-surface border border-white/[0.04] text-foreground rounded focus:outline-none focus:border-indigo-500/40"
                               >
-                                <option value="">All</option>
+                                <option value="" className="bg-zinc-800">All</option>
                                 {col.filterOptions?.map((option) => (
                                   <option key={option} value={option}>
                                     {option}
@@ -375,7 +375,7 @@ function Table<T extends object>({
                                 onChange={(e) =>
                                   handleFilter(col.key, e.target.value)
                                 }
-                                className="w-full p-2 border rounded"
+                                className="w-full p-2 glass-surface border border-white/[0.04] text-foreground placeholder:text-muted-foreground/50 rounded focus:outline-none focus:border-indigo-500/40"
                               />
                             )}
                           </div>
@@ -386,7 +386,7 @@ function Table<T extends object>({
                 </th>
               ))}
               {actions && (
-                <th className="w-[120px] px-4 py-2 text-white text-right">
+                <th className="w-[120px] px-4 py-3 text-foreground font-semibold text-right">
                   Actions
                 </th>
               )}
@@ -394,9 +394,9 @@ function Table<T extends object>({
           </thead>
           <tbody>
             {currentPageData.map((item) => (
-              <tr key={getRowKey(item)}>
+              <tr key={getRowKey(item)} className="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors group">
                 {onSelectItem && (
-                  <td className="w-[50px] px-4 py-2 text-white text-center">
+                  <td className="w-[50px] px-4 py-3 text-muted-foreground text-center">
                     <Checkbox
                       checked={selectedItems.includes(
                         getRowKey(item).toString()
@@ -410,7 +410,7 @@ function Table<T extends object>({
                 {columns.map((col) => (
                   <td
                     key={col.key}
-                    className="px-4 py-2 text-white text-center overflow-hidden"
+                    className="px-4 py-3 text-muted-foreground group-hover:text-foreground transition-colors text-center overflow-hidden"
                   >
                     <div className="overflow-x-auto whitespace-nowrap">
                       {renderCellContent(item, col)}
@@ -418,19 +418,19 @@ function Table<T extends object>({
                   </td>
                 ))}
                 {actions && (
-                  <td className="w-[110px] px-4 py-2 text-white text-right">
+                  <td className="w-[110px] px-4 py-3 text-muted-foreground text-right">
                     {actions(item)}
                   </td>
                 )}
               </tr>
             ))}
             {Array.from({ length: emptyRowsCount }).map((_, index) => (
-              <tr key={`empty-${index}`} style={{ height: '50px' }}>
+              <tr key={`empty-${index}`} style={{ height: '50px' }} className="border-b border-white/[0.02]">
                 {onSelectItem && <td></td>}
                 {columns.map((col) => (
                   <td
                     key={col.key}
-                    className="px-4 py-2 text-white text-center overflow-hidden"
+                    className="px-4 py-3 text-center overflow-hidden"
                   ></td>
                 ))}
                 {actions && <td></td>}

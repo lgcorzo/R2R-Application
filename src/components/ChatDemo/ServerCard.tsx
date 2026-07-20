@@ -51,32 +51,32 @@ const R2RServerCard: React.FC<R2RServerCardProps> = ({
       </CardHeader>
       <CardContent className="pt-0">
         <div className="grid grid-cols-2 gap-2 text-sm">
-          <div>
-            <p className="font-medium">Uptime:</p>
-            <p>{isConnected ? formatUptime(localUptime) : 'N/A'}</p>
+          <div className="p-2.5 rounded-lg glass-surface">
+            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">Uptime</p>
+            <p className="text-foreground">{isConnected ? formatUptime(localUptime) : 'N/A'}</p>
           </div>
-          <div>
-            <p className="font-medium">CPU Usage:</p>
-            <p>{serverStats ? `${serverStats.cpuUsage.toFixed(1)}%` : 'N/A'}</p>
+          <div className="p-2.5 rounded-lg glass-surface">
+            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">CPU Usage</p>
+            <p className="text-foreground">{serverStats ? `${serverStats.cpuUsage.toFixed(1)}%` : 'N/A'}</p>
           </div>
-          <div>
-            <p className="font-medium">Start Time:</p>
-            <p>
+          <div className="p-2.5 rounded-lg glass-surface">
+            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">Start Time</p>
+            <p className="text-foreground">
               {serverStats
                 ? new Date(serverStats.startTime).toLocaleString()
                 : 'N/A'}
             </p>
           </div>
-          <div>
-            <p className="font-medium">Memory Usage:</p>
-            <p>
+          <div className="p-2.5 rounded-lg glass-surface">
+            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">Memory Usage</p>
+            <p className="text-foreground">
               {serverStats ? `${serverStats.memoryUsage.toFixed(1)}%` : 'N/A'}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2 pt-2 text-sm">
-          <Link width="16" height="16" />
-          <span className="text-gray-500 dark:text-gray-400 truncate">
+        <div className="flex items-center gap-2 pt-3 text-sm border-t border-white/[0.06] mt-3">
+          <Link width="16" height="16" className="text-indigo-400/60" />
+          <span className="text-muted-foreground truncate">
             {pipeline?.deploymentUrl}
           </span>
           {copied ? (

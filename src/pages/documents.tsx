@@ -382,7 +382,7 @@ const Index: React.FC = () => {
   return (
     <Layout pageTitle="Documents" includeFooter={false}>
       <main className="w-full flex flex-col container h-screen-[calc(100%-4rem)]">
-        <div className="relative flex-grow bg-zinc-900 mt-[4rem] sm:mt-[4rem]">
+        <div className="relative flex-grow mt-[4rem] sm:mt-[4rem]">
           <div className="mx-auto max-w-6xl mb-12 mt-4 p-4 h-full">
             <DocumentsTable
               documents={paginatedDocuments}
@@ -413,7 +413,7 @@ const Index: React.FC = () => {
                     placeholder="Search by Title or Document ID"
                     value={searchQuery}
                     onChange={handleSearchInputChange}
-                    className="w-full bg-black border border-zinc-800 text-white rounded-md px-4 py-2 focus:outline-none"
+                    className="w-full glass-surface text-foreground placeholder:text-muted-foreground/50 rounded-xl px-4 py-2 border border-white/10 focus:outline-none focus:border-indigo-500/40 focus:ring-1 focus:ring-indigo-500/20 transition-all"
                   />
                 </div>
               }

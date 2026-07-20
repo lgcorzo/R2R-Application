@@ -575,7 +575,10 @@ const KnowledgeGraphD3: React.FC<KnowledgeGraphProps> = ({
 
   return (
     <div className="relative w-full h-full">
-      <svg ref={svgRef} className="w-full h-full bg-gray-900" />
+      <svg
+        ref={svgRef}
+        className="w-full h-full glass-panel rounded-2xl border border-white/10 shadow-2xl"
+      />
       <div
         ref={tooltipRef}
         className="absolute top-0 left-0 pointer-events-none"

@@ -11,6 +11,7 @@
 The redesign transforms the R2R Dashboard into a futuristic, high-performance UI using Tailwind CSS glass utility classes, CSS custom properties, and Framer Motion micro-animations.
 
 ### Design Tokens & Custom CSS Properties (`src/styles/globals.css`, `tailwind.config.js`)
+
 - **Background Layer**: Dark obsidian canvas (`#090d16`) with radial gradient mesh lighting (`radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%)`).
 - **Glass Panel Base (`.glass-panel`)**:
   - `background`: `rgba(15, 23, 42, 0.75)`
@@ -31,6 +32,7 @@ The redesign transforms the R2R Dashboard into a futuristic, high-performance UI
 ## 2. Component Design & Changes
 
 ### 2.1 Navigation & Layout (`Sidebar.tsx`, `AppSidebar.tsx`, Header)
+
 - **Floating Translucent Sidebar**:
   - Translucent slate glass background (`backdrop-blur-xl bg-slate-950/80 border-r border-white/10`).
   - Active navigation items feature glowing pill highlights (`bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-lg shadow-indigo-500/10`).
@@ -41,6 +43,7 @@ The redesign transforms the R2R Dashboard into a futuristic, high-performance UI
   - Environment badge, search shortcut, and user theme/profile quick action menu.
 
 ### 2.2 Telemetry & Metrics Cards
+
 - **Widgets**: `DAUCard`, `WAUCard`, `RequestsCard`, `ErrorsCard`, `LLMCompletionCard`, `AverageScoreCard`, `WorldMapCard`, `USMapCard`, `ContainerObjectCard`.
 - **Styling**:
   - Translucent glass card base (`.glass-panel`).
@@ -50,6 +53,7 @@ The redesign transforms the R2R Dashboard into a futuristic, high-performance UI
   - Topology maps (`WorldMapCard`, `USMapCard`) updated with dark glass vector fills, glow paths, and interactive translucent hover tooltips.
 
 ### 2.3 Chat Interface, SSE Agent Stream & Knowledge Graph
+
 - **Chat Container (`ChatDemo`)**:
   - Translucent viewport with floating dock for prompt input (`bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl`).
   - Input field with glowing focus rings (`focus-within:border-indigo-500/50 focus-within:ring-2 focus-within:ring-indigo-500/20`).
@@ -76,9 +80,11 @@ The redesign transforms the R2R Dashboard into a futuristic, high-performance UI
 ## 4. Verification Plan
 
 ### Automated Verification
+
 - Run `pnpm lint` and `pnpm format:check` in `R2R-Application` directory.
 - Run `pnpm build` to verify Next.js production compilation with zero errors.
 
 ### Manual Verification
+
 - Start local dev server via `pnpm dev` (port 3005) or test deployment.
 - Verify visual glassmorphism rendering across Sidebar, Header, Telemetry Cards, Chat interface, SSE thinking accordion, and Knowledge Graph.

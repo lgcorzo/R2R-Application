@@ -9,6 +9,7 @@
 **Tech Stack:** Next.js 15, React 18, Tailwind CSS v3.4, Radix UI / Shadcn UI, Framer Motion, Recharts, Visx, D3.js, Lucide React icons.
 
 ## Global Constraints
+
 - Target repository: `/mnt/F024B17C24B145FE/Repos/R2R-Application`
 - CSS Glassmorphism class: `.glass-panel` (`background: rgba(15, 23, 42, 0.75)`, `backdrop-filter: blur(16px) saturate(180%)`, `border: 1px solid rgba(255, 255, 255, 0.08)`)
 - Interactive hover glass class: `.glass-panel-interactive` (`border-color: rgba(255, 255, 255, 0.18)`, `scale: 1.01`)
@@ -19,10 +20,12 @@
 ### Task 1: CSS Glassmorphism Design Tokens & Tailwind Configuration
 
 **Files:**
+
 - Modify: `src/styles/globals.css:50-125`
 - Modify: `tailwind.config.js:15-60`
 
 **Interfaces:**
+
 - Consumes: Tailwind CSS theme config & CSS custom properties
 - Produces: `.glass-panel`, `.glass-panel-interactive`, `.glass-card`, `.accent-gradient-text`, `.glow-border` CSS utility classes and Tailwind color tokens.
 
@@ -37,7 +40,9 @@ Add `.glass-panel`, `.glass-panel-interactive`, `.glass-card`, `.accent-gradient
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 20px 40px -15px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
   }
 
   .glass-panel-interactive {
@@ -45,18 +50,26 @@ Add `.glass-panel`, `.glass-panel-interactive`, `.glass-card`, `.accent-gradient
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 20px 40px -15px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .glass-panel-interactive:hover {
     border-color: rgba(255, 255, 255, 0.18);
     transform: translateY(-2px);
-    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+    box-shadow:
+      0 25px 50px -12px rgba(99, 102, 241, 0.15),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
   }
 
   .glass-card {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(30, 41, 59, 0.7) 0%,
+      rgba(15, 23, 42, 0.8) 100%
+    );
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 1rem;
@@ -87,10 +100,12 @@ git commit -m "style: add glassmorphism design tokens and custom utility classes
 ### Task 2: Floating Translucent Sidebar & Header Navigation Redesign
 
 **Files:**
+
 - Modify: `src/components/Sidebar.tsx:1-200`
 - Modify: `src/components/AppSidebar.tsx:1-100`
 
 **Interfaces:**
+
 - Consumes: `.glass-panel`, `.glass-panel-interactive`, `.accent-gradient-text`
 - Produces: Modern floating translucent navigation sidebar with active glows and brand lighting.
 
@@ -115,6 +130,7 @@ git commit -m "feat(ui): overhaul sidebar with floating glassmorphism design"
 ### Task 3: Modernize Dashboard Telemetry Cards (DAU, WAU, Requests, Errors, Scores, Maps)
 
 **Files:**
+
 - Modify: `src/components/DAUCard.tsx`
 - Modify: `src/components/WAUCard.tsx`
 - Modify: `src/components/RequestsCard.tsx`
@@ -126,6 +142,7 @@ git commit -m "feat(ui): overhaul sidebar with floating glassmorphism design"
 - Modify: `src/components/ContainerObjectCard.tsx`
 
 **Interfaces:**
+
 - Consumes: `.glass-panel-interactive`, glowing metric headers, Recharts/Visx glass tooltips.
 - Produces: Translucent metric cards with trend badges, neon line charts, and interactive map tooltips.
 
@@ -150,12 +167,14 @@ git commit -m "feat(ui): modernize dashboard telemetry cards with sleek glassmor
 ### Task 4: Polish Chat Interface, SSE Agent Stream & Knowledge Graph Visualizer
 
 **Files:**
+
 - Modify: `src/components/ChatDemo/index.tsx`
 - Modify: `src/components/ChatDemo/result.tsx`
 - Modify: `src/components/AgentActivityIndicator.tsx` (or `src/components/ChatDemo/AgentActivityIndicator.tsx`)
 - Modify: `src/components/knowledgeGraphD3.tsx`
 
 **Interfaces:**
+
 - Consumes: SSE event streams (`thinking`, `tool_call`, `tool_result`, `citation`)
 - Produces: Floating glass prompt input dock, glowing SSE event pills (`purple pulse` for thinking, `cyan glow` for tools), and dark D3 knowledge graph canvas.
 
@@ -184,10 +203,12 @@ git commit -m "feat(ui): redesign chat interface, SSE agent activity badges, and
 ## Verification Plan
 
 ### Automated Verification
+
 - Run `pnpm lint` to verify zero ESLint/TypeScript errors.
 - Run `pnpm format:check` to verify code formatting.
 - Run `pnpm build` to verify Next.js production build succeeds cleanly.
 
 ### Manual Verification
+
 - Start local dev server via `pnpm dev -p 3005`.
 - Verify full glassmorphism visual experience across Sidebar, Header, Telemetry widgets, Chat interface, SSE thinking accordion, and Knowledge Graph canvas.

@@ -1,4 +1,5 @@
 {
+  "ignorePatterns": ["next-env.d.ts", ".next/"],
   "plugins": ["import", "@typescript-eslint"],
   "extends": [
     "next/core-web-vitals",

@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/nextjs';
-
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useEffect, useCallback } from 'react';

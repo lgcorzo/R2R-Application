@@ -99,7 +99,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       <div
-        className={`fixed left-0 top-16 z-50 h-[calc(100%-4rem)] w-80 bg-zinc-800 transition-transform duration-300 ease-in-out overflow-hidden`}
+        className={`fixed left-0 top-16 z-50 h-[calc(100%-4rem)] w-80 glass-panel shadow-2xl border-r border-white/10 transition-transform duration-300 ease-in-out overflow-hidden`}
         style={{
           transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
         }}

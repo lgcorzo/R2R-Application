@@ -28,8 +28,10 @@ interface NavItemProps {
 const NavItem: React.FC<NavItemProps> = ({ href, children, isActive }) => (
   <Link
     href={href}
-    className={`px-2 py-1 text-sm font-medium transition-colors ${
-      isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+    className={`px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-300 ${
+      isActive
+        ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-lg shadow-indigo-500/10'
+        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
     }`}
   >
     {children}
@@ -163,7 +165,7 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
     return (
       <nav
         ref={ref}
-        className="bg-background border-b border-border shadow z-50 w-full sticky top-0"
+        className="glass-panel border-b border-white/10 shadow-2xl z-50 w-full sticky top-0 backdrop-blur-xl"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-14 items-center">

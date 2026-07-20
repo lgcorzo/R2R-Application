@@ -339,7 +339,13 @@ const Index: React.FC = () => {
               </div>
 
               {/* Search Bar */}
-              <div className="sticky bottom-0 pt-4 pb-3 px-2 sm:px-4" style={{ background: 'linear-gradient(to top, hsl(var(--background)) 60%, transparent 100%)' }}>
+              <div
+                className="sticky bottom-0 pt-4 pb-3 px-2 sm:px-4"
+                style={{
+                  background:
+                    'linear-gradient(to top, hsl(var(--background)) 60%, transparent 100%)',
+                }}
+              >
                 <Search
                   pipeline={pipeline || undefined}
                   setQuery={setQuery}

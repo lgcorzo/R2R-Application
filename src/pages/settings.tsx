@@ -144,7 +144,9 @@ const renderNestedConfig = (
                     <span
                       className={`whitespace-pre-wrap font-medium ${getFontSize(valueStr)}`}
                     >
-                      <span className="text-indigo-400 font-semibold">Value: </span>
+                      <span className="text-indigo-400 font-semibold">
+                        Value:{' '}
+                      </span>
                       {valueStr}
                     </span>
                   ) : (
@@ -162,7 +164,9 @@ const renderNestedConfig = (
                       </span>
                     ) : (
                       <>
-                        <span className="text-indigo-400 font-semibold">Value: </span>
+                        <span className="text-indigo-400 font-semibold">
+                          Value:{' '}
+                        </span>
                         <span
                           className={`whitespace-pre-wrap ${getFontSize(valueStr)}`}
                         >
@@ -319,7 +323,9 @@ const Index: React.FC = () => {
       .sort((a, b) => a.localeCompare(b))
       .map((letter) => (
         <div key={letter} id={letter} className="mb-8">
-          <h4 className="text-xl font-bold text-indigo-400 pb-4 border-b border-white/10 mb-4">{letter}</h4>
+          <h4 className="text-xl font-bold text-indigo-400 pb-4 border-b border-white/10 mb-4">
+            {letter}
+          </h4>
           <div>{groupedSections[letter]}</div>
         </div>
       ));
@@ -351,8 +357,12 @@ const Index: React.FC = () => {
             <div className="glass-panel p-8 rounded-2xl shadow-2xl border-white/10">
               {activeTab === 'config' && (
                 <>
-                  <h4 className="text-2xl font-bold text-foreground pb-4 border-b border-white/10 mb-6">Configuration</h4>
-                  <div className="flex mb-8 overflow-x-auto pb-4 scrollbar-hide">{generateAlphabetList()}</div>
+                  <h4 className="text-2xl font-bold text-foreground pb-4 border-b border-white/10 mb-6">
+                    Configuration
+                  </h4>
+                  <div className="flex mb-8 overflow-x-auto pb-4 scrollbar-hide">
+                    {generateAlphabetList()}
+                  </div>
                   <div className="overflow-x-auto max-w-full">
                     <div className="w-full">
                       {Object.keys(config).length > 0 ? (
@@ -368,7 +378,9 @@ const Index: React.FC = () => {
               )}
               {activeTab === 'prompts' && (
                 <>
-                  <h4 className="text-2xl font-bold text-foreground pb-4 border-b border-white/10 mb-6">System Prompts</h4>
+                  <h4 className="text-2xl font-bold text-foreground pb-4 border-b border-white/10 mb-6">
+                    System Prompts
+                  </h4>
                   <div className="overflow-x-auto max-w-full">
                     <div className="w-full">
                       {prompts && prompts.length > 0 ? (

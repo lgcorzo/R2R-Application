@@ -95,7 +95,9 @@ const HomePage = () => {
                     <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
                       <MessageCircle className="w-5 h-5 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">Chat</h3>
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">
+                          Chat
+                        </h3>
                         <p className="text-xs text-muted-foreground">
                           Generate RAG responses.
                         </p>
@@ -104,7 +106,9 @@ const HomePage = () => {
                     <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
                       <ScanSearch className="w-5 h-5 text-emerald-400 group-hover:text-emerald-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">Search</h3>
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">
+                          Search
+                        </h3>
                         <p className="text-xs text-muted-foreground">
                           Conduct search over your documents and collections.
                         </p>
@@ -113,7 +117,9 @@ const HomePage = () => {
                     <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
                       <Users className="w-5 h-5 text-amber-400 group-hover:text-amber-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">Users</h3>
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">
+                          Users
+                        </h3>
                         <p className="text-xs text-muted-foreground">
                           Track user queries, search results, and LLM responses.
                         </p>
@@ -122,7 +128,9 @@ const HomePage = () => {
                     <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
                       <FileSearch className="w-5 h-5 text-rose-400 group-hover:text-rose-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">Logs</h3>
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">
+                          Logs
+                        </h3>
                         <p className="text-xs text-muted-foreground">
                           Track user queries, search results, and LLM responses.
                         </p>
@@ -143,7 +151,9 @@ const HomePage = () => {
                     <div className="flex items-start space-x-3 p-3 rounded-xl glass-surface hover:bg-white/[0.05] transition-all duration-300 group">
                       <Settings className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
                       <div>
-                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">Settings</h3>
+                        <h3 className="text-sm font-semibold mb-0.5 text-foreground">
+                          Settings
+                        </h3>
                         <p className="text-xs text-muted-foreground">
                           Manage your {brandingConfig.deploymentName} deployment
                           settings and configurations.

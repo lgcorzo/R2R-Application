@@ -52,15 +52,25 @@ const R2RServerCard: React.FC<R2RServerCardProps> = ({
       <CardContent className="pt-0">
         <div className="grid grid-cols-2 gap-2 text-sm">
           <div className="p-2.5 rounded-lg glass-surface">
-            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">Uptime</p>
-            <p className="text-foreground">{isConnected ? formatUptime(localUptime) : 'N/A'}</p>
+            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">
+              Uptime
+            </p>
+            <p className="text-foreground">
+              {isConnected ? formatUptime(localUptime) : 'N/A'}
+            </p>
           </div>
           <div className="p-2.5 rounded-lg glass-surface">
-            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">CPU Usage</p>
-            <p className="text-foreground">{serverStats ? `${serverStats.cpuUsage.toFixed(1)}%` : 'N/A'}</p>
+            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">
+              CPU Usage
+            </p>
+            <p className="text-foreground">
+              {serverStats ? `${serverStats.cpuUsage.toFixed(1)}%` : 'N/A'}
+            </p>
           </div>
           <div className="p-2.5 rounded-lg glass-surface">
-            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">Start Time</p>
+            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">
+              Start Time
+            </p>
             <p className="text-foreground">
               {serverStats
                 ? new Date(serverStats.startTime).toLocaleString()
@@ -68,7 +78,9 @@ const R2RServerCard: React.FC<R2RServerCardProps> = ({
             </p>
           </div>
           <div className="p-2.5 rounded-lg glass-surface">
-            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">Memory Usage</p>
+            <p className="font-medium text-indigo-300 text-xs uppercase tracking-wider mb-0.5">
+              Memory Usage
+            </p>
             <p className="text-foreground">
               {serverStats ? `${serverStats.memoryUsage.toFixed(1)}%` : 'N/A'}
             </p>

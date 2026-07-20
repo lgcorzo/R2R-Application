@@ -127,9 +127,19 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
   font-size: 13px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -142,8 +152,9 @@ pre,
 .file-name,
 .code-block,
 .mono-text {
-  font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Cascadia Code',
-    'Consolas', 'Fira Code', 'Courier New', monospace;
+  font-family:
+    'JetBrains Mono', 'SF Mono', 'Monaco', 'Cascadia Code', 'Consolas',
+    'Fira Code', 'Courier New', monospace;
   font-size: 13px;
 }
 
@@ -190,7 +201,8 @@ a {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(
+  background:
+    radial-gradient(
       ellipse at 20% 10%,
       rgba(99, 102, 241, 0.06) 0%,
       transparent 50%
@@ -559,8 +571,9 @@ td {
 
 /* ===== Smooth transitions ===== */
 * {
-  transition-property: background-color, border-color, color, fill, stroke,
-    opacity, box-shadow, transform;
+  transition-property:
+    background-color, border-color, color, fill, stroke, opacity, box-shadow,
+    transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }

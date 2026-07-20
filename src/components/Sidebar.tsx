@@ -401,7 +401,8 @@ const Sidebar: React.FC<SidebarProps> = ({
           isOpen ? 'translate-x-80' : 'translate-x-0'
         }`}
         style={{
-          background: 'linear-gradient(180deg, rgba(99, 102, 241, 0.06) 0%, transparent 50%, rgba(99, 102, 241, 0.06) 100%)',
+          background:
+            'linear-gradient(180deg, rgba(99, 102, 241, 0.06) 0%, transparent 50%, rgba(99, 102, 241, 0.06) 100%)',
         }}
         onClick={onToggle}
       >

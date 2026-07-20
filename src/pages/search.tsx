@@ -258,7 +258,9 @@ const SearchPage: React.FC = () => {
                           <h3 className="text-lg font-bold text-foreground mb-2">
                             {result.metadata?.title || `Result ${index + 1}`}
                           </h3>
-                          <p className="text-sm text-muted-foreground mb-2">{result.text}</p>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            {result.text}
+                          </p>
                           <p className="text-sm text-indigo-400 mb-2 font-medium">
                             Score: {result.score.toFixed(4)}
                           </p>
@@ -326,7 +328,10 @@ const SearchPage: React.FC = () => {
                           className="mb-4 p-4 glass-panel rounded-xl shadow-2xl border border-white/10"
                         >
                           <h3 className="text-lg font-bold text-foreground mb-2">
-                            {result.content.subject} <span className="text-indigo-400">{result.content.predicate}</span>{' '}
+                            {result.content.subject}{' '}
+                            <span className="text-indigo-400">
+                              {result.content.predicate}
+                            </span>{' '}
                             {result.content.object}
                           </h3>
                           <Accordion

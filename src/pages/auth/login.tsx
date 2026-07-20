@@ -347,7 +347,11 @@ const LoginPage: React.FC = () => {
               </Button>
             </div>
           </div>
-          {error && <div className="text-red-400 text-sm mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20">{error}</div>}
+          {error && (
+            <div className="text-red-400 text-sm mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+              {error}
+            </div>
+          )}
         </div>
       </div>
     </Layout>

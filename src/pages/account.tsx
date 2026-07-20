@@ -42,10 +42,14 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="glass-panel border border-white/10 shadow-2xl p-6 rounded-2xl w-full max-w-md backdrop-blur-xl">
-        <h2 className="text-xl font-bold mb-4 text-foreground">Update Profile</h2>
+        <h2 className="text-xl font-bold mb-4 text-foreground">
+          Update Profile
+        </h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1 text-muted-foreground">Name</label>
+            <label className="block text-sm font-medium mb-1 text-muted-foreground">
+              Name
+            </label>
             <Input
               value={formData.name}
               onChange={(e) =>
@@ -55,7 +59,9 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1 text-muted-foreground">Email</label>
+            <label className="block text-sm font-medium mb-1 text-muted-foreground">
+              Email
+            </label>
             <Input
               value={formData.email}
               onChange={(e) =>
@@ -66,7 +72,9 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1 text-muted-foreground">Bio</label>
+            <label className="block text-sm font-medium mb-1 text-muted-foreground">
+              Bio
+            </label>
             <Input
               value={formData.bio}
               onChange={(e) =>
@@ -179,7 +187,9 @@ const Index: React.FC = () => {
                       <h2 className="text-xl font-bold text-foreground">
                         {userProfile?.name || 'Unnamed User'}
                       </h2>
-                      <p className="text-muted-foreground">{userProfile?.email}</p>
+                      <p className="text-muted-foreground">
+                        {userProfile?.email}
+                      </p>
                     </div>
                   </div>
                   <Button onClick={() => setIsUpdateModalOpen(true)}>
@@ -194,7 +204,9 @@ const Index: React.FC = () => {
                     <h3 className="text-sm font-medium text-muted-foreground mb-2">
                       Bio
                     </h3>
-                    <p className="text-foreground">{userProfile?.bio || 'No bio provided'}</p>
+                    <p className="text-foreground">
+                      {userProfile?.bio || 'No bio provided'}
+                    </p>
                   </div>
 
                   <div className="space-y-2">
@@ -203,8 +215,12 @@ const Index: React.FC = () => {
                     </h3>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="glass-surface border border-white/[0.04] p-4 rounded-xl">
-                        <span className="text-sm text-muted-foreground">User ID</span>
-                        <p className="font-mono text-sm text-foreground mt-1">{userProfile?.id}</p>
+                        <span className="text-sm text-muted-foreground">
+                          User ID
+                        </span>
+                        <p className="font-mono text-sm text-foreground mt-1">
+                          {userProfile?.id}
+                        </p>
                       </div>
                       <div className="glass-surface border border-white/[0.04] p-4 rounded-xl">
                         <span className="text-sm text-muted-foreground">

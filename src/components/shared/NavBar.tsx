@@ -179,7 +179,10 @@ export const Navbar = forwardRef<React.ElementRef<'nav'>, NavbarProps>(
                 href={isSuperUser() ? '/' : '/documents'}
                 className="flex-shrink-0 flex items-center group"
               >
-                <Logo className="h-12 w-auto transition-transform duration-300 group-hover:scale-105" disableLink={true} />
+                <Logo
+                  className="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
+                  disableLink={true}
+                />
                 <span className="ml-2 text-xl font-bold accent-gradient-text">
                   {brandingConfig.navbar.appName}
                 </span>

@@ -511,7 +511,10 @@ const ManagePage: React.FC = () => {
           {/* Header */}
           <header className="flex h-16 shrink-0 items-center gap-2 border-b border-white/10 glass-panel shadow-none rounded-none px-4">
             <SidebarTrigger className="-ml-1 text-muted-foreground hover:text-foreground transition-colors" />
-            <Separator orientation="vertical" className="mr-2 h-4 bg-white/10" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 h-4 bg-white/10"
+            />
             <h1 className="text-2xl font-bold text-foreground">Manage</h1>
           </header>
 

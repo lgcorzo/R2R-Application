@@ -360,7 +360,9 @@ function Table<T extends object>({
                                 }
                                 className="w-full p-2 glass-surface border border-white/[0.04] text-foreground rounded focus:outline-none focus:border-indigo-500/40"
                               >
-                                <option value="" className="bg-zinc-800">All</option>
+                                <option value="" className="bg-zinc-800">
+                                  All
+                                </option>
                                 {col.filterOptions?.map((option) => (
                                   <option key={option} value={option}>
                                     {option}
@@ -394,7 +396,10 @@ function Table<T extends object>({
           </thead>
           <tbody>
             {currentPageData.map((item) => (
-              <tr key={getRowKey(item)} className="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors group">
+              <tr
+                key={getRowKey(item)}
+                className="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors group"
+              >
                 {onSelectItem && (
                   <td className="w-[50px] px-4 py-3 text-muted-foreground text-center">
                     <Checkbox
@@ -425,7 +430,11 @@ function Table<T extends object>({
               </tr>
             ))}
             {Array.from({ length: emptyRowsCount }).map((_, index) => (
-              <tr key={`empty-${index}`} style={{ height: '50px' }} className="border-b border-white/[0.02]">
+              <tr
+                key={`empty-${index}`}
+                style={{ height: '50px' }}
+                className="border-b border-white/[0.02]"
+              >
                 {onSelectItem && <td></td>}
                 {columns.map((col) => (
                   <td

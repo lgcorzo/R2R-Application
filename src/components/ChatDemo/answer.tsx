@@ -211,10 +211,7 @@ export const Answer: FC<{
               h5: (props) => <h5 className="text-foreground" {...props} />,
               h6: (props) => <h6 className="text-foreground" {...props} />,
               strong: (props) => (
-                <strong
-                  className="font-bold text-foreground"
-                  {...props}
-                />
+                <strong className="font-bold text-foreground" {...props} />
               ),
               p: ({ children }) => (
                 <p className="mb-4 leading-7 text-muted-foreground">
@@ -224,11 +221,18 @@ export const Answer: FC<{
                   )}
                 </p>
               ),
-              li: (props) => <li className="text-muted-foreground" {...props} />,
-              blockquote: (props) => (
-                <blockquote className="border-l-indigo-500/50 text-muted-foreground/80" {...props} />
+              li: (props) => (
+                <li className="text-muted-foreground" {...props} />
               ),
-              em: (props) => <em className="text-muted-foreground" {...props} />,
+              blockquote: (props) => (
+                <blockquote
+                  className="border-l-indigo-500/50 text-muted-foreground/80"
+                  {...props}
+                />
+              ),
+              em: (props) => (
+                <em className="text-muted-foreground" {...props} />
+              ),
 
               code: ({ node, inline, className, children, ...props }: any) => {
                 const match = /language-(\w+)/.exec(className || '');
@@ -330,7 +334,9 @@ export const Answer: FC<{
                           <div className="flex-1 max-h-[200px] overflow-y-auto pr-2">
                             {isKGElement && (metadata as any).summary && (
                               <div className="text-muted-foreground break-words mb-2">
-                                <strong className="text-foreground">Summary:</strong>{' '}
+                                <strong className="text-foreground">
+                                  Summary:
+                                </strong>{' '}
                                 {(metadata as any).summary}
                               </div>
                             )}
@@ -344,14 +350,18 @@ export const Answer: FC<{
                             </div>
                             {isKGElement && (metadata as any).impact_rating && (
                               <div className="text-muted-foreground break-words mt-2">
-                                <strong className="text-foreground">Impact Rating:</strong>{' '}
+                                <strong className="text-foreground">
+                                  Impact Rating:
+                                </strong>{' '}
                                 {(metadata as any).impact_rating}
                               </div>
                             )}
                             {isKGElement &&
                               (metadata as any).rating_explanation && (
                                 <div className="text-muted-foreground break-words mt-2">
-                                  <strong className="text-foreground">Rating Explanation:</strong>{' '}
+                                  <strong className="text-foreground">
+                                    Rating Explanation:
+                                  </strong>{' '}
                                   {(metadata as any).rating_explanation}
                                 </div>
                               )}

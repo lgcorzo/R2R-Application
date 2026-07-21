@@ -42,9 +42,9 @@
     --sidebar-ring: 252 70% 55%;
 
     /* Semantic colors */
-    --success: 142 76% 36%;
+    --success: 84 40% 49%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
+    --warning: 52 90% 63%;
     --warning-foreground: 0 0% 0%;
     --info: 221 83% 53%;
     --info-foreground: 0 0% 100%;
@@ -98,10 +98,10 @@
     --sidebar-ring: 239 84% 67%;
 
     /* Semantic */
-    --success: 142 71% 45%;
+    --success: 84 40% 49%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
+    --warning: 52 90% 63%;
+    --warning-foreground: 0 0% 0%;
     --info: 239 84% 67%;
     --info-foreground: 0 0% 100%;
   }

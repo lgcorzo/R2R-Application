@@ -247,8 +247,8 @@ importers:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
       react-dropzone:
-        specifier: ^14.3.5
-        version: 14.3.8(react@18.3.1)
+        specifier: ^19.1.1
+        version: 19.1.1(@types/react@18.3.3)(react@18.3.1)
       react-hook-form:
         specifier: ^7.82.0
         version: 7.82.0(react@18.3.1)
@@ -3737,8 +3737,8 @@ packages:
     resolution: {integrity: sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg==}
     engines: {node: '>= 0.8'}
 
-  enhanced-resolve@5.24.2:
-    resolution: {integrity: sha512-rpsZEGT1jFuve6QlpyRp9ckQ+kN61hvF9BzCPyMdaKTm8UJce96KBn3sorXOFXlzjPrs3Vc4T1NsSroZ3PxlFw==}
+  enhanced-resolve@5.24.3:
+    resolution: {integrity: sha512-PwKooW9JUzh5chmYfHM3IQl5OkK2u2Nm011MgeZrss3JmFraUx/fqrf78kk8GUMYoibx/14MdwTl/1WKkG7TpQ==}
     engines: {node: '>=10.13.0'}
 
   env-paths@2.2.1:
@@ -4061,9 +4061,9 @@ packages:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
     engines: {node: ^10.12.0 || >=12.0.0}
 
-  file-selector@2.1.2:
-    resolution: {integrity: sha512-QgXo+mXTe8ljeqUFaX3QVHc5osSItJ/Km+xpocx0aSqWGMSCf6qYs/VnzZgS864Pjn5iceMRFigeAV7AfTlaig==}
-    engines: {node: '>= 12'}
+  file-selector@4.0.2:
+    resolution: {integrity: sha512-gG5a3fIH+jVZY3AZeupJBjYnRd65YUTCO26gKhfE24LvmGPmBAx0peyxrjUkX6PhKfTUl9UPi7UYwvDS6RI2Jg==}
+    engines: {node: '>= 20'}
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -5431,11 +5431,15 @@ packages:
     peerDependencies:
       react: ^18.3.1
 
-  react-dropzone@14.3.8:
-    resolution: {integrity: sha512-sBgODnq+lcA4P296DY4wacOZz3JFpD99fp+hb//iBO2HHnyeZU3FwWyXJ6salNpqQdsZrgMrotuko/BdJMV8Ug==}
-    engines: {node: '>= 10.13'}
+  react-dropzone@19.1.1:
+    resolution: {integrity: sha512-zxuTwbyvP+FSdesiHafT/0UMTX/Ne1ri8XPTn7KM97ZinHKFy3N6KiKEGRiG28ibYV+nG6sHxoJlkVoDxIMHxQ==}
+    engines: {node: '>= 20'}
     peerDependencies:
-      react: '>= 16.8 || 18.0.0'
+      '@types/react': '*'
+      react: '>= 18'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   react-hook-form@7.82.0:
     resolution: {integrity: sha512-Zw/uFZ2dO+02GHlBn7JFGn8kZJ7LdM33B/0BXOovzFay+CMhf94JMw5BVu+F1tVkUKjNvBuaE3fz5BJhga10Tg==}
@@ -9936,7 +9940,7 @@ snapshots:
 
   encodeurl@2.0.0: {}
 
-  enhanced-resolve@5.24.2:
+  enhanced-resolve@5.24.3:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.3
@@ -10449,9 +10453,7 @@ snapshots:
     dependencies:
       flat-cache: 3.2.0
 
-  file-selector@2.1.2:
-    dependencies:
-      tslib: 2.8.1
+  file-selector@4.0.2: {}
 
   fill-range@7.1.1:
     dependencies:
@@ -11966,12 +11968,13 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-dropzone@14.3.8(react@18.3.1):
+  react-dropzone@19.1.1(@types/react@18.3.3)(react@18.3.1):
     dependencies:
       attr-accept: 2.2.5
-      file-selector: 2.1.2
-      prop-types: 15.8.1
+      file-selector: 4.0.2
       react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.3
 
   react-hook-form@7.82.0(react@18.3.1):
     dependencies:
@@ -12993,7 +12996,7 @@ snapshots:
       acorn-import-phases: 1.0.4(acorn@8.17.0)
       browserslist: 4.28.1
       chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.24.2
+      enhanced-resolve: 5.24.3
       es-module-lexer: 2.3.1
       eslint-scope: 5.1.1
       events: 3.3.0

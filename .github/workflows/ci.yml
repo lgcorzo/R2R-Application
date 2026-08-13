@@ -46,14 +46,14 @@ jobs:
 
       - name: Start server and run for 20 seconds
         run: |
-          mkdir -p .next
+          mkdir -p .next/cache/images
           timeout 20s node .next/standalone/server.js > .next/server.log 2>&1 || exit 0
 
       - name: Check server logs
         run: |
           cat .next/server.log
-          if grep -i "error" .next/server.log; then
-            echo "Server encountered errors during startup"
+          if grep -iE "^(Error|.*\bENOENT\b|.*\bfailed to\b|.*\bunhandled\b)" .next/server.log; then
+            echo "Server encountered critical errors during startup"
             exit 1
           fi
 

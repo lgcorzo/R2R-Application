@@ -1,5 +1,5 @@
 // R2R SSE Event Types based on official documentation
-// https://github.com/sciphi-ai/r2r/blob/main/docs/documentation/retrieval/agentic-rag.md
+// https://github.com/lgcorzo/R2R-Engine/blob/main/docs/documentation/retrieval/agentic-rag.md
 
 export interface ThinkingEventData {
   delta: {

@@ -168,7 +168,7 @@ const HomePage = () => {
                         className="flex items-center justify-center px-4 py-2 text-sm rounded-xl"
                         onClick={() =>
                           window.open(
-                            'https://github.com/SciPhi-AI/R2R/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=',
+                            'https://github.com/lgcorzo/R2R-Engine/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=',
                             '_blank'
                           )
                         }
@@ -180,7 +180,7 @@ const HomePage = () => {
                         className="flex items-center justify-center px-4 py-2 text-sm rounded-xl"
                         onClick={() =>
                           window.open(
-                            'https://github.com/SciPhi-AI/R2R/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=',
+                            'https://github.com/lgcorzo/R2R-Engine/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=',
                             '_blank'
                           )
                         }
@@ -227,7 +227,7 @@ const HomePage = () => {
                             className="rounded-xl py-1 px-3"
                             onClick={() =>
                               window.open(
-                                'https://github.com/SciPhi-AI/R2R/tree/main/py',
+                                'https://github.com/lgcorzo/R2R-Engine/tree/main/py',
                                 '_blank'
                               )
                             }
@@ -280,7 +280,7 @@ const HomePage = () => {
                             className="rounded-xl py-1 px-3"
                             onClick={() =>
                               window.open(
-                                'https://github.com/SciPhi-AI/R2R/tree/main/js/sdk',
+                                'https://github.com/lgcorzo/R2R-Engine/tree/main/js/sdk',
                                 '_blank'
                               )
                             }

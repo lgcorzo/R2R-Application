@@ -8,7 +8,7 @@ const defaultConfig = {
   deploymentName: 'R2R',
   socialLinks: {
     twitter: { enabled: true, url: 'https://twitter.com/ocolegro?lang=en' },
-    github: { enabled: true, url: 'https://github.com/SciPhi-AI/R2R' },
+    github: { enabled: true, url: 'https://github.com/lgcorzo/R2R-Application' },
     discord: { enabled: true, url: 'https://discord.gg/p6KqD2kjtB' },
   },
   navbar: {

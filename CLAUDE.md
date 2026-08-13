@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 🎯 Обзор проекта
 
-R2R Dashboard — Next.js приложение для управления и мониторинга RAG (Retrieval-Augmented Generation) пайплайнов, построенных на [R2R framework](https://github.com/SciPhi-AI/R2R). Используется TypeScript, React 18, Next.js 14.2.5 (Pages Router), и SDK r2r-js v0.4.43.
+R2R Dashboard — Next.js приложение для управления и мониторинга RAG (Retrieval-Augmented Generation) пайплайнов, построенных на [R2R framework](https://github.com/lgcorzo/R2R-Engine). Используется TypeScript, React 18, Next.js 14.2.5 (Pages Router), и SDK r2r-js v0.4.43.
 
 ### Ключевые архитектурные решения
 

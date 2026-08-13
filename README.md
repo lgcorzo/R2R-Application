@@ -8,7 +8,7 @@ Manage and Monitor Your R2R RAG Applications with Ease
 
 # About
 
-The R2R Dashboard is an open-source React+Next.js application designed to provide [R2R](https://github.com/SciPhi-AI/R2R) developers with an easy interface to interact with their pipelines. This dashboard aims to reduce development and iteration time by offering a user-friendly environment.
+The R2R Dashboard is an open-source React+Next.js application designed to provide [R2R](https://github.com/lgcorzo/R2R-Engine) developers with an easy interface to interact with their pipelines. This dashboard aims to reduce development and iteration time by offering a user-friendly environment.
 
 ## Key Features
 
@@ -56,7 +56,7 @@ After installing PNPM, you may need to add it to your system's PATH. Follow the 
 1. **Clone the project repository and navigate to the project directory:**
 
    ```bash
-   git clone git@github.com:SciPhi-AI/R2R-Application.git
+   git clone git@github.com:lgcorzo/R2R-Application.git
    cd R2R-Application
    ```
 

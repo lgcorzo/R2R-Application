@@ -1,15 +1,16 @@
 # Builder Stage
 FROM node:22-alpine AS builder
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install pnpm
-RUN npm install -g pnpm
+# Enable Corepack for pnpm
+RUN corepack enable && corepack prepare pnpm@10.24.0 --activate
 
 # Copy package.json and pnpm-lock.yaml
 COPY package.json pnpm-lock.yaml* ./
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --no-frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
@@ -19,10 +20,11 @@ RUN pnpm build
 
 # Production Stage
 FROM node:22-alpine AS runner
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install pnpm
-RUN npm install -g pnpm
+# Enable Corepack for pnpm
+RUN corepack enable && corepack prepare pnpm@10.24.0 --activate
 
 # Set node environment to production
 ENV NODE_ENV=production

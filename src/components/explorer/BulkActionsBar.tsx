@@ -14,12 +14,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 
 export type BulkAction =
-  | 'download'
-  | 'extract'
-  | 'copy'
-  | 'move'
-  | 'createCollection'
-  | 'delete';
+  'download' | 'extract' | 'copy' | 'move' | 'createCollection' | 'delete';
 
 interface BulkActionsBarProps {
   selectedCount: number;

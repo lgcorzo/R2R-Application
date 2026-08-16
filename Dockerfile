@@ -18,6 +18,9 @@ COPY . .
 # Build the Next.js application
 RUN pnpm build
 
+# Ensure all files in meriyah dist are copied to standalone build (Next.js standalone tracing misses meriyah.mjs with pnpm)
+RUN cp -rf node_modules/.pnpm/meriyah*/node_modules/meriyah/dist/* .next/standalone/node_modules/.pnpm/meriyah*/node_modules/meriyah/dist/ 2>/dev/null || true
+
 # Production Stage
 FROM node:22-alpine AS runner
 RUN apk add --no-cache libc6-compat

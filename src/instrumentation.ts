@@ -16,4 +16,3 @@ export async function onRequestError(err: any, request: any, context: any) {
     return Sentry.captureRequestError(err, request, context);
   }
 }
-

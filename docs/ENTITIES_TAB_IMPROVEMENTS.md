@@ -151,13 +151,14 @@ const getCategoryBadgeProps = (category: string): {
 - ✅ Type-safe через TypeScript interface
 
 **Цветовая схема:**
-| Категория | Цвет | Light mode | Dark mode |
-|-----------|------|------------|-----------|
-| API_ENDPOINT | Синий | `bg-blue-500/10` | `bg-blue-500/20` |
-| CLASS | Фиолетовый | `bg-purple-500/10` | `bg-purple-500/20` |
-| MODULE | Зелёный | `bg-green-500/10` | `bg-green-500/20` |
-| IMPORT | Голубой | `bg-cyan-500/10` | `bg-cyan-500/20` |
-| PERSON | Янтарный | `bg-amber-500/10` | `bg-amber-500/20` |
+
+| Категория    | Цвет       | Light mode         | Dark mode          |
+| ------------ | ---------- | ------------------ | ------------------ |
+| API_ENDPOINT | Синий      | `bg-blue-500/10`   | `bg-blue-500/20`   |
+| CLASS        | Фиолетовый | `bg-purple-500/10` | `bg-purple-500/20` |
+| MODULE       | Зелёный    | `bg-green-500/10`  | `bg-green-500/20`  |
+| IMPORT       | Голубой    | `bg-cyan-500/10`   | `bg-cyan-500/20`   |
+| PERSON       | Янтарный   | `bg-amber-500/10`  | `bg-amber-500/20`  |
 
 ### 4. Кнопки действий (Action Buttons)
 

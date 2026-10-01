@@ -12,6 +12,7 @@
 The goal of this initiative is to modernize the R2R Dashboard from a fragmented collection of disjointed administrative pages into a unified, high-density **RAG Developer & Operations Workbench**.
 
 ### Key Objectives
+
 1. **Consolidate Fragmented Information Architecture**: Eliminate competing pages (`/manage`, `/documents`, `/collections`, `/documents-detail`, `/explorer`, `/search`, `/chat`) and replace them with a unified 3-module system.
 2. **Elevate Retrieval Experimentation**: Implement a **Side-by-Side A/B Retrieval Arena** to test queries simultaneously against two retrieval configurations with instant visual diffs of ranked chunks, latency waterfalls, and score distributions.
 3. **Deepen Ingestion & Chunk Observability**: Implement a **3-Pane Knowledge Studio** offering an IDE-like explorer for documents, visual ingestion pipeline tracking, and live chunk/vector inspection.
@@ -21,19 +22,20 @@ The goal of this initiative is to modernize the R2R Dashboard from a fragmented 
 
 ## 2. Usability Audit & Heuristic Findings
 
-| Heuristic Issue | Previous Implementation | Redesigned Solution |
-| :--- | :--- | :--- |
-| **Fragmented Navigation** | 4 separate pages for managing docs/collections with overlapping code. | Unified **Knowledge Studio** (`/knowledge`) with 3-pane resizable layout. |
-| **Database Jargon Leak** | Low-level mathematical tuning knobs (`rrfK`, `efSearch`, `probes`) exposed without guidance. | Curated **Retrieval Presets** with an expandable "Tune" panel for deep configuration. |
-| **Bifurcated AI Interaction** | `/chat` and `/search` maintained separate UIs for overlapping RAG data. | Unified **Retrieval Arena** (`/arena`) unifying vector inspection with agent traces. |
-| **Orphaned Global Links** | `/documents-detail` linked globally without document context. | Context-aware slide-in or 3rd-pane chunk inspector linked directly to documents. |
-| **Layout Inconsistencies** | Mixed top-nav, collapsible sidebars, and slide-over drawers across routes. | Persistent **Activity Rail + Status Bar** framework across all routes. |
+| Heuristic Issue               | Previous Implementation                                                                      | Redesigned Solution                                                                   |
+| :---------------------------- | :------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------ |
+| **Fragmented Navigation**     | 4 separate pages for managing docs/collections with overlapping code.                        | Unified **Knowledge Studio** (`/knowledge`) with 3-pane resizable layout.             |
+| **Database Jargon Leak**      | Low-level mathematical tuning knobs (`rrfK`, `efSearch`, `probes`) exposed without guidance. | Curated **Retrieval Presets** with an expandable "Tune" panel for deep configuration. |
+| **Bifurcated AI Interaction** | `/chat` and `/search` maintained separate UIs for overlapping RAG data.                      | Unified **Retrieval Arena** (`/arena`) unifying vector inspection with agent traces.  |
+| **Orphaned Global Links**     | `/documents-detail` linked globally without document context.                                | Context-aware slide-in or 3rd-pane chunk inspector linked directly to documents.      |
+| **Layout Inconsistencies**    | Mixed top-nav, collapsible sidebars, and slide-over drawers across routes.                   | Persistent **Activity Rail + Status Bar** framework across all routes.                |
 
 ---
 
 ## 3. Global Shell & Navigation Architecture
 
 ### 3.1 Shell Layout
+
 The workbench uses an ultra-compact icon rail (width: 56px) paired with a contextual collapsible side panel and a persistent bottom diagnostics status bar (height: 28px).
 
 ```
@@ -102,6 +104,7 @@ The workbench uses an ultra-compact icon rail (width: 56px) paired with a contex
 ```
 
 #### Interactive Behavior & Algorithms
+
 - **Chunk Intersect Diffing**:
   Given chunk sets $R_A = \{c_{A,1}, \dots, c_{A,k}\}$ and $R_B = \{c_{B,1}, \dots, c_{B,k}\}$, the UI computes in $O(k)$:
   $$\text{Overlap}(c) = \begin{cases} \text{Position in } B & \text{if } c \in R_B \\ \text{Unique to } A & \text{otherwise} \end{cases}$$
@@ -134,6 +137,7 @@ The workbench uses an ultra-compact icon rail (width: 56px) paired with a contex
 ```
 
 #### Pane Details
+
 - **Pane 1 (Directory)**: Tree view of collections with document child nodes, document status indicators (ready, processing, failed), and quick ingestion upload button.
 - **Pane 2 (Pipeline & Chunk Stream)**: Stage-by-stage pipeline status tracker (`Upload` ➔ `Parse` ➔ `Chunk` ➔ `Embed` ➔ `Enrich`) with virtualized list of chunks.
 - **Pane 3 (Inspector)**: Detailed view of the selected chunk, including syntax-highlighted formatted text, embedding model stats, token counts, extracted entity relationships, and metadata JSON viewer.
@@ -152,6 +156,7 @@ The workbench uses an ultra-compact icon rail (width: 56px) paired with a contex
 ## 5. Technical Architecture & State Management
 
 ### 5.1 Directory & File Layout
+
 ```text
 src/
 ├── context/
@@ -186,7 +191,9 @@ src/
 ```
 
 ### 5.2 Legacy Deprecation & Migration Plan
+
 The following legacy pages will be safely archived/consolidated:
+
 - `/manage.tsx`, `/documents.tsx`, `/collections.tsx`, `/documents-detail.tsx`, `/explorer.tsx` ➔ Replaced by `/knowledge.tsx`.
 - `/chat.tsx`, `/search.tsx` ➔ Replaced by `/arena.tsx`.
 - `/analytics.tsx`, `/indexLogs.tsx`, `/settings.tsx` ➔ Replaced by `/ops.tsx`.

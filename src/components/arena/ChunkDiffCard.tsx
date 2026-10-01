@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { EnrichedChunk } from '@/types/workbench';
-import { Badge } from '@/components/ui/badge';
 import { ChevronDown, ChevronUp, FileText, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+
+import { Badge } from '@/components/ui/badge';
 import { useWorkbenchContext } from '@/context/WorkbenchContext';
+import { EnrichedChunk } from '@/types/workbench';
 
 interface ChunkDiffCardProps {
   chunk: EnrichedChunk;

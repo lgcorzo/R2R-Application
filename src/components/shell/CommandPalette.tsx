@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { FlaskConical, Library, Gauge, Sun, Moon, LogOut } from 'lucide-react';
 import { useRouter } from 'next/router';
+import { useTheme } from 'next-themes';
+import React, { useEffect, useState } from 'react';
+
 import {
   CommandDialog,
   CommandEmpty,
@@ -8,9 +11,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import { FlaskConical, Library, Gauge, Sun, Moon, LogOut } from 'lucide-react';
 import { useUserContext } from '@/context/UserContext';
-import { useTheme } from 'next-themes';
 
 export const CommandPalette: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -76,7 +77,10 @@ export const CommandPalette: React.FC = () => {
             )}
             <span>Toggle Theme</span>
           </CommandItem>
-          <CommandItem onSelect={() => runCommand(logout)} className="cursor-pointer">
+          <CommandItem
+            onSelect={() => runCommand(logout)}
+            className="cursor-pointer"
+          >
             <LogOut className="mr-2 h-4 w-4 text-destructive" />
             <span>Sign Out</span>
           </CommandItem>

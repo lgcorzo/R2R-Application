@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import { Search, Play } from 'lucide-react';
 import Head from 'next/head';
-import { useWorkbenchContext } from '@/context/WorkbenchContext';
-import { useUserContext } from '@/context/UserContext';
+import React, { useState } from 'react';
+
 import { ArenaPane } from '@/components/arena/ArenaPane';
 import { TraceDrawer } from '@/components/arena/TraceDrawer';
-import { computeChunkIntersection } from '@/lib/retrieval-diff';
-import { RankedChunk } from '@/types/workbench';
-import { Search, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useUserContext } from '@/context/UserContext';
+import { useWorkbenchContext } from '@/context/WorkbenchContext';
+import { computeChunkIntersection } from '@/lib/retrieval-diff';
+import { RankedChunk } from '@/types/workbench';
 
 export default function ArenaPage() {
   const {

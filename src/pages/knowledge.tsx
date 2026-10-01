@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { DocExplorer } from '@/components/knowledge/DocExplorer';
-import { PipelineTracker } from '@/components/knowledge/PipelineTracker';
+import { ChunkResponse, DocumentResponse } from 'r2r-js';
+import React, { useEffect, useState } from 'react';
+
 import { ChunkGrid } from '@/components/knowledge/ChunkGrid';
 import { ChunkInspector } from '@/components/knowledge/ChunkInspector';
-import { useWorkbenchContext } from '@/context/WorkbenchContext';
+import { DocExplorer } from '@/components/knowledge/DocExplorer';
+import { PipelineTracker } from '@/components/knowledge/PipelineTracker';
 import { useUserContext } from '@/context/UserContext';
-import { ChunkResponse, DocumentResponse } from 'r2r-js';
+import { useWorkbenchContext } from '@/context/WorkbenchContext';
 
 export default function KnowledgePage() {
   const { selectedDocId, selectedChunkId, setSelectedChunkId } =

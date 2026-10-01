@@ -1,7 +1,8 @@
-import React from 'react';
+import { FlaskConical, Library, Gauge, Terminal } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FlaskConical, Library, Gauge, Terminal } from 'lucide-react';
+import React from 'react';
+
 import { ThemeToggle } from '@/components/shared/ThemeToggle';
 import {
   Tooltip,

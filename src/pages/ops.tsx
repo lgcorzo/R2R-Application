@@ -1,7 +1,8 @@
-import React from 'react';
 import Head from 'next/head';
-import { LatencyWaterfall } from '@/components/ops/LatencyWaterfall';
+import React from 'react';
+
 import { EngineConfigCard } from '@/components/ops/EngineConfigCard';
+import { LatencyWaterfall } from '@/components/ops/LatencyWaterfall';
 
 export default function OpsPage() {
   return (

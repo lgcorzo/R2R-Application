@@ -1,5 +1,6 @@
-import React from 'react';
 import { Brain, Wrench, FileCheck, ChevronUp, ChevronDown } from 'lucide-react';
+import React from 'react';
+
 import { AgentActivity } from '@/types/r2r-events';
 
 interface TraceDrawerProps {

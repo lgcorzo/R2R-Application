@@ -1,5 +1,6 @@
 import React from 'react';
-import { RetrievalConfig, RetrievalPreset } from '@/types/workbench';
+
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -8,7 +9,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
-import { Label } from '@/components/ui/label';
+import { RetrievalConfig, RetrievalPreset } from '@/types/workbench';
 
 interface ParameterDrawerProps {
   config: RetrievalConfig;

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useUserContext } from '@/context/UserContext';
-import { useWorkbenchContext } from '@/context/WorkbenchContext';
 import { FileText, RefreshCw, Search } from 'lucide-react';
+import { DocumentResponse } from 'r2r-js';
+import React, { useEffect, useState } from 'react';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { DocumentResponse } from 'r2r-js';
+import { useUserContext } from '@/context/UserContext';
+import { useWorkbenchContext } from '@/context/WorkbenchContext';
 
 export const DocExplorer: React.FC = () => {
   const { getClient } = useUserContext();

@@ -1,5 +1,5 @@
-import React from 'react';
 import { CheckCircle2, Clock } from 'lucide-react';
+import React from 'react';
 
 interface PipelineTrackerProps {
   status: string;

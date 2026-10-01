@@ -21,12 +21,14 @@
 ### Task 1: Core Workbench Types, Intersection Logic, & State Store
 
 **Files:**
+
 - Create: `src/types/workbench.ts`
 - Create: `src/lib/retrieval-diff.ts`
 - Create: `src/context/WorkbenchContext.tsx`
 - Test: `src/lib/__tests__/retrieval-diff.test.ts`
 
 **Interfaces:**
+
 - Produces:
   - `computeChunkIntersection(resultsA: RankedChunk[], resultsB: RankedChunk[]): { diffA: EnrichedChunk[]; diffB: EnrichedChunk[] }`
   - `WorkbenchContext` & `useWorkbenchContext(): WorkbenchContextValue`
@@ -35,19 +37,44 @@
 - [ ] **Step 1: Write the failing unit tests for chunk intersection and diff tagging**
 
 Create `src/lib/__tests__/retrieval-diff.test.ts`:
+
 ```typescript
 import { computeChunkIntersection } from '../retrieval-diff';
 import { RankedChunk } from '@/types/workbench';
 
 describe('computeChunkIntersection', () => {
   const mockA: RankedChunk[] = [
-    { id: 'chunk-1', documentId: 'doc-1', text: 'Alpha text', score: 0.95, rank: 1 },
-    { id: 'chunk-2', documentId: 'doc-1', text: 'Beta text', score: 0.88, rank: 2 },
+    {
+      id: 'chunk-1',
+      documentId: 'doc-1',
+      text: 'Alpha text',
+      score: 0.95,
+      rank: 1,
+    },
+    {
+      id: 'chunk-2',
+      documentId: 'doc-1',
+      text: 'Beta text',
+      score: 0.88,
+      rank: 2,
+    },
   ];
 
   const mockB: RankedChunk[] = [
-    { id: 'chunk-3', documentId: 'doc-2', text: 'Gamma text', score: 0.92, rank: 1 },
-    { id: 'chunk-1', documentId: 'doc-1', text: 'Alpha text', score: 0.85, rank: 2 },
+    {
+      id: 'chunk-3',
+      documentId: 'doc-2',
+      text: 'Gamma text',
+      score: 0.92,
+      rank: 1,
+    },
+    {
+      id: 'chunk-1',
+      documentId: 'doc-1',
+      text: 'Alpha text',
+      score: 0.85,
+      rank: 2,
+    },
   ];
 
   it('correctly tags shared chunks and records counterpart rank', () => {
@@ -74,8 +101,10 @@ Expected: FAIL (module not found)
 - [ ] **Step 3: Define workbench types in `src/types/workbench.ts`**
 
 Create `src/types/workbench.ts`:
+
 ```typescript
-export type RetrievalPreset = 'dense' | 'bm25' | 'hybrid' | 'graph_deep' | 'custom';
+export type RetrievalPreset =
+  'dense' | 'bm25' | 'hybrid' | 'graph_deep' | 'custom';
 
 export interface RetrievalConfig {
   preset: RetrievalPreset;
@@ -110,12 +139,22 @@ export interface ArenaResults {
   error?: string;
 }
 
-export type PipelineStage = 'upload' | 'parsing' | 'extracting' | 'chunking' | 'embedding' | 'augmenting' | 'storing' | 'success' | 'failed';
+export type PipelineStage =
+  | 'upload'
+  | 'parsing'
+  | 'extracting'
+  | 'chunking'
+  | 'embedding'
+  | 'augmenting'
+  | 'storing'
+  | 'success'
+  | 'failed';
 ```
 
 - [ ] **Step 4: Implement `computeChunkIntersection` in `src/lib/retrieval-diff.ts`**
 
 Create `src/lib/retrieval-diff.ts`:
+
 ```typescript
 import { EnrichedChunk, RankedChunk } from '@/types/workbench';
 
@@ -158,6 +197,7 @@ export function computeChunkIntersection(
 - [ ] **Step 5: Implement `WorkbenchContext.tsx` in `src/context/WorkbenchContext.tsx`**
 
 Create `src/context/WorkbenchContext.tsx`:
+
 ```typescript
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { RetrievalConfig, ArenaResults } from '@/types/workbench';
@@ -267,6 +307,7 @@ git commit -m "feat(workbench): add core workbench types, retrieval diff algorit
 ### Task 2: Global Shell Components (Activity Rail, Status Bar, Command Palette)
 
 **Files:**
+
 - Create: `src/components/shell/ActivityRail.tsx`
 - Create: `src/components/shell/StatusBar.tsx`
 - Create: `src/components/shell/CommandPalette.tsx`
@@ -274,6 +315,7 @@ git commit -m "feat(workbench): add core workbench types, retrieval diff algorit
 - Modify: `src/pages/_app.tsx:129-143`
 
 **Interfaces:**
+
 - Produces:
   - `<WorkbenchShell>{children}</WorkbenchShell>` wrapping top-level pages.
   - Keyboard listener `⌘K` / `Ctrl+K` opening `<CommandPalette />`.
@@ -282,13 +324,19 @@ git commit -m "feat(workbench): add core workbench types, retrieval diff algorit
 - [ ] **Step 1: Create `ActivityRail.tsx`**
 
 Create `src/components/shell/ActivityRail.tsx`:
+
 ```tsx
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FlaskConical, Library, Gauge, Terminal } from 'lucide-react';
 import { ThemeToggle } from '@/components/shared/ThemeToggle';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 export const ActivityRail: React.FC = () => {
   const router = useRouter();
@@ -303,7 +351,10 @@ export const ActivityRail: React.FC = () => {
   return (
     <aside className="w-14 bg-card border-r border-border flex flex-col items-center py-3 z-30 select-none flex-shrink-0">
       <div className="mb-4">
-        <Link href="/arena" className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+        <Link
+          href="/arena"
+          className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+        >
           <Terminal className="w-5 h-5" />
         </Link>
       </div>
@@ -347,6 +398,7 @@ export const ActivityRail: React.FC = () => {
 - [ ] **Step 2: Create `StatusBar.tsx`**
 
 Create `src/components/shell/StatusBar.tsx`:
+
 ```tsx
 import React, { useEffect, useState } from 'react';
 import { Activity, Bug, Database, ShieldCheck } from 'lucide-react';
@@ -387,7 +439,9 @@ export const StatusBar: React.FC = () => {
     <footer className="h-7 bg-card border-t border-border px-3 flex items-center justify-between text-[11px] text-muted-foreground select-none z-30">
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-1.5">
-          <span className={`w-2 h-2 rounded-full ${isHealthy ? 'bg-emerald-500' : 'bg-rose-500 animate-pulse'}`} />
+          <span
+            className={`w-2 h-2 rounded-full ${isHealthy ? 'bg-emerald-500' : 'bg-rose-500 animate-pulse'}`}
+          />
           <span>{isHealthy ? 'R2R Engine Online' : 'Engine Disconnected'}</span>
         </div>
         {latency !== null && (
@@ -406,14 +460,19 @@ export const StatusBar: React.FC = () => {
         <button
           onClick={() => setIsDebugMode(!isDebugMode)}
           className={`flex items-center space-x-1 px-1.5 py-0.5 rounded transition-colors ${
-            isDebugMode ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'hover:bg-accent text-muted-foreground'
+            isDebugMode
+              ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+              : 'hover:bg-accent text-muted-foreground'
           }`}
           title="Toggle Raw Vector & JSON Debug View"
         >
           <Bug className="w-3 h-3" />
           <span>Debug Mode: {isDebugMode ? 'ON' : 'OFF'}</span>
         </button>
-        <span>Press <kbd className="bg-muted px-1 rounded text-[10px]">⌘K</kbd> for commands</span>
+        <span>
+          Press <kbd className="bg-muted px-1 rounded text-[10px]">⌘K</kbd> for
+          commands
+        </span>
       </div>
     </footer>
   );
@@ -423,10 +482,18 @@ export const StatusBar: React.FC = () => {
 - [ ] **Step 3: Create `CommandPalette.tsx`**
 
 Create `src/components/shell/CommandPalette.tsx`:
+
 ```tsx
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
 import { FlaskConical, Library, Gauge, Sun, Moon, LogOut } from 'lucide-react';
 import { useUserContext } from '@/context/UserContext';
 import { useTheme } from 'next-themes';
@@ -439,7 +506,7 @@ export const CommandPalette: React.FC = () => {
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if ((e.key === 'k' && (e.metaKey || e.ctrlKey))) {
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         setOpen((open) => !open);
       }
@@ -463,7 +530,9 @@ export const CommandPalette: React.FC = () => {
             <FlaskConical className="mr-2 h-4 w-4" />
             <span>Open Retrieval Arena (A/B Testing)</span>
           </CommandItem>
-          <CommandItem onSelect={() => runCommand(() => router.push('/knowledge'))}>
+          <CommandItem
+            onSelect={() => runCommand(() => router.push('/knowledge'))}
+          >
             <Library className="mr-2 h-4 w-4" />
             <span>Open Knowledge Studio (Documents & Chunks)</span>
           </CommandItem>
@@ -473,8 +542,16 @@ export const CommandPalette: React.FC = () => {
           </CommandItem>
         </CommandGroup>
         <CommandGroup heading="Preferences & Session">
-          <CommandItem onSelect={() => runCommand(() => setTheme(theme === 'dark' ? 'light' : 'dark'))}>
-            {theme === 'dark' ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
+          <CommandItem
+            onSelect={() =>
+              runCommand(() => setTheme(theme === 'dark' ? 'light' : 'dark'))
+            }
+          >
+            {theme === 'dark' ? (
+              <Sun className="mr-2 h-4 w-4" />
+            ) : (
+              <Moon className="mr-2 h-4 w-4" />
+            )}
             <span>Toggle Theme</span>
           </CommandItem>
           <CommandItem onSelect={() => runCommand(logout)}>
@@ -491,6 +568,7 @@ export const CommandPalette: React.FC = () => {
 - [ ] **Step 4: Create `WorkbenchShell.tsx` and integrate into `_app.tsx`**
 
 Create `src/components/shell/WorkbenchShell.tsx`:
+
 ```tsx
 import React, { ReactNode } from 'react';
 import { ActivityRail } from './ActivityRail';
@@ -498,12 +576,16 @@ import { StatusBar } from './StatusBar';
 import { CommandPalette } from './CommandPalette';
 import { Toaster } from '@/components/ui/toaster';
 
-export const WorkbenchShell: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const WorkbenchShell: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-background text-foreground antialiased select-none font-sans">
       <ActivityRail />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <main className="flex-1 overflow-hidden relative flex flex-col">{children}</main>
+        <main className="flex-1 overflow-hidden relative flex flex-col">
+          {children}
+        </main>
         <StatusBar />
       </div>
       <CommandPalette />
@@ -533,6 +615,7 @@ git commit -m "feat(shell): implement activity rail, status bar, command palette
 ### Task 3: Retrieval Arena (A/B Testing Studio)
 
 **Files:**
+
 - Create: `src/components/arena/ChunkDiffCard.tsx`
 - Create: `src/components/arena/ParameterDrawer.tsx`
 - Create: `src/components/arena/ArenaPane.tsx`
@@ -540,6 +623,7 @@ git commit -m "feat(shell): implement activity rail, status bar, command palette
 - Create: `src/pages/arena.tsx`
 
 **Interfaces:**
+
 - Produces:
   - `<ArenaPane />`: renders configuration controls, score sparklines, and ranked chunks.
   - `<ChunkDiffCard />`: tags `[Also in B at #X]` or `[Unique to A]`.
@@ -549,6 +633,7 @@ git commit -m "feat(shell): implement activity rail, status bar, command palette
 - [ ] **Step 1: Create `ChunkDiffCard.tsx`**
 
 Create `src/components/arena/ChunkDiffCard.tsx`:
+
 ```tsx
 import React, { useState } from 'react';
 import { EnrichedChunk } from '@/types/workbench';
@@ -561,13 +646,18 @@ interface ChunkDiffCardProps {
   counterpartLabel: string;
 }
 
-export const ChunkDiffCard: React.FC<ChunkDiffCardProps> = ({ chunk, counterpartLabel }) => {
+export const ChunkDiffCard: React.FC<ChunkDiffCardProps> = ({
+  chunk,
+  counterpartLabel,
+}) => {
   const [expanded, setExpanded] = useState(false);
   const { setSelectedChunkId, isDebugMode } = useWorkbenchContext();
 
   const getScoreColor = (score: number) => {
-    if (score >= 0.85) return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-    if (score >= 0.70) return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+    if (score >= 0.85)
+      return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+    if (score >= 0.7)
+      return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
     return 'bg-muted text-muted-foreground border-border';
   };
 
@@ -578,28 +668,42 @@ export const ChunkDiffCard: React.FC<ChunkDiffCardProps> = ({ chunk, counterpart
     >
       <div className="flex items-center justify-between text-xs">
         <div className="flex items-center space-x-2">
-          <span className="font-mono text-muted-foreground font-semibold">#{chunk.rank}</span>
+          <span className="font-mono text-muted-foreground font-semibold">
+            #{chunk.rank}
+          </span>
           <FileText className="w-3.5 h-3.5 text-primary" />
-          <span className="font-medium truncate max-w-[180px]">{chunk.documentTitle || chunk.documentId}</span>
+          <span className="font-medium truncate max-w-[180px]">
+            {chunk.documentTitle || chunk.documentId}
+          </span>
         </div>
         <div className="flex items-center space-x-1.5">
           {chunk.counterpartRank ? (
-            <Badge variant="outline" className="text-[10px] bg-sky-500/10 text-sky-400 border-sky-500/20">
+            <Badge
+              variant="outline"
+              className="text-[10px] bg-sky-500/10 text-sky-400 border-sky-500/20"
+            >
               <CheckCircle2 className="w-2.5 h-2.5 mr-1" />
               In {counterpartLabel} at #{chunk.counterpartRank}
             </Badge>
           ) : (
-            <Badge variant="outline" className="text-[10px] bg-purple-500/10 text-purple-400 border-purple-500/20">
+            <Badge
+              variant="outline"
+              className="text-[10px] bg-purple-500/10 text-purple-400 border-purple-500/20"
+            >
               Unique to this config
             </Badge>
           )}
-          <span className={`px-2 py-0.5 rounded text-[11px] font-mono border font-medium ${getScoreColor(chunk.score)}`}>
+          <span
+            className={`px-2 py-0.5 rounded text-[11px] font-mono border font-medium ${getScoreColor(chunk.score)}`}
+          >
             {chunk.score.toFixed(3)}
           </span>
         </div>
       </div>
 
-      <p className={`text-xs text-foreground/80 leading-relaxed font-sans ${expanded ? '' : 'line-clamp-2'}`}>
+      <p
+        className={`text-xs text-foreground/80 leading-relaxed font-sans ${expanded ? '' : 'line-clamp-2'}`}
+      >
         {chunk.text}
       </p>
 
@@ -618,7 +722,11 @@ export const ChunkDiffCard: React.FC<ChunkDiffCardProps> = ({ chunk, counterpart
           className="text-[11px] text-muted-foreground hover:text-primary flex items-center space-x-1"
         >
           <span>{expanded ? 'Show Less' : 'Show More'}</span>
-          {expanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+          {expanded ? (
+            <ChevronUp className="w-3 h-3" />
+          ) : (
+            <ChevronDown className="w-3 h-3" />
+          )}
         </button>
       </div>
     </div>
@@ -629,10 +737,17 @@ export const ChunkDiffCard: React.FC<ChunkDiffCardProps> = ({ chunk, counterpart
 - [ ] **Step 2: Create `ParameterDrawer.tsx`**
 
 Create `src/components/arena/ParameterDrawer.tsx`:
+
 ```tsx
 import React from 'react';
 import { RetrievalConfig, RetrievalPreset } from '@/types/workbench';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
 
@@ -641,20 +756,48 @@ interface ParameterDrawerProps {
   onChange: (updated: RetrievalConfig) => void;
 }
 
-export const ParameterDrawer: React.FC<ParameterDrawerProps> = ({ config, onChange }) => {
+export const ParameterDrawer: React.FC<ParameterDrawerProps> = ({
+  config,
+  onChange,
+}) => {
   const handlePresetChange = (preset: RetrievalPreset) => {
     switch (preset) {
       case 'dense':
-        onChange({ ...config, preset, semanticWeight: 1.0, fullTextWeight: 0.0, useGraph: false });
+        onChange({
+          ...config,
+          preset,
+          semanticWeight: 1.0,
+          fullTextWeight: 0.0,
+          useGraph: false,
+        });
         break;
       case 'bm25':
-        onChange({ ...config, preset, semanticWeight: 0.0, fullTextWeight: 1.0, useGraph: false });
+        onChange({
+          ...config,
+          preset,
+          semanticWeight: 0.0,
+          fullTextWeight: 1.0,
+          useGraph: false,
+        });
         break;
       case 'hybrid':
-        onChange({ ...config, preset, semanticWeight: 0.7, fullTextWeight: 0.3, rrfK: 60, useGraph: false });
+        onChange({
+          ...config,
+          preset,
+          semanticWeight: 0.7,
+          fullTextWeight: 0.3,
+          rrfK: 60,
+          useGraph: false,
+        });
         break;
       case 'graph_deep':
-        onChange({ ...config, preset, semanticWeight: 0.6, fullTextWeight: 0.4, useGraph: true });
+        onChange({
+          ...config,
+          preset,
+          semanticWeight: 0.6,
+          fullTextWeight: 0.4,
+          useGraph: true,
+        });
         break;
       case 'custom':
         onChange({ ...config, preset });
@@ -666,7 +809,10 @@ export const ParameterDrawer: React.FC<ParameterDrawerProps> = ({ config, onChan
     <div className="p-3 bg-muted/30 border-b border-border space-y-3 text-xs">
       <div className="flex items-center justify-between">
         <Label className="text-xs font-semibold">Preset Profile</Label>
-        <Select value={config.preset} onValueChange={(val) => handlePresetChange(val as RetrievalPreset)}>
+        <Select
+          value={config.preset}
+          onValueChange={(val) => handlePresetChange(val as RetrievalPreset)}
+        >
           <SelectTrigger className="w-[180px] h-7 text-xs">
             <SelectValue placeholder="Select preset" />
           </SelectTrigger>
@@ -683,20 +829,32 @@ export const ParameterDrawer: React.FC<ParameterDrawerProps> = ({ config, onChan
       <div className="grid grid-cols-2 gap-3 pt-1">
         <div>
           <div className="flex justify-between mb-1">
-            <span className="text-[11px] text-muted-foreground">Dense Weight</span>
-            <span className="font-mono text-[11px]">{(config.semanticWeight * 100).toFixed(0)}%</span>
+            <span className="text-[11px] text-muted-foreground">
+              Dense Weight
+            </span>
+            <span className="font-mono text-[11px]">
+              {(config.semanticWeight * 100).toFixed(0)}%
+            </span>
           </div>
           <Slider
             value={[config.semanticWeight * 100]}
             max={100}
             step={5}
-            onValueChange={([val]) => onChange({ ...config, preset: 'custom', semanticWeight: val / 100 })}
+            onValueChange={([val]) =>
+              onChange({
+                ...config,
+                preset: 'custom',
+                semanticWeight: val / 100,
+              })
+            }
           />
         </div>
 
         <div>
           <div className="flex justify-between mb-1">
-            <span className="text-[11px] text-muted-foreground">Top K Chunks</span>
+            <span className="text-[11px] text-muted-foreground">
+              Top K Chunks
+            </span>
             <span className="font-mono text-[11px]">{config.limit}</span>
           </div>
           <Slider
@@ -716,6 +874,7 @@ export const ParameterDrawer: React.FC<ParameterDrawerProps> = ({ config, onChan
 - [ ] **Step 3: Create `ArenaPane.tsx`**
 
 Create `src/components/arena/ArenaPane.tsx`:
+
 ```tsx
 import React, { useState } from 'react';
 import { RetrievalConfig, ArenaResults } from '@/types/workbench';
@@ -749,7 +908,9 @@ export const ArenaPane: React.FC<ArenaPaneProps> = ({
       <div className="px-3 py-2 border-b border-border bg-card/40 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <span className="font-semibold text-xs text-primary">{label}</span>
-          <span className="text-xs text-muted-foreground font-medium">({config.preset})</span>
+          <span className="text-xs text-muted-foreground font-medium">
+            ({config.preset})
+          </span>
         </div>
         <div className="flex items-center space-x-2">
           {results && (
@@ -776,7 +937,9 @@ export const ArenaPane: React.FC<ArenaPaneProps> = ({
         </div>
       </div>
 
-      {showTuning && <ParameterDrawer config={config} onChange={onConfigChange} />}
+      {showTuning && (
+        <ParameterDrawer config={config} onChange={onConfigChange} />
+      )}
 
       {/* Pane Results */}
       <div className="flex-1 overflow-y-auto p-3 space-y-2.5">
@@ -795,7 +958,11 @@ export const ArenaPane: React.FC<ArenaPaneProps> = ({
           </div>
         ) : (
           results.chunks.map((chunk) => (
-            <ChunkDiffCard key={chunk.id} chunk={chunk} counterpartLabel={counterpartLabel} />
+            <ChunkDiffCard
+              key={chunk.id}
+              chunk={chunk}
+              counterpartLabel={counterpartLabel}
+            />
           ))
         )}
       </div>
@@ -807,6 +974,7 @@ export const ArenaPane: React.FC<ArenaPaneProps> = ({
 - [ ] **Step 4: Create `TraceDrawer.tsx`**
 
 Create `src/components/arena/TraceDrawer.tsx`:
+
 ```tsx
 import React from 'react';
 import { Brain, Wrench, FileCheck, ChevronUp, ChevronDown } from 'lucide-react';
@@ -818,7 +986,11 @@ interface TraceDrawerProps {
   onToggle: () => void;
 }
 
-export const TraceDrawer: React.FC<TraceDrawerProps> = ({ activities, isOpen, onToggle }) => {
+export const TraceDrawer: React.FC<TraceDrawerProps> = ({
+  activities,
+  isOpen,
+  onToggle,
+}) => {
   if (activities.length === 0) return null;
 
   return (
@@ -831,17 +1003,29 @@ export const TraceDrawer: React.FC<TraceDrawerProps> = ({ activities, isOpen, on
           <Brain className="w-4 h-4 text-purple-400 animate-pulse" />
           <span>Agent Reasoning Stream ({activities.length} steps)</span>
         </div>
-        {isOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+        {isOpen ? (
+          <ChevronDown className="w-4 h-4" />
+        ) : (
+          <ChevronUp className="w-4 h-4" />
+        )}
       </div>
 
       {isOpen && (
         <div className="p-3 max-h-48 overflow-y-auto space-y-2 text-xs font-mono bg-background/50 border-t border-border">
           {activities.map((act, i) => (
             <div key={i} className="flex items-start space-x-2">
-              {act.type === 'thinking' && <Brain className="w-3.5 h-3.5 text-purple-400 mt-0.5 flex-shrink-0" />}
-              {act.type === 'tool_call' && <Wrench className="w-3.5 h-3.5 text-sky-400 mt-0.5 flex-shrink-0" />}
-              {act.type === 'citation' && <FileCheck className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" />}
-              <span className="text-foreground/90 whitespace-pre-wrap">{act.content}</span>
+              {act.type === 'thinking' && (
+                <Brain className="w-3.5 h-3.5 text-purple-400 mt-0.5 flex-shrink-0" />
+              )}
+              {act.type === 'tool_call' && (
+                <Wrench className="w-3.5 h-3.5 text-sky-400 mt-0.5 flex-shrink-0" />
+              )}
+              {act.type === 'citation' && (
+                <FileCheck className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" />
+              )}
+              <span className="text-foreground/90 whitespace-pre-wrap">
+                {act.content}
+              </span>
             </div>
           ))}
         </div>
@@ -854,6 +1038,7 @@ export const TraceDrawer: React.FC<TraceDrawerProps> = ({ activities, isOpen, on
 - [ ] **Step 5: Create `src/pages/arena.tsx`**
 
 Create `src/pages/arena.tsx`:
+
 ```tsx
 import React, { useState } from 'react';
 import Head from 'next/head';
@@ -868,7 +1053,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 export default function ArenaPage() {
-  const { configA, setConfigA, configB, setConfigB, resultsA, setResultsA, resultsB, setResultsB, activeQuery, setActiveQuery } = useWorkbenchContext();
+  const {
+    configA,
+    setConfigA,
+    configB,
+    setConfigB,
+    resultsA,
+    setResultsA,
+    resultsB,
+    setResultsB,
+    activeQuery,
+    setActiveQuery,
+  } = useWorkbenchContext();
   const { getClient } = useUserContext();
   const [loading, setLoading] = useState(false);
   const [isTraceOpen, setIsTraceOpen] = useState(false);
@@ -897,23 +1093,39 @@ export default function ArenaPage() {
         });
         const latency = Math.round(performance.now() - start);
         const rawChunks = res.results?.vector_search_results || [];
-        const ranked: RankedChunk[] = rawChunks.map((c: any, index: number) => ({
-          id: c.id || `chunk-${index}`,
-          documentId: c.document_id,
-          documentTitle: c.metadata?.title || c.document_id,
-          text: c.text,
-          score: c.score || 0,
-          rank: index + 1,
-          metadata: c.metadata,
-        }));
+        const ranked: RankedChunk[] = rawChunks.map(
+          (c: any, index: number) => ({
+            id: c.id || `chunk-${index}`,
+            documentId: c.document_id,
+            documentTitle: c.metadata?.title || c.document_id,
+            text: c.text,
+            score: c.score || 0,
+            rank: index + 1,
+            metadata: c.metadata,
+          })
+        );
         return { latency, ranked };
       };
 
-      const [resA, resB] = await Promise.all([runSearch(configA), runSearch(configB)]);
-      const { diffA, diffB } = computeChunkIntersection(resA.ranked, resB.ranked);
+      const [resA, resB] = await Promise.all([
+        runSearch(configA),
+        runSearch(configB),
+      ]);
+      const { diffA, diffB } = computeChunkIntersection(
+        resA.ranked,
+        resB.ranked
+      );
 
-      setResultsA({ query: activeQuery, latencyMs: resA.latency, chunks: diffA });
-      setResultsB({ query: activeQuery, latencyMs: resB.latency, chunks: diffB });
+      setResultsA({
+        query: activeQuery,
+        latencyMs: resA.latency,
+        chunks: diffA,
+      });
+      setResultsB({
+        query: activeQuery,
+        latencyMs: resB.latency,
+        chunks: diffB,
+      });
     } catch (e: any) {
       console.error(e);
     } finally {
@@ -944,7 +1156,12 @@ export default function ArenaPage() {
               className="pl-9 h-9 text-xs"
             />
           </div>
-          <Button onClick={executeArenaSearch} disabled={loading || !activeQuery.trim()} size="sm" className="h-9 px-4 text-xs space-x-1.5">
+          <Button
+            onClick={executeArenaSearch}
+            disabled={loading || !activeQuery.trim()}
+            size="sm"
+            className="h-9 px-4 text-xs space-x-1.5"
+          >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>Run Arena</span>
           </Button>
@@ -970,7 +1187,11 @@ export default function ArenaPage() {
           />
         </div>
 
-        <TraceDrawer activities={[]} isOpen={isTraceOpen} onToggle={() => setIsTraceOpen(!isTraceOpen)} />
+        <TraceDrawer
+          activities={[]}
+          isOpen={isTraceOpen}
+          onToggle={() => setIsTraceOpen(!isTraceOpen)}
+        />
       </div>
     </>
   );
@@ -994,6 +1215,7 @@ git commit -m "feat(arena): implement retrieval arena, chunk diffing cards, para
 ### Task 4: 3-Pane Knowledge Studio (Explorer, Pipeline & Chunk DevTools)
 
 **Files:**
+
 - Create: `src/components/knowledge/DocExplorer.tsx`
 - Create: `src/components/knowledge/PipelineTracker.tsx`
 - Create: `src/components/knowledge/ChunkGrid.tsx`
@@ -1001,6 +1223,7 @@ git commit -m "feat(arena): implement retrieval arena, chunk diffing cards, para
 - Create: `src/pages/knowledge.tsx`
 
 **Interfaces:**
+
 - Produces:
   - `<DocExplorer />`: Pane 1 tree list with upload modal.
   - `<PipelineTracker />`: Pane 2 pipeline health and stage progress bar.
@@ -1011,6 +1234,7 @@ git commit -m "feat(arena): implement retrieval arena, chunk diffing cards, para
 - [ ] **Step 1: Create `DocExplorer.tsx`**
 
 Create `src/components/knowledge/DocExplorer.tsx`:
+
 ```tsx
 import React, { useEffect, useState } from 'react';
 import { useUserContext } from '@/context/UserContext';
@@ -1049,9 +1273,19 @@ export const DocExplorer: React.FC = () => {
   return (
     <div className="h-full flex flex-col bg-card/30 border-r border-border overflow-hidden select-none">
       <div className="p-3 border-b border-border flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Knowledge Base</span>
-        <Button variant="ghost" size="icon" className="w-6 h-6" onClick={fetchDocs} disabled={loading}>
-          <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Knowledge Base
+        </span>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="w-6 h-6"
+          onClick={fetchDocs}
+          disabled={loading}
+        >
+          <RefreshCw
+            className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`}
+          />
         </Button>
       </div>
 
@@ -1063,12 +1297,16 @@ export const DocExplorer: React.FC = () => {
               key={doc.id}
               onClick={() => setSelectedDocId(doc.id)}
               className={`px-2.5 py-1.5 rounded-md text-xs flex items-center space-x-2 cursor-pointer transition-colors ${
-                isSelected ? 'bg-primary text-primary-foreground font-medium' : 'hover:bg-accent text-foreground/80'
+                isSelected
+                  ? 'bg-primary text-primary-foreground font-medium'
+                  : 'hover:bg-accent text-foreground/80'
               }`}
             >
               <FileText className="w-3.5 h-3.5 flex-shrink-0" />
               <span className="truncate flex-1">{doc.title || doc.id}</span>
-              <span className={`w-2 h-2 rounded-full flex-shrink-0 ${doc.ingestion_status === 'success' ? 'bg-emerald-400' : 'bg-amber-400'}`} />
+              <span
+                className={`w-2 h-2 rounded-full flex-shrink-0 ${doc.ingestion_status === 'success' ? 'bg-emerald-400' : 'bg-amber-400'}`}
+              />
             </div>
           );
         })}
@@ -1081,6 +1319,7 @@ export const DocExplorer: React.FC = () => {
 - [ ] **Step 2: Create `PipelineTracker.tsx`**
 
 Create `src/components/knowledge/PipelineTracker.tsx`:
+
 ```tsx
 import React from 'react';
 import { CheckCircle2, AlertCircle, Clock } from 'lucide-react';
@@ -1090,27 +1329,36 @@ interface PipelineTrackerProps {
   totalChunks: number;
 }
 
-export const PipelineTracker: React.FC<PipelineTrackerProps> = ({ status, totalChunks }) => {
+export const PipelineTracker: React.FC<PipelineTrackerProps> = ({
+  status,
+  totalChunks,
+}) => {
   const stages = ['Upload', 'Parse', 'Chunk', 'Embed', 'Enrich'];
 
   return (
     <div className="px-4 py-2.5 bg-muted/20 border-b border-border flex items-center justify-between text-xs">
       <div className="flex items-center space-x-3">
-        <span className="font-medium text-muted-foreground">Pipeline Stages:</span>
+        <span className="font-medium text-muted-foreground">
+          Pipeline Stages:
+        </span>
         <div className="flex items-center space-x-1.5">
           {stages.map((stage, i) => (
             <React.Fragment key={stage}>
               <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                 {stage}
               </span>
-              {i < stages.length - 1 && <span className="text-muted-foreground text-[10px]">➔</span>}
+              {i < stages.length - 1 && (
+                <span className="text-muted-foreground text-[10px]">➔</span>
+              )}
             </React.Fragment>
           ))}
         </div>
       </div>
 
       <div className="flex items-center space-x-2 font-mono text-[11px] text-muted-foreground">
-        <span>Status: <strong className="text-foreground">{status}</strong></span>
+        <span>
+          Status: <strong className="text-foreground">{status}</strong>
+        </span>
         <span>•</span>
         <span>{totalChunks} Chunks</span>
       </div>
@@ -1122,6 +1370,7 @@ export const PipelineTracker: React.FC<PipelineTrackerProps> = ({ status, totalC
 - [ ] **Step 3: Create `ChunkGrid.tsx`**
 
 Create `src/components/knowledge/ChunkGrid.tsx`:
+
 ```tsx
 import React from 'react';
 import { ChunkResponse } from 'r2r-js';
@@ -1152,7 +1401,9 @@ export const ChunkGrid: React.FC<ChunkGridProps> = ({ chunks, loading }) => {
             key={chunk.id}
             onClick={() => setSelectedChunkId(chunk.id)}
             className={`p-3 rounded-lg border text-xs cursor-pointer transition-all space-y-1.5 ${
-              isSelected ? 'border-primary bg-primary/5 shadow-sm' : 'border-border bg-card/40 hover:bg-card'
+              isSelected
+                ? 'border-primary bg-primary/5 shadow-sm'
+                : 'border-border bg-card/40 hover:bg-card'
             }`}
           >
             <div className="flex items-center justify-between text-[11px] font-mono text-muted-foreground">
@@ -1173,6 +1424,7 @@ export const ChunkGrid: React.FC<ChunkGridProps> = ({ chunks, loading }) => {
 - [ ] **Step 4: Create `ChunkInspector.tsx`**
 
 Create `src/components/knowledge/ChunkInspector.tsx`:
+
 ```tsx
 import React from 'react';
 import { ChunkResponse } from 'r2r-js';
@@ -1186,7 +1438,8 @@ export const ChunkInspector: React.FC<ChunkInspectorProps> = ({ chunk }) => {
   if (!chunk) {
     return (
       <div className="h-full flex items-center justify-center text-xs text-muted-foreground p-4 text-center">
-        Select a chunk from the middle pane to inspect embedding vectors and metadata.
+        Select a chunk from the middle pane to inspect embedding vectors and
+        metadata.
       </div>
     );
   }
@@ -1195,28 +1448,47 @@ export const ChunkInspector: React.FC<ChunkInspectorProps> = ({ chunk }) => {
     <div className="h-full flex flex-col bg-card/20 border-l border-border overflow-hidden">
       <div className="p-3 border-b border-border">
         <h4 className="text-xs font-semibold">Chunk DevTools</h4>
-        <span className="text-[10px] font-mono text-muted-foreground truncate block">{chunk.id}</span>
+        <span className="text-[10px] font-mono text-muted-foreground truncate block">
+          {chunk.id}
+        </span>
       </div>
 
       <Tabs defaultValue="text" className="flex-1 flex flex-col">
         <div className="px-3 pt-2">
           <TabsList className="grid grid-cols-2 h-7 text-xs">
-            <TabsTrigger value="text" className="text-xs">Formatted</TabsTrigger>
-            <TabsTrigger value="json" className="text-xs">Raw JSON</TabsTrigger>
+            <TabsTrigger value="text" className="text-xs">
+              Formatted
+            </TabsTrigger>
+            <TabsTrigger value="json" className="text-xs">
+              Raw JSON
+            </TabsTrigger>
           </TabsList>
         </div>
 
-        <TabsContent value="text" className="flex-1 overflow-y-auto p-3 text-xs leading-relaxed space-y-3">
+        <TabsContent
+          value="text"
+          className="flex-1 overflow-y-auto p-3 text-xs leading-relaxed space-y-3"
+        >
           <div className="p-3 rounded bg-muted/40 font-sans border border-border whitespace-pre-wrap">
             {chunk.text}
           </div>
           <div className="space-y-1.5 font-mono text-[11px] text-muted-foreground">
-            <div>Length: <span className="text-foreground">{chunk.text?.length}</span> characters</div>
-            <div>Document: <span className="text-foreground">{chunk.document_id}</span></div>
+            <div>
+              Length:{' '}
+              <span className="text-foreground">{chunk.text?.length}</span>{' '}
+              characters
+            </div>
+            <div>
+              Document:{' '}
+              <span className="text-foreground">{chunk.document_id}</span>
+            </div>
           </div>
         </TabsContent>
 
-        <TabsContent value="json" className="flex-1 overflow-y-auto p-3 font-mono text-[11px]">
+        <TabsContent
+          value="json"
+          className="flex-1 overflow-y-auto p-3 font-mono text-[11px]"
+        >
           <pre className="p-3 rounded bg-muted/60 border border-border overflow-x-auto">
             {JSON.stringify(chunk, null, 2)}
           </pre>
@@ -1230,6 +1502,7 @@ export const ChunkInspector: React.FC<ChunkInspectorProps> = ({ chunk }) => {
 - [ ] **Step 5: Create `src/pages/knowledge.tsx`**
 
 Create `src/pages/knowledge.tsx`:
+
 ```tsx
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
@@ -1242,7 +1515,8 @@ import { useUserContext } from '@/context/UserContext';
 import { ChunkResponse, DocumentResponse } from 'r2r-js';
 
 export default function KnowledgePage() {
-  const { selectedDocId, selectedChunkId, setSelectedChunkId } = useWorkbenchContext();
+  const { selectedDocId, selectedChunkId, setSelectedChunkId } =
+    useWorkbenchContext();
   const { getClient } = useUserContext();
   const [doc, setDoc] = useState<DocumentResponse | null>(null);
   const [chunks, setChunks] = useState<ChunkResponse[]>([]);
@@ -1275,10 +1549,13 @@ export default function KnowledgePage() {
       }
     };
     fetchDocChunks();
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [selectedDocId, getClient]);
 
-  const activeChunk = chunks.find((c) => c.id === selectedChunkId) || chunks[0] || null;
+  const activeChunk =
+    chunks.find((c) => c.id === selectedChunkId) || chunks[0] || null;
 
   return (
     <>
@@ -1290,7 +1567,10 @@ export default function KnowledgePage() {
           <DocExplorer />
         </div>
         <div className="flex-1 flex flex-col min-w-0 border-r border-border">
-          <PipelineTracker status={doc?.ingestion_status || 'Ready'} totalChunks={chunks.length} />
+          <PipelineTracker
+            status={doc?.ingestion_status || 'Ready'}
+            totalChunks={chunks.length}
+          />
           <ChunkGrid chunks={chunks} loading={loading} />
         </div>
         <div className="w-1/3 min-w-[300px] max-w-[480px]">
@@ -1319,11 +1599,13 @@ git commit -m "feat(knowledge): implement 3-pane knowledge studio, pipeline trac
 ### Task 5: Ops & Telemetry Hub
 
 **Files:**
+
 - Create: `src/components/ops/LatencyWaterfall.tsx`
 - Create: `src/components/ops/EngineConfigCard.tsx`
 - Create: `src/pages/ops.tsx`
 
 **Interfaces:**
+
 - Produces:
   - `<LatencyWaterfall />`: visual p50/p95/p99 breakdown.
   - `<EngineConfigCard />`: live cluster engine configuration.
@@ -1332,6 +1614,7 @@ git commit -m "feat(knowledge): implement 3-pane knowledge studio, pipeline trac
 - [ ] **Step 1: Create `LatencyWaterfall.tsx`**
 
 Create `src/components/ops/LatencyWaterfall.tsx`:
+
 ```tsx
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -1358,12 +1641,23 @@ export const LatencyWaterfall: React.FC = () => {
           <div key={m.name} className="space-y-1">
             <div className="flex justify-between text-xs">
               <span className="text-muted-foreground">{m.name}</span>
-              <span className="font-mono text-[11px]">p50: {m.p50}ms | p95: {m.p95}ms | p99: {m.p99}ms</span>
+              <span className="font-mono text-[11px]">
+                p50: {m.p50}ms | p95: {m.p95}ms | p99: {m.p99}ms
+              </span>
             </div>
             <div className="h-2 bg-muted rounded-full overflow-hidden flex">
-              <div style={{ width: `${(m.p50 / m.p99) * 100}%` }} className="bg-emerald-500 h-full" />
-              <div style={{ width: `${((m.p95 - m.p50) / m.p99) * 100}%` }} className="bg-amber-500 h-full" />
-              <div style={{ width: `${((m.p99 - m.p95) / m.p99) * 100}%` }} className="bg-rose-500 h-full" />
+              <div
+                style={{ width: `${(m.p50 / m.p99) * 100}%` }}
+                className="bg-emerald-500 h-full"
+              />
+              <div
+                style={{ width: `${((m.p95 - m.p50) / m.p99) * 100}%` }}
+                className="bg-amber-500 h-full"
+              />
+              <div
+                style={{ width: `${((m.p99 - m.p95) / m.p99) * 100}%` }}
+                className="bg-rose-500 h-full"
+              />
             </div>
           </div>
         ))}
@@ -1376,6 +1670,7 @@ export const LatencyWaterfall: React.FC = () => {
 - [ ] **Step 2: Create `EngineConfigCard.tsx`**
 
 Create `src/components/ops/EngineConfigCard.tsx`:
+
 ```tsx
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -1421,6 +1716,7 @@ export const EngineConfigCard: React.FC = () => {
 - [ ] **Step 3: Create `src/pages/ops.tsx`**
 
 Create `src/pages/ops.tsx`:
+
 ```tsx
 import React from 'react';
 import Head from 'next/head';
@@ -1435,8 +1731,13 @@ export default function OpsPage() {
       </Head>
       <div className="flex-1 overflow-y-auto p-6 space-y-6 max-w-6xl mx-auto w-full">
         <div>
-          <h2 className="text-lg font-bold tracking-tight">Telemetry & Engine Operations</h2>
-          <p className="text-xs text-muted-foreground">Monitor cluster health, pipeline latency waterfalls, and active runtime configuration.</p>
+          <h2 className="text-lg font-bold tracking-tight">
+            Telemetry & Engine Operations
+          </h2>
+          <p className="text-xs text-muted-foreground">
+            Monitor cluster health, pipeline latency waterfalls, and active
+            runtime configuration.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1466,10 +1767,12 @@ git commit -m "feat(ops): implement telemetry and engine operations hub"
 ### Task 6: Routing, Default Redirects, and Legacy Cleanup
 
 **Files:**
+
 - Modify: `src/pages/index.tsx`
 - Modify: `src/pages/_app.tsx`
 
 **Interfaces:**
+
 - Produces:
   - Root route `/` automatically redirects authenticated users directly to `/arena`.
   - Verification that all legacy routes continue to function or cleanly forward to `/arena` and `/knowledge`.
@@ -1477,6 +1780,7 @@ git commit -m "feat(ops): implement telemetry and engine operations hub"
 - [ ] **Step 1: Update `src/pages/index.tsx` to redirect to `/arena`**
 
 Ensure `src/pages/index.tsx` redirects cleanly:
+
 ```tsx
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';

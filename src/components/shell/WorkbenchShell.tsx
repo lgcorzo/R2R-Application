@@ -1,8 +1,10 @@
 import React, { ReactNode } from 'react';
-import { ActivityRail } from './ActivityRail';
-import { StatusBar } from './StatusBar';
-import { CommandPalette } from './CommandPalette';
+
 import { Toaster } from '@/components/ui/toaster';
+
+import { ActivityRail } from './ActivityRail';
+import { CommandPalette } from './CommandPalette';
+import { StatusBar } from './StatusBar';
 
 export const WorkbenchShell: React.FC<{ children: ReactNode }> = ({
   children,

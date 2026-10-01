@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { RetrievalConfig, ArenaResults } from '@/types/workbench';
-import { ParameterDrawer } from './ParameterDrawer';
-import { ChunkDiffCard } from './ChunkDiffCard';
 import { SlidersHorizontal, Clock, Layers } from 'lucide-react';
+import React, { useState } from 'react';
+
 import { Button } from '@/components/ui/button';
+import { RetrievalConfig, ArenaResults } from '@/types/workbench';
+
+import { ChunkDiffCard } from './ChunkDiffCard';
+import { ParameterDrawer } from './ParameterDrawer';
 
 interface ArenaPaneProps {
   label: string;

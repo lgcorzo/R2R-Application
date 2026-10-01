@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+
 import { RetrievalConfig, ArenaResults } from '@/types/workbench';
 
 const DEFAULT_CONFIG_A: RetrievalConfig = {
@@ -87,7 +88,9 @@ export const WorkbenchProvider: React.FC<{ children: ReactNode }> = ({
 export const useWorkbenchContext = (): WorkbenchContextValue => {
   const ctx = useContext(WorkbenchContext);
   if (!ctx) {
-    throw new Error('useWorkbenchContext must be used within WorkbenchProvider');
+    throw new Error(
+      'useWorkbenchContext must be used within WorkbenchProvider'
+    );
   }
   return ctx;
 };

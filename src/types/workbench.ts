@@ -1,9 +1,5 @@
 export type RetrievalPreset =
-  | 'dense'
-  | 'bm25'
-  | 'hybrid'
-  | 'graph_deep'
-  | 'custom';
+  'dense' | 'bm25' | 'hybrid' | 'graph_deep' | 'custom';
 
 export interface RetrievalConfig {
   preset: RetrievalPreset;

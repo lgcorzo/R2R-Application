@@ -87,7 +87,7 @@ export interface R2RSSEEvent {
 
 // Extended Message type with agent activity
 export interface AgentActivity {
-  type: 'thinking' | 'tool_call' | 'tool_result';
+  type: 'thinking' | 'tool_call' | 'tool_result' | 'citation';
   content: string;
   timestamp: number;
 }

@@ -30,14 +30,10 @@ const HomePage = () => {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated && !isSuperUser()) {
-      router.replace('/documents');
-    }
-  }, [isAuthenticated, router]);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/auth/login');
+    if (isAuthenticated) {
+      router.replace('/arena');
+    } else {
+      router.replace('/auth/login');
     }
   }, [isAuthenticated, router]);
 

@@ -5,8 +5,10 @@ import { useEffect, useCallback } from 'react';
 
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { WorkbenchShell } from '@/components/shell/WorkbenchShell';
 import { brandingConfig } from '@/config/brandingConfig';
 import { UserProvider, useUserContext } from '@/context/UserContext';
+import { WorkbenchProvider } from '@/context/WorkbenchContext';
 import logger from '@/lib/logger';
 import { initializePostHog } from '@/lib/posthog-client';
 import '@/styles/globals.css';
@@ -22,6 +24,9 @@ function MyAppContent({ Component, pageProps }: AppProps) {
   const checkAccess = useCallback(async () => {
     const publicRoutes = ['/auth/login', '/auth/signup'];
     const userRoutes = [
+      '/arena',
+      '/knowledge',
+      '/ops',
       '/documents',
       '/documents-detail',
       '/collections',
@@ -52,7 +57,7 @@ function MyAppContent({ Component, pageProps }: AppProps) {
     }
 
     if (!isUserRoute(currentPath)) {
-      router.replace('/documents');
+      router.replace('/arena');
     }
   }, [isAuthenticated, isSuperUser, authState.userRole, router]);
 
@@ -60,7 +65,17 @@ function MyAppContent({ Component, pageProps }: AppProps) {
     checkAccess();
   }, [checkAccess]);
 
-  return <Component {...pageProps} />;
+  const isPublicRoute = ['/auth/login', '/auth/signup'].includes(router.pathname);
+
+  if (isPublicRoute) {
+    return <Component {...pageProps} />;
+  }
+
+  return (
+    <WorkbenchShell>
+      <Component {...pageProps} />
+    </WorkbenchShell>
+  );
 }
 
 function MyApp(props: AppProps) {
@@ -135,7 +150,9 @@ function MyApp(props: AppProps) {
         disableTransitionOnChange
       >
         <UserProvider>
-          <MyAppContent {...props} />
+          <WorkbenchProvider>
+            <MyAppContent {...props} />
+          </WorkbenchProvider>
         </UserProvider>
       </ThemeProvider>
     </ErrorBoundary>

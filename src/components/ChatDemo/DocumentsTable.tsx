@@ -102,37 +102,29 @@ const DocumentsTable: React.FC<DocumentsTableProps> = ({
       filterType: 'multiselect',
       filterOptions: ['success', 'failed', 'pending'],
       renderCell: (doc) => {
-        let variant: 'success' | 'destructive' | 'pending' = 'pending';
-        switch (doc.ingestionStatus) {
-          case IngestionStatus.SUCCESS:
-            variant = 'success';
-            break;
-          case IngestionStatus.FAILED:
-            variant = 'destructive';
-            break;
-          case IngestionStatus.PENDING:
-            variant = 'pending';
-            break;
-          case IngestionStatus.PARSING:
-            variant = 'pending';
-            break;
-          case IngestionStatus.EXTRACTING:
-            variant = 'pending';
-            break;
-          case IngestionStatus.CHUNKING:
-            variant = 'pending';
-            break;
-          case IngestionStatus.AUGMENTING:
-            variant = 'pending';
-            break;
-          case IngestionStatus.ENRICHING:
-            variant = 'pending';
-            break;
-          case IngestionStatus.STORING:
-            variant = 'pending';
-            break;
+        const s = (doc.ingestionStatus || '').toLowerCase();
+        if (s === 'success') {
+          return (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+              {doc.ingestionStatus}
+            </span>
+          );
         }
-        return <Badge variant={variant}>{doc.ingestionStatus}</Badge>;
+        if (s === 'failed') {
+          return (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-500/10 text-rose-400 border border-rose-500/25 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shadow-[0_0_6px_rgba(251,113,133,0.8)]" />
+              {doc.ingestionStatus}
+            </span>
+          );
+        }
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-300 border border-amber-500/25 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shadow-[0_0_6px_rgba(251,191,36,0.8)]" />
+            {doc.ingestionStatus || 'pending'}
+          </span>
+        );
       },
     },
     {
@@ -142,22 +134,37 @@ const DocumentsTable: React.FC<DocumentsTableProps> = ({
       filterType: 'multiselect',
       filterOptions: ['success', 'failed', 'pending', 'processing'],
       renderCell: (doc) => {
-        let variant: 'success' | 'destructive' | 'pending' = 'pending';
-        switch (doc.extractionStatus) {
-          case KGExtractionStatus.SUCCESS:
-            variant = 'success';
-            break;
-          case KGExtractionStatus.FAILED:
-            variant = 'destructive';
-            break;
-          case KGExtractionStatus.PENDING:
-            variant = 'pending';
-            break;
-          case KGExtractionStatus.PROCESSING:
-            variant = 'pending';
-            break;
+        const s = (doc.extractionStatus || '').toLowerCase();
+        if (s === 'success') {
+          return (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+              {doc.extractionStatus}
+            </span>
+          );
         }
-        return <Badge variant={variant}>{doc.extractionStatus}</Badge>;
+        if (s === 'enriched') {
+          return (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-300 border border-amber-500/25 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.8)]" />
+              {doc.extractionStatus}
+            </span>
+          );
+        }
+        if (s === 'failed') {
+          return (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-500/10 text-rose-400 border border-rose-500/25 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shadow-[0_0_6px_rgba(251,113,133,0.8)]" />
+              {doc.extractionStatus}
+            </span>
+          );
+        }
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/25 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse shadow-[0_0_6px_rgba(129,140,248,0.8)]" />
+            {doc.extractionStatus || 'pending'}
+          </span>
+        );
       },
     },
     { key: 'documentType', label: 'Type', selected: false },
@@ -222,57 +229,70 @@ const DocumentsTable: React.FC<DocumentsTableProps> = ({
         </div>
       ) : (
         <>
-          <div className="flex justify-between items-center mb-4">
-            {/* Column toggle popover */}
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button>
-                  <SlidersHorizontal className="h-4 w-4" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent align="start">
-                <div className="grid gap-4 p-4">
-                  <div className="space-y-2">
-                    <h4 className="font-medium leading-none">Toggle Columns</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Select which columns to display in the table.
-                    </p>
-                  </div>
-                  <div className="grid gap-2">
-                    {columns.map((col) => (
-                      <div
-                        key={col.key}
-                        className="flex items-center space-x-2"
-                      >
-                        <Checkbox
-                          id={`column-toggle-${col.key}`}
-                          checked={visibleColumns[col.key]}
-                          onCheckedChange={(
-                            checked: boolean | 'indeterminate'
-                          ) => {
-                            if (typeof checked === 'boolean') {
-                              onToggleColumn(col.key, checked);
-                            }
-                          }}
-                        />
-                        <label
-                          htmlFor={`column-toggle-${col.key}`}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-4 p-2 bg-[#090d1a]/80 backdrop-blur-xl border border-white/[0.08] rounded-2xl shadow-xl">
+            {/* Left side: Column toggle popover + search bar */}
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="h-10 px-3 bg-white/[0.04] hover:bg-white/[0.08] hover:text-white border-white/10 rounded-xl text-slate-300 flex items-center gap-2 flex-shrink-0 transition-colors"
+                  >
+                    <SlidersHorizontal className="h-4 w-4 text-indigo-400" />
+                    <span className="hidden md:inline text-xs font-medium">
+                      Columns
+                    </span>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  align="start"
+                  className="glass-panel border-white/10 p-4 rounded-xl shadow-2xl"
+                >
+                  <div className="grid gap-4">
+                    <div className="space-y-1">
+                      <h4 className="font-semibold text-sm text-white leading-none">
+                        Toggle Columns
+                      </h4>
+                      <p className="text-xs text-slate-400">
+                        Select which columns to display in the table.
+                      </p>
+                    </div>
+                    <div className="grid gap-2 max-h-[300px] overflow-y-auto pr-1">
+                      {columns.map((col) => (
+                        <div
+                          key={col.key}
+                          className="flex items-center space-x-2 py-0.5"
                         >
-                          {col.label}
-                        </label>
-                      </div>
-                    ))}
+                          <Checkbox
+                            id={`column-toggle-${col.key}`}
+                            checked={visibleColumns[col.key]}
+                            onCheckedChange={(
+                              checked: boolean | 'indeterminate'
+                            ) => {
+                              if (typeof checked === 'boolean') {
+                                onToggleColumn(col.key, checked);
+                              }
+                            }}
+                          />
+                          <label
+                            htmlFor={`column-toggle-${col.key}`}
+                            className="text-xs font-medium text-slate-300 cursor-pointer"
+                          >
+                            {col.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </PopoverContent>
-            </Popover>
+                </PopoverContent>
+              </Popover>
 
-            {middleContent}
+              <div className="flex-1 min-w-0">{middleContent}</div>
+            </div>
 
             {/* Right side: Upload and Delete buttons */}
             {!hideActions && (
-              <div className="flex space-x-2">
+              <div className="flex items-center space-x-2 flex-shrink-0">
                 <UploadButton
                   setUploadedDocuments={() => {}}
                   onUploadSuccess={async () => {

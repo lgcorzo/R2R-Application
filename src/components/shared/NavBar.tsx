@@ -28,12 +28,15 @@ interface NavItemProps {
 const NavItem: React.FC<NavItemProps> = ({ href, children, isActive }) => (
   <Link
     href={href}
-    className={`px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-300 ${
+    className={`px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-full whitespace-nowrap transition-all duration-200 flex items-center gap-1.5 ${
       isActive
-        ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-lg shadow-indigo-500/10'
-        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+        ? 'bg-gradient-to-r from-indigo-500/25 via-purple-500/20 to-indigo-500/25 text-white font-semibold border border-indigo-500/40 shadow-[0_0_15px_rgba(99,102,241,0.25)]'
+        : 'text-slate-400 hover:text-slate-100 hover:bg-white/[0.06] hover:border-white/10 border border-transparent'
     }`}
   >
+    {isActive && (
+      <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.9)]" />
+    )}
     {children}
   </Link>
 );
@@ -115,8 +118,8 @@ const NavItems: React.FC<NavItemsProps> = ({
   }
 
   return (
-    <nav>
-      <div className="flex items-center space-x-2">
+    <nav className="overflow-x-auto no-scrollbar max-w-[68vw]">
+      <div className="flex items-center space-x-1.5 py-1">
         {items
           .filter((item) => item.show)
           .map((item) => (

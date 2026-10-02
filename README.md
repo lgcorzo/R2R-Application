@@ -50,17 +50,20 @@ The workbench architecture consolidates administrative and developer workflows i
 ```
 
 ### 1. ⚔️ Retrieval Arena (`/arena`)
+
 - **Dual Retrieval Viewports**: Simultaneous side-by-side execution of Configuration A vs Configuration B.
 - **Visual Chunk Diffing**: Badges show overlapping chunks (`[Also in B at #X]`), unique discoveries (`[Unique to A]`), and rank shifts.
 - **Dynamic Configuration Tuning**: Real-time adjustment of hybrid dense/sparse weights (BM25 vs Vector), reranker selection (Cohere, ColBERT), and Top-K limits.
 - **Agent Trace Drawer**: Live inspection of streaming thought blocks, tool calls, and citation anchors.
 
 ### 2. 📚 3-Pane Knowledge Studio (`/knowledge`)
+
 - **Pane 1 (Hierarchy)**: Filterable collection and document trees with ingestion status badges.
 - **Pane 2 (Pipeline Tracker & Chunk Grid)**: Visual progress through `Upload` ➔ `Parse` ➔ `Chunk` ➔ `Embed` ➔ `Enrich` stages, plus virtualized chunk previews.
 - **Pane 3 (Chunk DevTools)**: Low-level vector inspection, embedding similarity distributions, token counts, and live metadata editing.
 
 ### 3. ⚙️ Telemetry & Operations Hub (`/ops`)
+
 - **Latency Percentiles**: Real-time p50, p95, and p99 latency metrics across retrieval, generation, and ingestion stages.
 - **Dead-Letter Queue (DLQ)**: Ingestion error monitoring with full stack traces and surgical retry triggers.
 - **Engine Diagnostics**: Cluster status, OpenZiti zero-trust connection health, and LLM token usage tracking.

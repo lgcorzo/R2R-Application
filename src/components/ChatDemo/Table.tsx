@@ -257,14 +257,14 @@ function Table<T extends object>({
     <div className="flex flex-col h-full">
       {/* Remove the column toggle popover as it's now handled in DocumentsTable */}
       <div
-        className="overflow-x-auto"
+        className="overflow-x-auto rounded-2xl border border-white/[0.08] shadow-2xl"
         style={{ height: tableHeight, maxWidth: '100%' }}
       >
-        <table className="w-full glass-surface border border-white/[0.04] rounded-lg overflow-hidden">
-          <thead className="sticky top-0 bg-black/40 backdrop-blur-xl z-10">
+        <table className="w-full bg-[#0a0f1d]/70 backdrop-blur-xl rounded-2xl overflow-hidden">
+          <thead className="sticky top-0 bg-[#070b14]/95 backdrop-blur-2xl z-10">
             <tr className="border-b border-white/[0.08]">
               {onSelectAll && (
-                <th className="w-[50px] px-4 py-3 text-foreground text-center">
+                <th className="w-[50px] px-4 py-3.5 text-foreground text-center">
                   <Checkbox
                     checked={isAllSelected}
                     onCheckedChange={handleSelectAllInternal}
@@ -275,7 +275,7 @@ function Table<T extends object>({
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className="px-4 py-3 text-foreground font-semibold text-center overflow-hidden"
+                  className="px-4 py-3.5 text-xs font-semibold text-slate-300 uppercase tracking-wider text-center overflow-hidden"
                 >
                   <div className="flex items-center justify-center">
                     <span className="mr-2 truncate">{col.label}</span>
@@ -398,7 +398,7 @@ function Table<T extends object>({
             {currentPageData.map((item) => (
               <tr
                 key={getRowKey(item)}
-                className="border-b border-white/[0.02] hover:bg-white/[0.02] transition-colors group"
+                className="border-b border-white/[0.04] hover:bg-indigo-500/[0.04] transition-all duration-150 group"
               >
                 {onSelectItem && (
                   <td className="w-[50px] px-4 py-3 text-muted-foreground text-center">
@@ -415,7 +415,7 @@ function Table<T extends object>({
                 {columns.map((col) => (
                   <td
                     key={col.key}
-                    className="px-4 py-3 text-muted-foreground group-hover:text-foreground transition-colors text-center overflow-hidden"
+                    className="px-4 py-3 text-slate-300 group-hover:text-white transition-colors text-center overflow-hidden"
                   >
                     <div className="overflow-x-auto whitespace-nowrap">
                       {renderCellContent(item, col)}

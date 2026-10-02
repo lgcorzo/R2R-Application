@@ -1,3 +1,4 @@
+import { Search, X } from 'lucide-react';
 import { DocumentResponse } from 'r2r-js';
 import React, {
   useState,
@@ -350,6 +351,11 @@ const Index: React.FC = () => {
     [debouncedSearchHandler]
   );
 
+  const handleClearSearch = useCallback(() => {
+    setSearchQuery('');
+    debouncedSearchHandler('');
+  }, [debouncedSearchHandler]);
+
   /**
    * Handle column visibility
    */
@@ -381,46 +387,59 @@ const Index: React.FC = () => {
 
   return (
     <Layout pageTitle="Documents" includeFooter={false}>
-      <main className="w-full flex flex-col container h-screen-[calc(100%-4rem)]">
-        <div className="relative flex-grow mt-[4rem] sm:mt-[4rem]">
-          <div className="mx-auto max-w-6xl mb-12 mt-4 p-4 h-full">
-            <DocumentsTable
-              documents={paginatedDocuments}
-              loading={loading}
-              onRefresh={refetchDocuments}
-              pendingDocuments={pendingDocuments}
-              setPendingDocuments={setPendingDocuments}
-              onSelectAll={handleSelectAll}
-              onSelectItem={handleSelectItem}
-              selectedItems={selectedDocumentIds}
-              visibleColumns={visibleColumns}
-              onToggleColumn={handleToggleColumn}
-              totalEntries={displayTotalEntries}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-              itemsPerPage={ITEMS_PER_PAGE}
-              filters={filters}
-              onFiltersChange={handleFiltersChange}
-              searchQuery={searchQuery}
-              onSearchQueryChange={(query: string) => {
-                setSearchQuery(query);
-                debouncedSearchHandler(query);
-              }}
-              middleContent={
-                <div className="w-full px-2">
-                  <input
-                    type="text"
-                    placeholder="Search by Title or Document ID"
-                    value={searchQuery}
-                    onChange={handleSearchInputChange}
-                    className="w-full glass-surface text-foreground placeholder:text-muted-foreground/50 rounded-xl px-4 py-2 border border-white/10 focus:outline-none focus:border-indigo-500/40 focus:ring-1 focus:ring-indigo-500/20 transition-all"
-                  />
-                </div>
-              }
-            />
-          </div>
-        </div>
-      </main>
+      <div className="w-full flex-1 flex flex-col px-4 sm:px-6 lg:px-8 py-5 max-w-[1700px] mx-auto overflow-y-auto">
+        <DocumentsTable
+          documents={paginatedDocuments}
+          loading={loading}
+          onRefresh={refetchDocuments}
+          pendingDocuments={pendingDocuments}
+          setPendingDocuments={setPendingDocuments}
+          onSelectAll={handleSelectAll}
+          onSelectItem={handleSelectItem}
+          selectedItems={selectedDocumentIds}
+          visibleColumns={visibleColumns}
+          onToggleColumn={handleToggleColumn}
+          totalEntries={displayTotalEntries}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          itemsPerPage={ITEMS_PER_PAGE}
+          filters={filters}
+          onFiltersChange={handleFiltersChange}
+          searchQuery={searchQuery}
+          onSearchQueryChange={(query: string) => {
+            setSearchQuery(query);
+            debouncedSearchHandler(query);
+          }}
+          middleContent={
+            <div className="relative w-full">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <Search className="h-4 w-4" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search documents by title, ID, or content..."
+                value={searchQuery}
+                onChange={handleSearchInputChange}
+                className="w-full pl-10 pr-16 py-2 text-sm bg-white/[0.04] hover:bg-white/[0.06] text-foreground placeholder:text-slate-500 rounded-xl border border-white/[0.08] focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 focus:bg-[#0c1222] transition-all"
+              />
+              <div className="absolute inset-y-0 right-0 pr-2.5 flex items-center gap-1.5">
+                {searchQuery && (
+                  <button
+                    onClick={handleClearSearch}
+                    className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                    title="Clear search"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                )}
+                <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono font-medium text-slate-400 bg-white/[0.06] border border-white/[0.08] rounded shadow-sm">
+                  /
+                </kbd>
+              </div>
+            </div>
+          }
+        />
+      </div>
     </Layout>
   );
 };

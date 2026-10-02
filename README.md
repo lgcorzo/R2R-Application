@@ -1,32 +1,72 @@
 <h2 align="center">
-R2R Dashboard
+R2R Dashboard & Developer Workbench
 </h2>
 <img width="1041" alt="r2r" src="https://github.com/user-attachments/assets/b6ee6a78-5d37-496d-ae10-ce18eee7a1d6">
 <h3 align="center">
-Manage and Monitor Your R2R RAG Applications with Ease
+Next-Generation RAG Developer & Operations Workbench for R2R Pipelines
 </h3>
 
 # About
 
-The R2R Dashboard is an open-source React+Next.js application designed to provide [R2R](https://github.com/lgcorzo/R2R-Engine) developers with an easy interface to interact with their pipelines. This dashboard aims to reduce development and iteration time by offering a user-friendly environment.
+The R2R Dashboard is an open-source Next.js 15 & React application built for [R2R](https://github.com/lgcorzo/R2R-Engine). It has been upgraded into a unified **RAG Developer & Operations Workbench**, providing AI engineers, platform developers, and autonomous agent factories with a high-density environment to benchmark retrieval strategies, monitor multimodal ingestion pipelines, and inspect real-time engine telemetry.
 
 ## Key Features
 
-- **🗂️ Document Management**: Upload, update, and delete documents and their metadata.
-- **🛝 Playground**: Stream RAG responses with different models and configurable settings.
-- **📊 Analytics**: View aggregate statistics around latencies and metrics with detailed histograms.
-- **📜 Logs**: Track user queries, search results, and LLM responses.
-- **🔧 Development Tools**: Easily start a development server, format code, and run lint checks.
+- **⚔️ Retrieval Arena (`/arena`)**: Side-by-side A/B experimentation studio. Run queries simultaneously across two retrieval configurations (Dense Semantic, BM25, Hybrid RRF, Knowledge Graph), compare ranked chunks with visual diff badges (`[Also in B at #X]`, `[Unique to A]`), tune parameters in real-time, and trace collapsible agent reasoning steps (`ThinkingBlock`).
+- **📚 3-Pane Knowledge Studio (`/knowledge`)**: Unified document explorer and ingestion control center. Features a hierarchical collection/document tree (Pane 1), a 5-stage ingestion lifecycle tracker (`Upload` ➔ `Parse` ➔ `Chunk` ➔ `Embed` ➔ `Enrich`) with virtualized chunk cards (Pane 2), and deep Chunk DevTools for vector dimensionality, token counts, and metadata JSON inspection (Pane 3).
+- **⚙️ Telemetry & Operations Hub (`/ops`)**: Live system observability. Track pipeline latency percentiles (p50, p95, p99), monitor ingestion dead-letter queues with automated retry capabilities, review token consumption across models, and verify engine cluster health.
+- **🧭 Developer Workbench Shell**: High-productivity workspace with an ultra-compact Activity Rail (56px), keyboard-first Command Palette (`⌘K` / `Ctrl+K`), and a persistent bottom diagnostics status bar displaying live latency, model backends, and cluster connectivity.
+- **🛡️ Zero-Trust Security & Enterprise SSO**: Secure ingress over OpenZiti zero-trust overlay (`https://r2r.ziti`) backed by OAuth2 Proxy and multi-provider SSO (Google, GitHub, direct credentials).
+- **🗂️ Document & Collection Governance**: Fine-grained role-based access control (RBAC), multi-tenant collection isolation, and multimodal file ingestion (`.pdf`, `.txt`, `.json`, `.png`, source code).
 
 ## Table of Contents
 
 1. [Key Features](#key-features)
-2. [Screenshots & Frontend Interface](#screenshots--frontend-interface)
-3. [Dark Gravity Autonomous CA/CD Factory Integration](#-dark-gravity-autonomous-cacd-factory-integration)
-4. [Quick Install](#quick-install)
-5. [Developing with the R2R Dashboard](#developing-with-the-r2r-dashboard)
-6. [Links & Documentation](#links)
-7. [Summary](#summary)
+2. [Workbench Workspaces & Architecture](#workbench-workspaces--architecture)
+3. [Screenshots & Frontend Interface](#screenshots--frontend-interface)
+4. [Dark Gravity Autonomous CA/CD Factory Integration](#-dark-gravity-autonomous-cacd-factory-integration)
+5. [Quick Install](#quick-install)
+6. [Developing with the R2R Dashboard](#developing-with-the-r2r-dashboard)
+7. [Links & Documentation](#links)
+8. [Summary](#summary)
+
+---
+
+# Workbench Workspaces & Architecture
+
+The workbench architecture consolidates administrative and developer workflows into three specialized workspaces, coordinated by an IDE-like shell:
+
+```
+┌──────┬───────────────────────┬────────────────────────────────────────────────────────┐
+│ RAIL │ CONTEXT PANEL         │ MAIN WORKBENCH VIEWPORT                                │
+├──────┼───────────────────────┼────────────────────────────────────────────────────────┤
+│ ⚔️   │ • Presets Library     │ [ Active Viewport: Arena / Knowledge / Ops ]           │
+│ 📚   │ • Saved Queries       │                                                        │
+│ ⚙️   │ • Ingestion Filters   │                                                        │
+│ 🌐   │ • Cluster Endpoints   │                                                        │
+├──────┴───────────────────────┴────────────────────────────────────────────────────────┤
+│ STATUS: Engine: Online (v3.7) │ Latency: 142ms │ Active Model: gpt-4o │ Hotkey: ⌘K     │
+└───────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 1. ⚔️ Retrieval Arena (`/arena`)
+
+- **Dual Retrieval Viewports**: Simultaneous side-by-side execution of Configuration A vs Configuration B.
+- **Visual Chunk Diffing**: Badges show overlapping chunks (`[Also in B at #X]`), unique discoveries (`[Unique to A]`), and rank shifts.
+- **Dynamic Configuration Tuning**: Real-time adjustment of hybrid dense/sparse weights (BM25 vs Vector), reranker selection (Cohere, ColBERT), and Top-K limits.
+- **Agent Trace Drawer**: Live inspection of streaming thought blocks, tool calls, and citation anchors.
+
+### 2. 📚 3-Pane Knowledge Studio (`/knowledge`)
+
+- **Pane 1 (Hierarchy)**: Filterable collection and document trees with ingestion status badges.
+- **Pane 2 (Pipeline Tracker & Chunk Grid)**: Visual progress through `Upload` ➔ `Parse` ➔ `Chunk` ➔ `Embed` ➔ `Enrich` stages, plus virtualized chunk previews.
+- **Pane 3 (Chunk DevTools)**: Low-level vector inspection, embedding similarity distributions, token counts, and live metadata editing.
+
+### 3. ⚙️ Telemetry & Operations Hub (`/ops`)
+
+- **Latency Percentiles**: Real-time p50, p95, and p99 latency metrics across retrieval, generation, and ingestion stages.
+- **Dead-Letter Queue (DLQ)**: Ingestion error monitoring with full stack traces and surgical retry triggers.
+- **Engine Diagnostics**: Cluster status, OpenZiti zero-trust connection health, and LLM token usage tracking.
 
 ---
 
@@ -78,14 +118,15 @@ Manage knowledge isolation, role-based access controls (RBAC), and logical bound
 
 ### 4. Zero-Trust Authentication & Access Portal
 
-Secure ingress backed by OAuth2 Proxy and OpenZiti zero-trust overlay.
+Secure ingress backed by OAuth2 Proxy and OpenZiti zero-trust overlay (`https://r2r.ziti`).
 
 <p align="center">
   <img src="assets/login.png" alt="R2R Dashboard Authentication Portal" width="100%" />
 </p>
 
-- **Enterprise Single Sign-On**: Seamless integration with OAuth2 / OIDC providers.
-- **Role-Based Views**: Automatic UI capability pruning based on user permissions.
+- **Zero-Trust Deployment (`https://r2r.ziti`)**: Hardened ingress routed via OpenZiti overlay network with configurable deployment endpoints.
+- **Enterprise Single Sign-On (SSO)**: Flexible authentication supporting direct credentials alongside OAuth2 / OIDC providers (Google and GitHub).
+- **Role-Based Views**: Automatic UI capability pruning based on user permissions and authenticated identity.
 
 ---
 

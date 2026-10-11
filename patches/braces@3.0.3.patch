@@ -1,0 +1,22 @@
+diff --git a/lib/parse.js b/lib/parse.js
+index 3a6988e629f52aee6609dc5ec290a5e9ff47cecb..11fad2f70f10c1fdb7eebbfb919a05b4d037061e 100644
+--- a/lib/parse.js
++++ b/lib/parse.js
+@@ -6,6 +6,7 @@ const stringify = require('./stringify');
+  * Constants
+  */
+
++const MAX_DEPTH = 50;
+ const {
+   MAX_LENGTH,
+   CHAR_BACKSLASH, /* \ */
+@@ -195,6 +196,9 @@ const parse = (input, options = {}) => {
+      */
+
+     if (value === CHAR_LEFT_CURLY_BRACE) {
++      if (depth >= (opts.maxDepth || MAX_DEPTH)) {
++        throw new SyntaxError(`Nesting depth (${depth + 1}) exceeds max depth (${opts.maxDepth || MAX_DEPTH})`);
++      }
+       depth++;
+
+       const dollar = prev.value && prev.value.slice(-1) === '$' || block.dollar === true;

@@ -8,6 +8,7 @@ RUN corepack enable && corepack prepare pnpm@10.24.0 --activate
 
 # Copy package.json and pnpm-lock.yaml
 COPY package.json pnpm-lock.yaml* ./
+COPY patches* ./patches/
 
 # Install dependencies
 RUN pnpm install --no-frozen-lockfile

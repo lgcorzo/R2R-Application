@@ -198,6 +198,7 @@ const AssignUserToCollectionDialog: React.FC<
             onPageChange={() => {}}
             showPagination={false}
             loading={loading}
+            getRowKey={(user) => user.id}
           />
         )}
         <DialogFooter className="mt-4 flex justify-end space-x-2">

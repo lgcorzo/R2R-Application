@@ -75,7 +75,7 @@ function Table<T extends object>({
   getRowKey = (item: T) => {
     const idKey = 'id' as keyof T;
     const id = item[idKey];
-    return id ? id.toString() : Math.random().toString();
+    return id ? id.toString() : crypto.randomUUID();
   },
 }: TableProps<T>) {
   const [sort, setSort] = useState(

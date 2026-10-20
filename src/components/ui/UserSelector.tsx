@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   Dialog,
@@ -45,7 +46,7 @@ const UserSelector: React.FC<UserSelectorProps> = ({
   };
 
   const generatePlaceholderUserId = () => {
-    return 'user-' + Math.random().toString(36).substr(2, 9);
+    return 'user-' + uuidv4();
   };
 
   return (

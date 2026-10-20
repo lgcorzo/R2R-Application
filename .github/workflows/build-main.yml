@@ -14,9 +14,13 @@ permissions:
 env:
   REGISTRY_IMAGE: sciphiai/r2r-dashboard
 
+permissions: read-all
+
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       release_version: ${{ steps.version.outputs.RELEASE_VERSION }}
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -80,6 +84,8 @@ jobs:
   create-manifest:
     needs: [prepare, build]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3

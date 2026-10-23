@@ -1,6 +1,5 @@
 # Builder Stage
 FROM node:22-alpine AS builder
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Enable Corepack for pnpm
@@ -24,7 +23,6 @@ RUN cp -rf node_modules/.pnpm/meriyah*/node_modules/meriyah/dist/* .next/standal
 
 # Production Stage
 FROM node:22-alpine AS runner
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Enable Corepack for pnpm

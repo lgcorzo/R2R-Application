@@ -16,8 +16,10 @@ Sentry.init({
   // Attach stack traces to all messages
   attachStacktrace: true,
 
-  // Send default PII
-  sendDefaultPii: true,
+  // Collect default PII
+  dataCollection: {
+    userInfo: true,
+  },
 
   // Filter out sensitive data before sending
   beforeSend(event, hint) {

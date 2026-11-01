@@ -8,7 +8,8 @@
   },
   "pnpm": {
     "patchedDependencies": {
-      "braces@3.0.3": "patches/braces@3.0.3.patch"
+      "braces@3.0.3": "patches/braces@3.0.3.patch",
+      "minimatch@11.0.3": "patches/minimatch@11.0.3.patch"
     },
     "allowedBuildScripts": [
       "@sentry/cli",
@@ -18,7 +19,7 @@
     "overrides": {
       "next": "15.5.28",
       "hono": "^4.13.12",
-      "@hono/node-server": "^1.19.17",
+      "@hono/node-server": "^2.1.5",
       "@modelcontextprotocol/sdk": "^1.31.0",
       "proxy-addr": "^2.0.8",
       "source-map-js": "^1.2.2",
@@ -28,7 +29,7 @@
       "@babel/core": "^7.29.6",
       "@isaacs/brace-expansion": "^5.0.1",
       "axios": "^1.20.0",
-      "qs": "^6.16.0",
+      "qs": "^6.17.1",
       "cross-spawn": "^7.0.6",
       "nanoid": "^3.3.18",
       "cookie": "^0.7.2",
@@ -36,7 +37,7 @@
       "express": "^4.21.2",
       "micromatch": "^4.0.8",
       "ws": "^8.21.0",
-      "glob": "^10.5.0",
+      "glob": "^14.0.3",
       "diff": "^8.0.3",
       "webpack": "^5.108.4",
       "serialize-javascript": "^7.0.5",
@@ -45,7 +46,7 @@
       "picomatch": "^4.0.4",
       "yaml": "^2.8.3",
       "lodash": "^4.18.0",
-      "follow-redirects": "^1.16.1",
+      "follow-redirects": "^1.16.2",
       "postcss": "^8.5.26",
       "immutable": "^5.1.5",
       "fast-uri": "^3.1.9",
@@ -58,7 +59,9 @@
       "sharp": "^0.35.5",
       "undici": "^7.30.1",
       "uuid": "^11.1.1",
-      "zod": "^4.6.6"
+      "zod": "^4.6.6",
+      "minimatch": "^11.0.3",
+      "systeminformation": "^5.33.19"
     }
   },
   "scripts": {
@@ -69,7 +72,8 @@
     "lint": "eslint --fix .",
     "lint:verbose": "eslint --config .eslintrc.verbose.json .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test": "next build"
   },
   "husky": {
     "hooks": {

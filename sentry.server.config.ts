@@ -17,7 +17,6 @@ Sentry.init({
   attachStacktrace: true,
 
   // Send default PII
-  sendDefaultPii: true,
 
   // Filter out sensitive data before sending
   beforeSend(event, hint) {

@@ -1,0 +1,10 @@
+diff --git a/dist/commonjs/index.js b/dist/commonjs/index.js
+index eb1c915f43b2debf5faa7ac3a73c262a161c7a4f..075b60bf41002dfbefb8a3ed9a72880377998a46 100644
+--- a/dist/commonjs/index.js
++++ b/dist/commonjs/index.js
+@@ -1548,3 +1548,5 @@ exports.minimatch.Minimatch = Minimatch;
+ exports.minimatch.escape = escape_js_1.escape;
+ exports.minimatch.unescape = unescape_js_1.unescape;
+ //# sourceMappingURL=index.js.map
++module.exports = Object.assign(minimatch, exports);
++module.exports.default = minimatch;

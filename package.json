@@ -139,7 +139,7 @@
     "@visx/tooltip": "^4.0.0",
     "@visx/vendor": "^4.0.0",
     "ansi_up": "^6.0.2",
-    "chart.js": "^4.4.7",
+    "chart.js": "^4.6.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
